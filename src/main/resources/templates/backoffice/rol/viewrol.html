@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="layout::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="layout::menu"></nav>
+
+<div class="card">
+    <div class="card-header text-bg-danger">
+        Mantenimiento de roles:
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="rol : ${rol}">
+                <td th:text="${rol.rolid}"></td>
+                <td th:text="${rol.nomrol}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
