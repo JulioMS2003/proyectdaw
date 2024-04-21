@@ -12,7 +12,7 @@ import java.util.Timer;
 public class Usuario {
 
     @Id
-    private Integer usuarioid;
+    private String usuarioid;
     @Column(name="clave")
     private String clave;
     @Column(name="nomusuario")

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="layout::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script th:src="@{/js/web/backoffice/usuario/viewusuario.js}" type="text/javascript"></script>
+<nav th:replace="layout::menu"></nav>
+
+<div class="card">
+    <div class="card-header text-bg-danger">
+        Mantenimiento de usuarios:
+    </div>
+    <div class="card-body">
+        <button id="btnagregar" type="button" class="btn btn-primary">Agregar</button>
+        <hr />
+        <div id="divmensaje"></div>
+        <table id="tblusuario" class="table">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Clave</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Ultimo Login</th>
+                <th>Actualizar</th>
+                <th>Ver</th>
+                <th>Borrar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="usuario : ${usuario}">
+                <td th:text="${usuario.usuarioid}"></td>
+                <td th:text="${usuario.clave}"></td>
+                <td th:text="${usuario.nomusuario}"></td>
+                <td th:text="${usuario.apeusuario}"></td>
+                <td th:text="${usuario.rol.rolid}"></td>
+                <td th:text="${usuario.estado}"></td>
+                <td th:text="${usuario.ultimologin}"></td>
+                <td>
+                    <button type="button" class="btn btn-primary btnactualizar"
+                            th:data-usuarioid="${usuario.usuarioid}"
+                            th:data-usuarioclave="${usuario.clave}"
+                            th:data-usuarionom="${usuario.nomusuario}"
+                            th:data-usuarioape="${usuario.apeusuario}"
+                            th:data-usuariorol="${usuario.rol.rolid}"
+                            th:data-usuarioestado="${usuario.estado}"
+                            th:data-usuariologin="${usuario.ultimologin}">actualizar</button>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal registro y actualizacion de usuario-->
+<div class="modal fade" id="modalusuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtidusuario"
+                           placeholder="name@example.com">
+                    <label for="txtidusuario">Ingrese el Id del usuario</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtclaveusuario"
+                           placeholder="name@example.com">
+                    <label for="txtclaveusuario">Ingrese la clave del usuario</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtnomusuario"
+                           placeholder="name@example.com">
+                    <label for="txtnomusuario">Ingrese nombre del usuario</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtapeusuario"
+                           placeholder="name@example.com">
+                    <label for="txtnomusuario">Ingrese apellido del usuario</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <select id="cborol" class="form-control"></select>
+                    <label for="cborol">Seleccione Rol</label>
+                </div>
+                <div class="form-check form-switch" id="switchusuario">
+                    <input class="form-check-input" type="checkbox" role="switch" id="cbestado">
+                    <label class="form-check-label" for="cbestado">Estado</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+            <input type="hidden" id="hddusuario" value="0">
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
