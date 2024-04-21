@@ -1,9 +1,6 @@
 package pe.edu.cibertec.proyectdaw.model.bd;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Cleanup;
 import lombok.Data;
 
@@ -32,7 +29,9 @@ public class Empleado {
     private String foto;
     @Column(name="direccion")
     private String direccion;
-    @Column(name="distritoid")
-    private Integer distritoid;
+
+    @ManyToOne
+    @JoinColumn(name="distritoid")
+    private Distrito distrito;
 
 }

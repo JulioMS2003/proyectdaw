@@ -1,9 +1,6 @@
 package pe.edu.cibertec.proyectdaw.model.bd;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -15,7 +12,9 @@ public class Provincia {
     private Integer provinciaid;
     @Column(name="nomprov")
     private String nomprov;
-    @Column(name="departamentoid")
-    private Integer departamentoid;
+
+    @ManyToOne
+    @JoinColumn(name="departamentoid")
+    private Departamento departamento;
 
 }
