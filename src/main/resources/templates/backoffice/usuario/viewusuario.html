@@ -27,8 +27,6 @@
                 <th scope="col">Estado</th>
                 <th scope="col">Ultimo Login</th>
                 <th>Actualizar</th>
-                <th>Ver</th>
-                <th>Borrar</th>
             </tr>
             </thead>
             <tbody>
@@ -50,8 +48,6 @@
                             th:data-usuarioestado="${usuario.estado}"
                             th:data-usuariologin="${usuario.ultimologin}">actualizar</button>
                 </td>
-                <td></td>
-                <td></td>
             </tr>
             </tbody>
         </table>
@@ -92,13 +88,13 @@
                     <label for="cborol">Seleccione Rol</label>
                 </div>
                 <div class="form-check form-switch" id="switchusuario">
-                    <input class="form-check-input" type="checkbox" role="switch" id="cbestado">
-                    <label class="form-check-label" for="cbestado">Estado</label>
+                    <input class="form-check-input" type="checkbox" role="switch" id="cboestado">
+                    <label class="form-check-label" for="cboestado">Activo</label>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" id="btncerrar" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnguardar">Guardar</button>
             </div>
             <input type="hidden" id="hddusuario" value="0">
         </div>

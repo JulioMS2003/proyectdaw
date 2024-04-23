@@ -5,8 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import pe.edu.cibertec.proyectdaw.model.bd.Rol;
 import pe.edu.cibertec.proyectdaw.service.IRolService;
-import pe.edu.cibertec.proyectdaw.service.IUsuarioService;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Controller
@@ -14,11 +17,11 @@ import pe.edu.cibertec.proyectdaw.service.IUsuarioService;
 public class RolController {
 
     private IRolService iRolService;
-    @GetMapping("/list")
-    public String listarRol(Model model){
-        model.addAttribute("rol",
-                iRolService.listarRol());
-        return "backoffice/rol/viewrol";
+
+    @GetMapping("/get")
+    @ResponseBody
+    public List<Rol> listRol(){
+        return iRolService.listarRol();
     }
 
 }
