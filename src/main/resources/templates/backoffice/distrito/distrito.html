@@ -9,66 +9,67 @@
 
 <div class="card">
     <div class="card-header text-bg-danger">
-        Mantenimiento de plano:
+        Mantenimiento de distrito:
     </div>
     <div class="card-body">
         <button id="btnagregar" type="button" class="btn btn-primary">Agregar</button>
         <hr />
         <div id="divmensaje"></div>
-        <table id="tblplano" class="table">
+        <table id="tbldistrito" class="table">
             <thead>
             <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Id Distrito</th>
-                <th scope="col">Estado</th>
+                <th scope="col">Nombre Distrito</th>
+                <th scope="col">Id Provincia</th>
                 <th>Actualizar</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="plano : ${plano}"> <!-- Cambiar aca -->
+            <tr th:each="distrito : ${distrito}">
                 <td th:text="${}"></td>
                 <td th:text="${}"></td>
                 <td th:text="${}"></td>
                 <td>
                     <button type="button" class="btn btn-primary btnactualizar"
-                            th:data-planoid="${}"
                             th:data-distritoid="${}"
-                            th:data-estadoid="${}">actualizar</button>
+                            th:data-distritonom="${}"
+                            th:data-provinciaid="${}">actualizar</button>
                 </td>
             </tr>
-            </tbody> <!-- Cambiar hasta aca -->
+            </tbody>
         </table>
     </div>
 </div>
 
-<!-- Modal registro y actualizacion de plano-->
-<div class="modal fade" id="modalplano" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal registro y actualizacion de distrito-->
+<div class="modal fade" id="modaldistrito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Plano</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Distrito</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtplanoid"
+                    <input type="text" class="form-control" id="txtiddistrito"
                            placeholder="name@example.com">
-                    <label for="txtplanoid">Ingrese el Id del plano</label>
+                    <label for="txtiddistrito">Ingrese el Id del distrito</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <select id="cbodistrito" class="form-control"></select>
-                    <label for="cbodistrito">Seleccione Distrito</label>
+                    <input type="text" class="form-control" id="txtnomdistrito"
+                           placeholder="name@example.com">
+                    <label for="txtnomdistrito">Ingrese el nombre del distrito</label>
                 </div>
-                <div class="form-check form-switch" id="switchempleado">
-                    <input class="form-check-input" type="checkbox" role="switch" id="cboestado">
-                    <label class="form-check-label" for="cboestado">Activo</label>
+                <div class="form-floating mb-3">
+                    <select id="cboprovincia" class="form-control"></select>
+                    <label for="cboprovincia">Seleccione Provincia</label>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" id="btncerrar" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" id="btnguardar">Guardar</button>
             </div>
-            <input type="hidden" id="hddplano" value="0">
+            <input type="hidden" id="hdddistrito" value="0">
         </div>
     </div>
 </div>
