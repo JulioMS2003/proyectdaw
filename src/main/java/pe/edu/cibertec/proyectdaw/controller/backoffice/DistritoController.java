@@ -18,7 +18,7 @@ public class DistritoController {
     public String viewDistrito(Model model){
         model.addAttribute("distrito",
                 iDistritoService.listarDistrito());
-        return "backoffice/distrito/distrito";
+        return "backoffice/distrito/viewdistrito";
     }
 
 }
