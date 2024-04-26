@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pe.edu.cibertec.proyectdaw.model.bd.Rol;
 import pe.edu.cibertec.proyectdaw.model.bd.Usuario;
-import pe.edu.cibertec.proyectdaw.model.dto.request.UsuarioRequest;
-import pe.edu.cibertec.proyectdaw.model.dto.response.UsuarioResponse;
 import pe.edu.cibertec.proyectdaw.service.IUsuarioService;
 
 import java.util.List;
