@@ -14,8 +14,8 @@ public class DepartamentoController {
 
     private IDepartamentoService iDepartamentoService;
 
-    @GetMapping("/list")
-    public String listarDepartamento(Model model){
+    @GetMapping("")
+    public String viewDepartamento(Model model){
         model.addAttribute("departamento",
                 iDepartamentoService.listarDepartamento());
         return "backoffice/departamento/viewdepartamento";
