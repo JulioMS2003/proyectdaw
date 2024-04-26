@@ -19,7 +19,7 @@ public class Empleado {
     private Integer apeemp;
     @Column(name="estado")
     private Boolean estado;
-    @Column(name="fecNac")
+    @Column(name="fec_nac")
     private Date fecNac;
     @Column(name="email")
     private String email;

@@ -18,6 +18,6 @@ public class ProvinciaCrontroller {
     public String viewProvincia(Model model) {
         model.addAttribute("provincia",
                 iProvinciaService.listarProvincia());
-        return "backoffice/provincia/provincia";
+        return "backoffice/provincia/viewprovincia";
     }
 }

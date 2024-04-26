@@ -18,7 +18,7 @@ public class PlanoController {
     public String viewPlano(Model model){
         model.addAttribute("plano",
                 iPlanoService.listarPlano());
-        return "backoffice/plano/plano";
+        return "backoffice/plano/viewplano";
     }
 
 }
