@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.Set;
 import java.util.Timer;
 
 @Data
@@ -23,8 +24,9 @@ public class Usuario {
     private Boolean estado;
     @Column(name="ultimo_login")
     private Timestamp ultimologin;
-
-    @ManyToOne
-    @JoinColumn(name="rolid")
-    private Rol rol;
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "Usuario_Rol",
+    joinColumns = @JoinColumn(name = "usuarioid"),
+    inverseJoinColumns = @JoinColumn(name = "rolid"))
+    private Set<Rol> roles;
 }

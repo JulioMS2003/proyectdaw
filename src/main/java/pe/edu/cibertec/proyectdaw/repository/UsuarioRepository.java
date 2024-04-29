@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pe.edu.cibertec.proyectdaw.model.bd.Usuario;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+public interface UsuarioRepository extends JpaRepository<Usuario, String> {
 }
