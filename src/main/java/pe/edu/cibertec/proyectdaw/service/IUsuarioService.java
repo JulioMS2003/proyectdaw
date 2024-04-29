@@ -7,6 +7,6 @@ import java.util.List;
 public interface IUsuarioService {
 
     List<Usuario> listarUsuario();
-
+    Usuario obtenerPorId(String usuarioid);
     void registrarUsuario(Usuario usuario);
 }
