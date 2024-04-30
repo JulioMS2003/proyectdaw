@@ -11,6 +11,7 @@ import java.util.Date;
 public class Proyecto {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer proyectoid;
     @Column(name="fecinicio")
     private Date fecinicio;

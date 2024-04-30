@@ -17,10 +17,7 @@ import pe.edu.cibertec.proyectdaw.service.DetalleUsuarioService;
 @AllArgsConstructor
 public class SecurityConfig {
     private DetalleUsuarioService  detalleUsuarioService;
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
@@ -33,7 +30,7 @@ public class SecurityConfig {
         http.formLogin(login -> {
             login.loginPage("/auth/login");
             login.loginProcessingUrl("/auth/login");
-            login.defaultSuccessUrl("/auth/login-success");
+            login.defaultSuccessUrl("/auth/login-success", true);
             login.usernameParameter("usuarioid");
             login.passwordParameter("clave");
         });
@@ -48,7 +45,7 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(detalleUsuarioService);
-        daoAuthenticationProvider.setPasswordEncoder(this.passwordEncoder());
+        daoAuthenticationProvider.setPasswordEncoder(this.bCryptPasswordEncoder);
         return daoAuthenticationProvider;
     }
 }

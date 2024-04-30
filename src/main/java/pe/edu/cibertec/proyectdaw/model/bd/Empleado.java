@@ -12,6 +12,7 @@ import java.util.Date;
 public class Empleado {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer empleadoid;
     @Column(name="nomemp")
     private Integer nomemp;

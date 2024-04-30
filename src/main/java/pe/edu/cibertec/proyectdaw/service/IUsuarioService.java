@@ -9,4 +9,5 @@ public interface IUsuarioService {
     List<Usuario> listarUsuario();
     Usuario obtenerPorId(String usuarioid);
     void registrarUsuario(Usuario usuario);
+    void actualizarPassword(String nuevaClave, String usuarioid);
 }

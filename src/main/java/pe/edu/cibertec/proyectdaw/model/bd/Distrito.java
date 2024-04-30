@@ -10,6 +10,7 @@ import lombok.Data;
 public class Distrito {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer distritoid;
     @Column(name="nomdist")
     private String nomdist;
