@@ -1,9 +1,6 @@
 package pe.edu.cibertec.proyectdaw.model.bd;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Cleanup;
 import lombok.Data;
 
@@ -13,6 +10,7 @@ import lombok.Data;
 public class Empresa {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer empresaid;
     @Column(name="nomempresa")
     private String nomempresa;
