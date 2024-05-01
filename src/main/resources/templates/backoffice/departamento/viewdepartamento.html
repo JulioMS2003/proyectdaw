@@ -18,14 +18,27 @@
         <table id="tbldepartamento" class="table">
             <thead>
             <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
+                <th scope="col" class="text-center">Id</th>
+                <th scope="col" class="text-center">Nombre</th>
+                <th scope="col" class="text-center" colspan="2">Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="departamento : ${departamento}">
-                <td th:text="${departamento.departamentoid}"></td>
-                <td th:text="${departamento.nomdepa}"></td>
+            <tr th:each="departamento : ${listaDepartamentos}">
+                <td class="text-center" th:text="${departamento.departamentoid}"></td>
+                <td class="text-center" th:text="${departamento.nomdepa}"></td>
+                <td class="text-center">
+                    <button style="width: 100px" type="button" class="btn btn-primary btneditar"
+                        th:data-depaid="${departamento.departamentoid}">
+                        Editar
+                    </button>
+                </td>
+                <td class="text-center">
+                    <button style="width: 100px" type="button" class="btn btn-danger btneliminar"
+                        th:data-depaid="${departamento.departamentoid}">
+                        Eliminar
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>

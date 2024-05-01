@@ -17,4 +17,9 @@ public class DepartamentoService implements IDepartamentoService {
     public List<Departamento> listarDepartamento() {
         return departamentoRepository.findAll();
     }
+
+    @Override
+    public List<Departamento> listarDepartamentosOrdenadosPorNombreAsc() {
+        return departamentoRepository.findAllByOrderByNomdepa();
+    }
 }

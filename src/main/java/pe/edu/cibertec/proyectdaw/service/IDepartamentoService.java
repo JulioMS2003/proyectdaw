@@ -7,5 +7,5 @@ import java.util.List;
 public interface IDepartamentoService{
 
     List<Departamento> listarDepartamento();
-
+    List<Departamento> listarDepartamentosOrdenadosPorNombreAsc();
 }
