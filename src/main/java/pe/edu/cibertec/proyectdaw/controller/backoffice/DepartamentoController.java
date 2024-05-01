@@ -3,9 +3,13 @@ package pe.edu.cibertec.proyectdaw.controller.backoffice;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import pe.edu.cibertec.proyectdaw.model.bd.Departamento;
+import pe.edu.cibertec.proyectdaw.model.dto.request.DepartamentoRequest;
+import pe.edu.cibertec.proyectdaw.model.dto.response.ResultadoResponse;
 import pe.edu.cibertec.proyectdaw.service.IDepartamentoService;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Controller
@@ -21,4 +25,43 @@ public class DepartamentoController {
         return "backoffice/departamento/viewdepartamento";
     }
 
+    @GetMapping("/lista")
+    @ResponseBody
+    public List<Departamento> listarDepartamentos(){
+        return iDepartamentoService.listarDepartamentosOrdenadosPorNombreAsc();
+    }
+
+    @PostMapping("/registro")
+    @ResponseBody
+    public ResultadoResponse registrarDepartamento(@RequestBody DepartamentoRequest departamentoRequest) {
+        String mensaje = "Departamento registrada con éxito";
+        boolean respuesta = true;
+        try{
+            iDepartamentoService.registrarDepartamento(departamentoRequest);
+        } catch(Exception ex){
+            mensaje = "Error: " + ex.getMessage();
+            respuesta = false;
+        }
+        return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
+    }
+
+    @PutMapping("/actualizacion")
+    @ResponseBody
+    public ResultadoResponse actualizarDepartamento(@RequestBody DepartamentoRequest departamentoRequest) {
+        String mensaje = "Departamento actualizado con éxito";
+        boolean respuesta = true;
+        try{
+            iDepartamentoService.registrarDepartamento(departamentoRequest);
+        } catch(Exception ex){
+            mensaje = "Error: " + ex.getMessage();
+            respuesta = false;
+        }
+        return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
+    }
+
+    @GetMapping("/obtener/{id}")
+    @ResponseBody
+    public Departamento obtenerPorId(@PathVariable("id") Integer departamentoid) {
+        return iDepartamentoService.obtenerPorId(departamentoid);
+    }
 }

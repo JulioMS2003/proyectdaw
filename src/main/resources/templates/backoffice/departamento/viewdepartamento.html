@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<script th:src="@{/js/web/backoffice/departamento/viewdepartamento.js}"></script>
 <nav th:replace="layout::menu"></nav>
 
 <div class="card">
@@ -45,5 +46,30 @@
     </div>
 </div>
 
+<!-- Modal Departamento -->
+<div class="modal fade" id="modaldepartamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="hdddepartamentoid" value="0">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtnomdepa" placeholder="Nombre" autocomplete="off">
+                    <label for="txtnomdepa">Nombre</label>
+                </div>
+                <div class="alert alert-danger text-center" role="alert" id="msjerror"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnguardar">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btncerrar"></button>
+                <button type="button" class="btn btn-primary" id="btnactualizar">Actualizar</button>
+                <button type="button" class="btn btn-danger" id="btneliminar">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
