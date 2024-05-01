@@ -84,6 +84,45 @@ $(document).on("click", ".btneditar", function(){
     $("#modaldepartamento").modal("show");
 })
 
+$(document).on("click", ".btneliminar", function() {
+    Swal.fire({
+        title: "¿Eliminar Departamento?",
+        text: "Esta acción no se podrá deshacer",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Sí, eliminar",
+        confirmButtonColor: "#00FF09",
+        cancelButtonColor: "#FF0C27"
+    }).then((result) => {
+        if(result.isConfirmed) {
+            $.ajax({
+                type: "DELETE",
+                url: "/departamento/eliminacion/" + $(this).attr("data-depaid"),
+                contentType: "application/json",
+                success: function(resultado) {
+                    if(resultado.respuesta) {
+                        listarDepartamentos();
+                        Swal.fire({
+                            title: resultado.mensaje,
+                            icon: "success",
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire({
+                            title: resultado.mensaje,
+                            icon: "error",
+                            timer: 2000,
+                            showConfirmButton: false
+                        })
+                    }
+                }
+            })
+        }
+    })
+})
+
 function listarDepartamentos(){
     $.ajax({
         type: "GET",

@@ -59,6 +59,20 @@ public class DepartamentoController {
         return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
     }
 
+    @DeleteMapping("/eliminacion/{id}")
+    @ResponseBody
+    public ResultadoResponse eliminarDepartamento(@PathVariable("id") Integer departamentoid){
+        String mensaje = "Departamento eliminado";
+        boolean respuesta = true;
+        try{
+            iDepartamentoService.eliminarDepartamento(departamentoid);
+        } catch(Exception ex){
+            mensaje = "Error: " + ex.getMessage();
+            respuesta = false;
+        }
+        return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
+    }
+
     @GetMapping("/obtener/{id}")
     @ResponseBody
     public Departamento obtenerPorId(@PathVariable("id") Integer departamentoid) {

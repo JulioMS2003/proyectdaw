@@ -12,4 +12,5 @@ public interface IDepartamentoService{
     void registrarDepartamento(Departamento departamento);
     List<Departamento> listarDepartamento();
     List<Departamento> listarDepartamentosOrdenadosPorNombreAsc();
+    void eliminarDepartamento(Integer departamentoid);
 }

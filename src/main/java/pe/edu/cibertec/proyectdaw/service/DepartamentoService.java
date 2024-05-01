@@ -54,4 +54,9 @@ public class DepartamentoService implements IDepartamentoService {
     public List<Departamento> listarDepartamentosOrdenadosPorNombreAsc() {
         return departamentoRepository.findAllByOrderByNomdepa();
     }
+
+    @Override
+    public void eliminarDepartamento(Integer departamentoid) {
+        departamentoRepository.deleteById(departamentoid);
+    }
 }
