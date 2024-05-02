@@ -1,39 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="layout::head">
+<head th:replace="~{layout::head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<nav th:replace="layout::menu"></nav>
-
+<th:block th:replace="~{layout::sweetalert2}"></th:block>
+<script th:src="@{/js/web/backoffice/provincia/viewprovincia.js}"></script>
+<nav th:replace="~{layout::menu}"></nav>
 <div class="card">
     <div class="card-header text-bg-danger">
-        Mantenimiento de provincia:
+        Mantenimiento de provincias:
     </div>
     <div class="card-body">
-        <button id="btnagregar" type="button" class="btn btn-primary">Agregar</button>
+        <button id="btnnuevo" type="button" class="btn btn-primary">Nueva Provincia</button>
         <hr />
-        <div id="divmensaje"></div>
         <table id="tblprovincia" class="table">
             <thead>
             <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Nombre Provincia</th>
-                <th scope="col">Id Departamento</th>
-                <th>Actualizar</th>
+                <th scope="col">Provincia</th>
+                <th scope="col">Departamento</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="provincia : ${provincia}">
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
+            <tr th:each="provincia : ${listaProvincias}">
+                <td th:text="${provincia.provinciaid}"></td>
+                <td th:text="${provincia.nomprov}"></td>
+                <td th:text="${provincia.departamento.nomdepa}"></td>
                 <td>
-                    <button type="button" class="btn btn-primary btnactualizar"
-                            th:data-provinciaid="${}"
-                            th:data-provincianom="${}"
-                            th:data-distritoid="${}">actualizar</button>
+                    <button type="button" class="btn btn-primary btneditar"
+                            th:data-proviid="${provincia.provinciaid}"
+                            th:data-nomprov="${provincia.nomprov}"
+                            th:data-depaid="${provincia.departamento.departamentoid}"><i class="bi bi-pencil"></i></button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btneliminar" th:data-provid="${provincia.provinciaid}"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>
             </tbody>
@@ -46,30 +50,26 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Provincia</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="hddprovinciaid" value="0">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtidprovincia"
-                           placeholder="name@example.com">
-                    <label for="txtidprovincia">Ingrese el Id de la provincia</label>
+                    <input type="text" class="form-control" id="txtnomprov"
+                           placeholder="Nombre" autocomplete="off">
+                    <label for="txtnomprov">Nombre</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtnomprovincia"
-                           placeholder="name@example.com">
-                    <label for="txtnomprovincia">Ingrese el nombre de la provincia</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <select id="cbodepartamento" class="form-control"></select>
-                    <label for="cbodepartamento">Seleccione Departamento</label>
+                    <select id="cbodepartamento" class="form-select" aria-label="Floating label select example">
+                        <option value="1">Seleccionar opción</option>
+                    </select>
+                    <label for="cbodepartamento">Departamento</label>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="btncerrar" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" id="btnguardar">Guardar</button>
             </div>
-            <input type="hidden" id="hdddepartamento" value="0">
         </div>
     </div>
 </div>
