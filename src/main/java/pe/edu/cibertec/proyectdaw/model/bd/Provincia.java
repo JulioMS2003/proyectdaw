@@ -9,10 +9,10 @@ import lombok.Data;
 public class Provincia {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer provinciaid;
     @Column(name="nomprov")
     private String nomprov;
-
     @ManyToOne
     @JoinColumn(name="departamentoid")
     private Departamento departamento;
