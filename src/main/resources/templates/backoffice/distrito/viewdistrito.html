@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+<th:block th:replace="~{layout::sweetalert2}"></th:block>
+<script th:src="@{/js/web/backoffice/distrito/viewdistrito.js}" type="text/javascript"></script>
 <nav th:replace="layout::menu"></nav>
 
 <div class="card">
@@ -12,28 +14,41 @@
         Mantenimiento de distrito:
     </div>
     <div class="card-body">
-        <button id="btnagregar" type="button" class="btn btn-primary">Agregar</button>
+        <button id="btnnuevo" type="button" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i>Nuevo Distrito
+        </button>
         <hr />
-        <div id="divmensaje"></div>
         <table id="tbldistrito" class="table">
             <thead>
             <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Nombre Distrito</th>
-                <th scope="col">Id Provincia</th>
-                <th>Actualizar</th>
+                <th scope="col">Distrito</th>
+                <th scope="col">Provincia</th>
+                <th scope="col">Departamento</th>
+                <th scope="col">Actualizar</th>
+                <th scope="col">Eliminar</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="distrito : ${distrito}">
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
+            <tr th:each="distrito : ${listaDistritos}">
+                <td th:text="${distrito.distritoid}"></td>
+                <td th:text="${distrito.nomdist}"></td>
+                <td th:text="${distrito.provincia.nomprov}"></td>
+                <td th:text="${distrito.provincia.departamento.nomdepa}"></td>
                 <td>
-                    <button type="button" class="btn btn-primary btnactualizar"
-                            th:data-distritoid="${}"
-                            th:data-distritonom="${}"
-                            th:data-provinciaid="${}">actualizar</button>
+                    <button type="button" class="btn btn-primary btneditar"
+                            th:data-distid="${distrito.distritoid}"
+                            th:data-nomdist="${distrito.nomdist}"
+                            th:data-provid="${distrito.provincia.provinciaid}"
+                            th:data-depaid="${distrito.provincia.departamento.departamentoid}">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btneliminar" th:data-distid="${distrito.distritoid}">
+
+                        <i class="bi bi-trash"></i>
+                    </button>
                 </td>
             </tr>
             </tbody>
@@ -50,26 +65,28 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="hdddistritoid" value="0">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtiddistrito"
-                           placeholder="name@example.com">
-                    <label for="txtiddistrito">Ingrese el Id del distrito</label>
+                    <input type="text" class="form-control" id="txtnomdist"
+                           placeholder="Nombre" autocomplete="off">
+                    <label for="txtnomdist">Nombre</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtnomdistrito"
-                           placeholder="name@example.com">
-                    <label for="txtnomdistrito">Ingrese el nombre del distrito</label>
+                    <select id="cbodepartamento" class="form-select" aria-label="Floating label select example">
+                        <option value="-1">Seleccionar opción</option>
+                    </select>
+                    <label for="cbodepartamento">Departamento</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <select id="cboprovincia" class="form-control"></select>
-                    <label for="cboprovincia">Seleccione Provincia</label>
+                    <select id="cboprovincia" class="form-select" aria-label="Floating label select example">
+                        <option value="-1">Seleccionar opción</option>
+                    </select>
+                    <label for="cboprovincia">Provincia</label>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="btncerrar" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="btnguardar">Guardar</button>
+                <button type="button" class="btn btn-success" id="btnguardar">Guardar</button>
             </div>
-            <input type="hidden" id="hdddistrito" value="0">
         </div>
     </div>
 </div>
