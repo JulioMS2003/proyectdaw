@@ -17,4 +17,9 @@ public class EmpleadoService implements IEmpleadoService{
     public List<Empleado> listarEmpleado() {
         return empleadoRepository.findAll();
     }
+
+    @Override
+    public List<Empleado> listarEmpleadosOrdenadosPorApellido() {
+        return empleadoRepository.findAllByOrderByApeemp();
+    }
 }

@@ -1,63 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="layout::head">
+<head th:replace="~{layout::head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<nav th:replace="layout::menu"></nav>
-
+<nav th:replace="~{layout::menu}"></nav>
 <div class="card">
     <div class="card-header text-bg-danger">
-        Mantenimiento de empleado:
+        Mantenimiento de Empleados:
     </div>
     <div class="card-body">
-        <button id="btnagregar" type="button" class="btn btn-primary">Agregar</button>
+        <button id="btnnuevo" style="width: 100px" type="button" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nuevo Empleado
+        </button>
         <hr />
-        <div id="divmensaje"></div>
-        <table id="tblempleado" class="table">
+        <table id="tblempleado" class="table table-bordered table-striped">
             <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Fecha de Nacimiento</th>
-                <th scope="col">Email</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Foto</th>
-                <th scope="col">Direccion</th>
-                <th scope="col">Distrito</th>
-                <th>Actualizar</th>
-            </tr>
+                <tr>
+                    <th scope="col" class="text-center">Empleado</th>
+                    <th scope="col" class="text-center">Email</th>
+                    <th scope="col" class="text-center">Teléfono</th>
+                    <th scope="col" class="text-center">Estado</th>
+                    <th scope="col" class="text-center">Detalles</th>
+                    <th scope="col" class="text-center">Actualizar</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="empleado : ${empleado}"> <!-- Cambiar aca -->
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td>
-                    <button type="button" class="btn btn-primary btnactualizar"
-                            th:data-empleadoid="${}"
-                            th:data-empleadonom="${}"
-                            th:data-empleadoape-="${}"
-                            th:data-estado="${}"
-                            th:data-empleadonac="${}"
-                            th:data-empleadoemail="${}"
-                            th:data-empleadofono="${}"
-                            th:data-empleadofoto="${}"
-                            th:data-empleadodirec="${}"
-                            th:data-distritoid="${}">actualizar</button>
-                </td>
-            </tr>
-            </tbody> <!-- Cambiar hasta aca -->
+                <tr th:each="empleado : ${listaEmpleados}">
+                    <td class="text-center" th:text="${empleado.apeemp + ' ' + empleado.nomemp}"></td>
+                    <td class="text-center" th:text="${empleado.email}"></td>
+                    <td class="text-center" th:text="${empleado.telefono}"></td>
+                    <td class="text-center" th:text="${empleado.estado == true ? 'Activo' : 'Inactivo'}"></td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-success btndetalles" th:data-empid="${empleado.empleadoid}">
+                            <i class="bi bi-file-earmark-richtext"></i>
+                        </button>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-primary btneditar" th:data-empid="${empleado.empleadoid}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>

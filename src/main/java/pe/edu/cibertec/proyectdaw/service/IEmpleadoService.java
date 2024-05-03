@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IEmpleadoService {
     List<Empleado> listarEmpleado();
+    List<Empleado> listarEmpleadosOrdenadosPorApellido();
 }

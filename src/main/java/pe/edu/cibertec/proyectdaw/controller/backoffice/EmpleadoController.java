@@ -16,8 +16,8 @@ public class EmpleadoController {
 
     @GetMapping("")
     public String viewEmpleado(Model model){
-        model.addAttribute("empleado",
-                iEmpleadoService.listarEmpleado());
+        model.addAttribute("listaEmpleados",
+                iEmpleadoService.listarEmpleadosOrdenadosPorApellido());
         return "backoffice/empleado/viewempleado";
     }
 
