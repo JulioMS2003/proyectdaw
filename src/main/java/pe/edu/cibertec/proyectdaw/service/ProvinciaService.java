@@ -43,6 +43,10 @@ public class ProvinciaService implements IProvinciaService {
     public List<Provincia> listarTodasOrdenadasPorNombresAsc() {
         return provinciaRepository.findAllByOrderByNomprov();
     }
+    @Override
+    public List<Provincia> listarTodasPorDepaIdOrdenadasPorNombreAsc(Integer departamentoid){
+        return provinciaRepository.findAllByDepaIdOrderByNomprov(departamentoid);
+    }
 
     @Override
     public void eliminarProvincia(Integer provinciaid) {

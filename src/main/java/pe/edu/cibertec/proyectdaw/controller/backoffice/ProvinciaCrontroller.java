@@ -31,6 +31,14 @@ public class ProvinciaCrontroller {
     public List<Provincia> listarProvincias(){
         return iProvinciaService.listarTodasOrdenadasPorNombresAsc();
     }
+
+    @GetMapping("/lista/{depaid}")
+    @ResponseBody
+    public List<Provincia> listarProvinciasPorDepartamento(@PathVariable("depaid") Integer departamentoid){
+        return  iProvinciaService.listarTodasPorDepaIdOrdenadasPorNombreAsc(departamentoid);
+    }
+
+
     @RequestMapping(value="/guardar",method = {RequestMethod.POST, RequestMethod.PUT})
     @ResponseBody
     public ResultadoResponse guardarProvincia(@RequestBody ProvinciaRequest provinciaRequest){

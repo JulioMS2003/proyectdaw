@@ -10,5 +10,6 @@ public interface IProvinciaService {
 
     List<Provincia> listarProvincia();
     List<Provincia> listarTodasOrdenadasPorNombresAsc();
+    List<Provincia> listarTodasPorDepaIdOrdenadasPorNombreAsc(Integer departamentoid);
     void eliminarProvincia(Integer provinciaid);
 }
