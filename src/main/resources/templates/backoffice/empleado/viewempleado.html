@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+<th:block th:replace="~{layout::sweetalert2}"></th:block>
+<script th:src="@{/js/web/backoffice/empleado/viewempleado.js}" type="text/javascript"></script>
 <nav th:replace="~{layout::menu}"></nav>
 <div class="card">
     <div class="card-header text-bg-danger">
@@ -48,70 +50,85 @@
     </div>
 </div>
 
-<!-- Modal registro y actualizacion de empleado-->
-<div class="modal fade" id="modalempleado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal registro, lectura y actualizacion de empleado-->
+<div class="modal fade" id="modalempleado" tabindex="-1" aria-labelledby="empleadoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Empleado</h1>
+                <h1 class="modal-title fs-5" id="empleadoModalLabel"></h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="hddempleadoid" value="0">
+                <input type="hidden" id="hddfoto" value="">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtidempleado"
-                           placeholder="name@example.com">
-                    <label for="txtidempleado">Ingrese el Id del empleado</label>
+                    <input type="text" class="form-control" id="txtnomemp"
+                           placeholder="Nombres" autocomplete="off">
+                    <label for="txtnomemp">Nombres</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtnomempleado"
-                           placeholder="name@example.com">
-                    <label for="txtnomempleado">Ingrese nombre del empleado</label>
+                    <input type="text" class="form-control" id="txtapeemp"
+                           placeholder="Apellidos" autocomplete="off">
+                    <label for="txtapeemp">Apellidos</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtapeempleado"
-                           placeholder="name@example.com">
-                    <label for="txtapeempleado">Ingrese apellido del empleado</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="txtfechanacimiento"
-                           placeholder="name@example.com">
-                    <label for="txtfechanacimiento">Ingrese fecha del empleado</label>
+                    <input type="date" class="form-control" id="txtfecnac"
+                           placeholder="Fecha de Nacimiento">
+                    <label for="txtfecnac">Fecha de Nacimiento</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="txtemail"
-                           placeholder="name@example.com">
-                    <label for="txtemail">Ingrese email del empleado</label>
+                           placeholder="Email" autocomplete="off">
+                    <label for="txtemail">Email</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="number" class="form-control" id="txttelefono"
-                           placeholder="name@example.com">
-                    <label for="txttelefono">Ingrese telefono del empleado</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtfoto"
-                           placeholder="name@example.com">
-                    <label for="txtfoto">Ingrese foto del empleado</label>
+                           placeholder="Teléfono" autocomplete="off">
+                    <label for="txttelefono">Teléfono</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="txtdireccion"
-                           placeholder="name@example.com">
-                    <label for="txtdireccion">Ingrese direccion del empleado</label>
+                           placeholder="Dirección" autocomplete="off">
+                    <label for="txtdireccion">Dirección</label>
+                </div>
+                <div class="form-floating mb-3" id="divfoto">
+                    <input type="file" class="form-control" id="txtfoto"
+                           placeholder="Foto">
+                    <label for="txtfoto">Foto</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtdistritoid"
-                           placeholder="name@example.com">
-                    <label for="txtdistritoid">Ingrese distrito del empleado</label>
+                    <select id="cbodepartamento" class="form-select" aria-label="Floating label select example">
+                        <option value="-1">Seleccionar opción</option>
+                    </select>
+                    <label for="cbodepartamento">Departamento</label>
                 </div>
-                <div class="form-check form-switch" id="switchempleado">
-                    <input class="form-check-input" type="checkbox" role="switch" id="cboestado">
-                    <label class="form-check-label" for="cboestado">Activo</label>
+                <div class="form-floating mb-3">
+                    <select id="cboprovincia" class="form-select" aria-label="Floating label select example">
+                        <option value="-1">Seleccionar opción</option>
+                    </select>
+                    <label for="cboprovincia">Provincia</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <select id="cbodistrito" class="form-select" aria-label="Floating label select example">
+                        <option value="-1">Seleccionar opción</option>
+                    </select>
+                    <label for="cbodistrito">Distrito</label>
+                </div>
+                <div class="form-check form-switch" id="divestado">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchestado">
+                    <label class="form-check-label" for="switchestado">Activo</label>
+                </div>
+                <div id="alertactivo" class="text-center alert alert-primary" role="alert">
+                    Usuario Activo
+                </div>
+                <div id="alertinactivo" class="text-center alert alert-secondary" role="alert">
+                    <Usuario Inactivo
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" id="btncerrar" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" id="btnguardar">Guardar</button>
             </div>
-            <input type="hidden" id="hddempleado" value="0">
         </div>
     </div>
 </div>
