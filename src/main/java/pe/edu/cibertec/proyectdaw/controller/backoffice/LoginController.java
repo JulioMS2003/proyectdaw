@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pe.edu.cibertec.proyectdaw.model.dto.security.UsuarioSecurity;
 import pe.edu.cibertec.proyectdaw.service.IUsuarioService;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping("/auth")
 @AllArgsConstructor
@@ -31,6 +33,7 @@ public class LoginController {
         UsuarioSecurity usuario = (UsuarioSecurity) userDetails;
         session.setAttribute("nombres", usuario.getNombres() + " " + usuario.getApellidos());
         session.setAttribute("username", usuario.getUsername());
+        iUsuarioService.actualizarUltimoLogin(new Date(), usuario.getUsername());
         return "redirect:/auth/dashboard";
     }
 

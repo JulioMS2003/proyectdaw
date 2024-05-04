@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pe.edu.cibertec.proyectdaw.model.bd.Usuario;
 import pe.edu.cibertec.proyectdaw.repository.UsuarioRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,5 +49,10 @@ public class UsuarioService implements IUsuarioService{
     public void actualizarPassword(String nuevaClave, String username) {
         String encriptado = bCryptPasswordEncoder.encode(nuevaClave);
         usuarioRepository.actualizarPassword(encriptado, username);
+    }
+
+    @Override
+    public void actualizarUltimoLogin(Date ultimologin, String username) {
+        usuarioRepository.actualizarUltimoLogin(ultimologin, username);
     }
 }

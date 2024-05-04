@@ -2,6 +2,7 @@ package pe.edu.cibertec.proyectdaw.service;
 
 import pe.edu.cibertec.proyectdaw.model.bd.Usuario;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IUsuarioService {
@@ -12,4 +13,5 @@ public interface IUsuarioService {
     Usuario obtenerPorUsername(String username);
     void registrarUsuario(Usuario usuario);
     void actualizarPassword(String nuevaClave, String username);
+    void actualizarUltimoLogin(Date ultimologin, String username);
 }
