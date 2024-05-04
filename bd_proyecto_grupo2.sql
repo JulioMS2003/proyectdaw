@@ -7,15 +7,16 @@ rolid Int Primary Key Auto_Increment,
 nomrol Varchar(30) Not Null);
 
 Create Table Usuario(
-usuarioid Char(7) Primary Key,
-clave Char(60) Not Null,
+usuarioid Int Primary Key Auto_Increment,
+username Varchar(11) Not Null,
+password Char(60) Not Null,
 nomusuario Varchar(50) Not Null,
 apeusuario Varchar(50) Not Null,
-estado Bit Not Null,
+activo Bit Not Null,
 ultimo_login TimeStamp Null);
 
 Create Table Usuario_Rol(
-usuarioid Char(7),
+usuarioid Int,
 rolid Int,
 Foreign Key (usuarioid) References Usuario (usuarioid),
 Foreign Key (rolid) References Rol (rolid));
@@ -80,16 +81,19 @@ Foreign Key (empleadoid) References Empleado (empleadoid));
 
 -- Inserciones
 Insert Into Rol
-Values (null, 'Admin');
+Values (null, 'Administrador');
 
 Insert Into Usuario
-Values ('adad123',
-'$2y$12$xWy7jG32CA4ZsjpfiILujurhpeU987XJzBfmSy2BwFKQZDEUIwuk6', -- Contraseña: 123
-'Admin', 'Admin',
+Values (Null, 'admin1234',
+'$2a$12$1LfV01H5j8HnQEIq0EXkjeP5ktdkbwOt7od2Kb5CHSjUroolKKxca',
+'Penélope Pura', 'Nelson Taylor',
 true, null);
+-- Credenciales:
+-- username: admin1234
+-- password: admin1234
 
 Insert Into Usuario_Rol
-Values ('adad123', 1);
+Values (1, 1);
 
 Insert Into Departamento
 Values (Null, 'Amazonas'), (Null, 'Ancash'), (Null, 'Apurímac'),

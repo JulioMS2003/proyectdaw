@@ -22,7 +22,7 @@ public class DetalleUsuarioService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = iUsuarioService.obtenerPorId(username);
+        Usuario usuario = iUsuarioService.obtenerPorUsername(username);
         return autenticacionUsuario(usuario, obtenerListaRolesUsuario(usuario.getRoles()));
     }
     private List<GrantedAuthority> obtenerListaRolesUsuario(Set<Rol> listRoles){
@@ -34,13 +34,14 @@ public class DetalleUsuarioService implements UserDetailsService {
     }
     private UserDetails autenticacionUsuario(Usuario usuario, List<GrantedAuthority> authorityList){
         UsuarioSecurity usuarioSecurity = new UsuarioSecurity(
-                usuario.getUsuarioid(),
-                usuario.getClave(), usuario.getEstado(),
+                usuario.getUsername(),
+                usuario.getPassword(), usuario.getActivo(),
                 true, true, true, authorityList
         );
+        usuarioSecurity.setUsername(usuario.getUsername());
+        usuarioSecurity.setPassword(usuario.getPassword());
         usuarioSecurity.setNombres(usuario.getNomusuario());
         usuarioSecurity.setApellidos(usuario.getApeusuario());
-        usuarioSecurity.setUsuarioid(usuario.getUsuarioid());
         return usuarioSecurity;
     }
 }

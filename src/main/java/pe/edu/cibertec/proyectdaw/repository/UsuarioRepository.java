@@ -9,11 +9,12 @@ import org.springframework.stereotype.Repository;
 import pe.edu.cibertec.proyectdaw.model.bd.Usuario;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, String> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
+    Usuario findByUsername(String username);
     @Transactional
     @Modifying
-    @Query(value = "Update Usuario Set clave=:clave Where usuarioid=:usuarioid",
+    @Query(value = "Update Usuario Set password=:password Where username=:username",
             nativeQuery = true)
-    void actualizarPassword(@Param("clave") String clave, @Param("usuarioid") String usuarioid);
+    void actualizarPassword(@Param("password") String password, @Param("username") String username);
 }

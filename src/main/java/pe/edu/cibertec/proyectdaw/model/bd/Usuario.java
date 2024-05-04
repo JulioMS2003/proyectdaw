@@ -13,15 +13,18 @@ import java.util.Timer;
 public class Usuario {
 
     @Id
-    private String usuarioid;
-    @Column(name="clave")
-    private String clave;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer usuarioid;
+    @Column(name = "username")
+    private String username;
+    @Column(name="password")
+    private String password;
     @Column(name="nomusuario")
     private String nomusuario;
     @Column(name="apeusuario")
     private String apeusuario;
-    @Column(name="estado")
-    private Boolean estado;
+    @Column(name="activo")
+    private Boolean activo;
     @Column(name="ultimo_login")
     private Timestamp ultimologin;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

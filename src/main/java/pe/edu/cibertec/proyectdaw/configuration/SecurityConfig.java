@@ -31,8 +31,8 @@ public class SecurityConfig {
             login.loginPage("/auth/login");
             login.loginProcessingUrl("/auth/login");
             login.defaultSuccessUrl("/auth/login-success", true);
-            login.usernameParameter("usuarioid");
-            login.passwordParameter("clave");
+            login.usernameParameter("username");
+            login.passwordParameter("password");
         });
         http.logout(logout -> {
             logout.logoutSuccessUrl("/auth/login?logout")

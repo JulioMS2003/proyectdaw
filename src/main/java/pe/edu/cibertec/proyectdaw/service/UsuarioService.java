@@ -21,7 +21,7 @@ public class UsuarioService implements IUsuarioService{
         return usuarioRepository.findAll();    }
 
     @Override
-    public Usuario obtenerPorId(String usuarioid) {
+    public Usuario obtenerPorId(Integer usuarioid) {
         Usuario usuario = null;
         Optional<Usuario> optional = usuarioRepository.findById(usuarioid);
         if(optional.isPresent())
@@ -30,12 +30,18 @@ public class UsuarioService implements IUsuarioService{
     }
 
     @Override
+    public Usuario obtenerPorUsername(String username) {
+        return usuarioRepository.findByUsername(username);
+    }
+
+    @Override
     public void registrarUsuario(Usuario usuario) {
         usuarioRepository.save(usuario);
     }
 
     @Override
-    public void actualizarPassword(String nuevaClave, String usuarioid) {
-        usuarioRepository.actualizarPassword(bCryptPasswordEncoder.encode(nuevaClave), usuarioid);
+    public void actualizarPassword(String nuevaClave, String username) {
+        String encriptado = bCryptPasswordEncoder.encode(nuevaClave);
+        usuarioRepository.actualizarPassword(encriptado, username);
     }
 }

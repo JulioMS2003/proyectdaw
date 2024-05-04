@@ -7,7 +7,8 @@ import java.util.List;
 public interface IUsuarioService {
 
     List<Usuario> listarUsuario();
-    Usuario obtenerPorId(String usuarioid);
+    Usuario obtenerPorId(Integer usuarioid);
+    Usuario obtenerPorUsername(String username);
     void registrarUsuario(Usuario usuario);
-    void actualizarPassword(String nuevaClave, String usuarioid);
+    void actualizarPassword(String nuevaClave, String username);
 }

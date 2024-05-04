@@ -12,12 +12,12 @@
         <hr />
         <form th:action="@{/auth/login}" method="post">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="usuarioid" name="usuarioid" placeholder="Ingresar usuario" autocomplete="off">
-                <label for="usuarioid">Usuario</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" autocomplete="off">
+                <label for="username">Username</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="clave" name="clave" placeholder="Clave" autocomplete="off">
-                <label for="clave">Clave</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off">
+                <label for="password">Pasword</label>
             </div>
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Ingresar</button>

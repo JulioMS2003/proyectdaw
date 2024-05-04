@@ -10,10 +10,12 @@ import java.util.Collection;
 @Getter
 @Setter
 public class UsuarioSecurity extends User {
-    private String usuarioid;
+    private String username;
+    private String password;
     private String nombres;
     private String apellidos;
     public UsuarioSecurity(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
 }
+
