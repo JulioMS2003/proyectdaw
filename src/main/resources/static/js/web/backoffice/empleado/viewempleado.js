@@ -8,6 +8,7 @@ $(document).on("click", "#btnnuevo", function(){
     $("#txtemail").val("");
     $("#txttelefono").val("");
     $("#txtdireccion").val("");
+    $("#switchestado").prop("checked", true);
     deshabilitarCampos(false, true);
     mostrarEstadoEmpleado(false, false);
     cargarCboDepartamento(0);
@@ -20,13 +21,13 @@ $(document).on("click", "#btnnuevo", function(){
 
 $(document).on("click", ".btndetalles", function(){
     $("#empleadoModalLabel").html("Detalles Empleado");
-    cargarModalEmpleado($(this).attr("data-empid"), true, true, true);
+    cargarModalEmpleado($(this).attr("data-empid"), true, true, true, true);
     $("#modalempleado").modal("show");
 })
 
 $(document).on("click", ".btneditar", function(){
     $("#empleadoModalLabel").html("Editar Empleado");
-    cargarModalEmpleado($(this).attr("data-empid"), false, false, false);
+    cargarModalEmpleado($(this).attr("data-empid"), false, false, false, false);
     $("#modalempleado").modal("show");
 })
 
@@ -54,7 +55,34 @@ $(document).on("change", "#cboprovincia", function(){
     }
 })
 
-function cargarModalEmpleado(empleadoid, deshabilitar, esconderSwitch, mostrarEstado) {
+$(document).on("click", "#btnguardar", function(){
+    $.ajax({
+        type: $("#hddempleadoid") == 0 ? "POST" : "PUT",
+        url: "/empleado/guardar",
+        contentType: "application/json",
+        data: JSON.stringify({
+            empleadoid: $("#hddempleadoid").val(),
+            nomemp: $("#txtnomemp").val(),
+            apeemp: $("#txtapeemp").val(),
+            estado: $("#switchestado").prop("checked"),
+            fecnac: $("#txtfecnac").val(),
+            email: $("#txtemail").val(),
+            telefono: $("#txttelefono").val(),
+            foto: $("#hddfoto").val(),
+            direccion: $("#txtdireccion").val(),
+            distritoid: $("#cbodistrito").val()
+        }),
+        success: function(resultado) {
+            alertaDeRespuesta("", resultado.mensaje, resultado.respuesta ? "success" : "error");
+            if(resultado.respuesta) {
+                listarEmpleados();
+                $("#modalempleado").modal("hide");
+            }
+        }
+    })
+})
+
+function cargarModalEmpleado(empleadoid, deshabilitar, esconderSwitch, mostrarEstado, soloLectura) {
     $.ajax({
         type: "GET",
         url: "/empleado/buscar/" + empleadoid,
@@ -67,7 +95,8 @@ function cargarModalEmpleado(empleadoid, deshabilitar, esconderSwitch, mostrarEs
             $("#txtemail").val(resultado.email);
             $("#txttelefono").val(resultado.telefono);
             $("#hddfoto").val(resultado.foto);
-            $("#txtdireccion").val(resultado.direccion);
+            $("#txtdireccion").val(resultado.direccion != null ? resultado.direccion :
+                                   soloLectura == true ? "No registrado" : "");
             $("#switchestado").prop("checked", resultado.estado == true ? true : false);
             deshabilitarCampos(deshabilitar, esconderSwitch);
             mostrarEstadoEmpleado(mostrarEstado, resultado.estado);
@@ -155,6 +184,37 @@ function cargarCboDistrito(distritoid, provinciaid){
     })
 }
 
+function listarEmpleados(){
+    $.ajax({
+        type: "GET",
+        url: "/empleado/lista",
+        dataType: "json",
+        success: function(resultado) {
+            $("#tblempleado > tbody").html("");
+            $.each(resultado, function(index, value){
+                $("#tblempleado > tbody").append(
+                    `<tr>` +
+                        `<td class="text-center">${value.apeemp + ' ' + value.nomemp}</td>` +
+                        `<td class="text-center">${value.email}</td>` +
+                        `<td class="text-center">${value.telefono}</td>` +
+                        `<td class="text-center">${value.estado == true ? "Activo" : "Inactivo"}</td>` +
+                        `<td class="text-center">` +
+                            `<button type="button" class="btn btn-success btndetalles" data-empid="${value.empleadoid}">` +
+                                `<i class="bi bi-file-earmark-richtext"></i>` +
+                            `</button>` +
+                        `</td>` +
+                        `<td class="text-center">` +
+                            `<button type="button" class="btn btn-primary btneditar" data-empid="${value.empleadoid}">` +
+                                `<i class="bi bi-pencil"></i>` +
+                            `</button>` +
+                        `</td>` +
+                    `</tr>`
+                );
+            });
+        }
+    })
+}
+
 function resetearCbo(cbo){
     $(cbo).empty();
     $(cbo).append(
@@ -173,4 +233,14 @@ function cambiarValCbo(cbo, val){
         $(cbo).val(val);
     else
         $(cbo).val(-1);
+}
+
+function alertaDeRespuesta(_title, _text, _icon) {
+    Swal.fire({
+        title: _title,
+        text: _text,
+        icon: _icon,
+        timer: 1500,
+        showConfirmButton: false
+    })
 }
