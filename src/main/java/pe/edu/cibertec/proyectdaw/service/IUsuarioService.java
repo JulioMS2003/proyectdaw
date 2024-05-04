@@ -7,6 +7,7 @@ import java.util.List;
 public interface IUsuarioService {
 
     List<Usuario> listarUsuario();
+    List<Usuario> listarUsuariosOrdenadosPorApellidos();
     Usuario obtenerPorId(Integer usuarioid);
     Usuario obtenerPorUsername(String username);
     void registrarUsuario(Usuario usuario);

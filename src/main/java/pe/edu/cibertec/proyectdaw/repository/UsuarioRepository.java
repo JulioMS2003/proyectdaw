@@ -8,13 +8,21 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pe.edu.cibertec.proyectdaw.model.bd.Usuario;
 
+import java.util.Date;
+import java.util.List;
+
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Usuario findByUsername(String username);
+    List<Usuario> findAllByOrderByApeusuario();
     @Transactional
     @Modifying
     @Query(value = "Update Usuario Set password=:password Where username=:username",
             nativeQuery = true)
     void actualizarPassword(@Param("password") String password, @Param("username") String username);
+    @Transactional
+    @Modifying
+    @Query(value = "Update Usuario Set ultimologin=:ultimologin Where username=:username")
+    void actualizarUltimoLogin(@Param("ultimologin") Date ultimologin, @Param("username") String username);
 }

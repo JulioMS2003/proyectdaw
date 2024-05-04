@@ -3,9 +3,8 @@ package pe.edu.cibertec.proyectdaw.model.bd;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
-import java.util.Timer;
 
 @Data
 @Entity
@@ -25,8 +24,9 @@ public class Usuario {
     private String apeusuario;
     @Column(name="activo")
     private Boolean activo;
-    @Column(name="ultimo_login")
-    private Timestamp ultimologin;
+    @Column(name="ultimologin")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date ultimologin;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "Usuario_Rol",
     joinColumns = @JoinColumn(name = "usuarioid"),

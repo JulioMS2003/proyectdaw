@@ -8,12 +8,12 @@ nomrol Varchar(30) Not Null);
 
 Create Table Usuario(
 usuarioid Int Primary Key Auto_Increment,
-username Varchar(11) Not Null,
+username Varchar(11) Not Null Unique,
 password Char(60) Not Null,
 nomusuario Varchar(50) Not Null,
 apeusuario Varchar(50) Not Null,
 activo Bit Not Null,
-ultimo_login TimeStamp Null);
+ultimologin TimeStamp Null);
 
 Create Table Usuario_Rol(
 usuarioid Int,

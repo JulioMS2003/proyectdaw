@@ -21,6 +21,11 @@ public class UsuarioService implements IUsuarioService{
         return usuarioRepository.findAll();    }
 
     @Override
+    public List<Usuario> listarUsuariosOrdenadosPorApellidos() {
+        return usuarioRepository.findAllByOrderByApeusuario();
+    }
+
+    @Override
     public Usuario obtenerPorId(Integer usuarioid) {
         Usuario usuario = null;
         Optional<Usuario> optional = usuarioRepository.findById(usuarioid);
