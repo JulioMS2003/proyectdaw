@@ -28,6 +28,12 @@ public class DistritoController {
     @ResponseBody
     public List<Distrito> listarDistritos(){ return iDistritoService.listarTodoOrdenadosPorNombreAsc();}
 
+    @GetMapping("/lista/{provinciaid}")
+    @ResponseBody
+    public List<Distrito> listarDistritosPorProvincia(@PathVariable("provinciaid") Integer provinciaid){
+        return iDistritoService.listarTodosPorProvIdOrdenadosPorNombreAsc(provinciaid);
+    }
+
     @RequestMapping(value="/guardar", method = {RequestMethod.POST, RequestMethod.PUT})
     @ResponseBody
     public ResultadoResponse guardarDistrito(@RequestBody DistritoRequest distritoRequest){

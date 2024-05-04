@@ -10,6 +10,11 @@ $(document).on("click", "#btnnuevo", function(){
     $("#txtdireccion").val("");
     deshabilitarCampos(false, true);
     mostrarEstadoEmpleado(false, false);
+    cargarCboDepartamento(0);
+    resetearCbo("#cboprovincia");
+    resetearCbo("#cbodistrito");
+    $("#cboprovincia").prop("disabled", true);
+    $("#cbodistrito").prop("disabled", true);
     $("#modalempleado").modal("show");
 })
 
@@ -23,6 +28,30 @@ $(document).on("click", ".btneditar", function(){
     $("#empleadoModalLabel").html("Editar Empleado");
     cargarModalEmpleado($(this).attr("data-empid"), false, false, false);
     $("#modalempleado").modal("show");
+})
+
+$(document).on("change", "#cbodepartamento", function(){
+    if($("#cbodepartamento").val() == -1) {
+        resetearCbo("#cboprovincia");
+        resetearCbo("#cbodistrito");
+        $("#cboprovincia").prop("disabled", true);
+        $("#cbodistrito").prop("disabled", true);
+    } else {
+        cargarCboProvincia(0, $("#cbodepartamento").val());
+        resetearCbo("#cbodistrito");
+        $("#cboprovincia").prop("disabled", false);
+        $("#cbodistrito").prop("disabled", true);
+    }
+})
+
+$(document).on("change", "#cboprovincia", function(){
+    if($("#cboprovincia").val() == -1) {
+        resetearCbo("#cbodistrito");
+        $("#cbodistrito").prop("disabled", true);
+    } else {
+        cargarCboDistrito(0, $("#cboprovincia").val());
+        $("#cbodistrito").prop("disabled", false);
+    }
 })
 
 function cargarModalEmpleado(empleadoid, deshabilitar, esconderSwitch, mostrarEstado) {
@@ -42,6 +71,10 @@ function cargarModalEmpleado(empleadoid, deshabilitar, esconderSwitch, mostrarEs
             $("#switchestado").prop("checked", resultado.estado == true ? true : false);
             deshabilitarCampos(deshabilitar, esconderSwitch);
             mostrarEstadoEmpleado(mostrarEstado, resultado.estado);
+            cargarCboDepartamento(resultado.distrito.provincia.departamento.departamentoid);
+            cargarCboProvincia(resultado.distrito.provincia.provinciaid,
+                               resultado.distrito.provincia.departamento.departamentoid);
+            cargarCboDistrito(resultado.distrito.distritoid, resultado.distrito.provincia.provinciaid);
         }
     })
 }
@@ -75,4 +108,69 @@ function mostrarEstadoEmpleado(mostrar, estado){
         $("#alertactivo").hide();
         $("#alertinactivo").hide();
     }
+}
+
+function cargarCboDepartamento(departamentoid){
+    $.ajax({
+        type: "GET",
+        url: "/departamento/lista",
+        data: "json",
+        success: function(resultado) {
+            resetearCbo("#cbodepartamento");
+            $.each(resultado, function(index, value){
+                llenarCbo("#cbodepartamento", value.departamentoid, value.nomdepa);
+            });
+            cambiarValCbo("#cbodepartamento", departamentoid);
+        }
+    })
+}
+
+function cargarCboProvincia(provinciaid, departamentoid){
+    $.ajax({
+        type: "GET",
+        url: "/provincia/lista/" + departamentoid,
+        data: "json",
+        success: function(resultado) {
+            resetearCbo("#cboprovincia");
+            $.each(resultado, function(index, value){
+                llenarCbo("#cboprovincia", value.provinciaid, value.nomprov);
+            });
+            cambiarValCbo("#cboprovincia", provinciaid);
+        }
+    })
+}
+
+function cargarCboDistrito(distritoid, provinciaid){
+    $.ajax({
+        type: "GET",
+        url: "/distrito/lista/" + provinciaid,
+        data: "json",
+        success: function(resultado) {
+            resetearCbo("#cbodistrito");
+            $.each(resultado, function(index, value){
+                llenarCbo("#cbodistrito", value.distritoid, value.nomdist);
+            });
+            cambiarValCbo("#cbodistrito", distritoid);
+        }
+    })
+}
+
+function resetearCbo(cbo){
+    $(cbo).empty();
+    $(cbo).append(
+        `<option value="-1">Seleccionar opción</option>`
+    );
+}
+
+function llenarCbo(cbo, value, name){
+    $(cbo).append(
+        `<option value="${value}">${name}</option>`
+    );
+}
+
+function cambiarValCbo(cbo, val){
+    if(val > 0)
+        $(cbo).val(val);
+    else
+        $(cbo).val(-1);
 }

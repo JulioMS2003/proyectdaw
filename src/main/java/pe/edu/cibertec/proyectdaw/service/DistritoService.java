@@ -44,6 +44,12 @@ public class DistritoService implements IDistritoService{
     public  List<Distrito> listarTodoOrdenadosPorNombreAsc(){
         return  distritoRepository.findAllByOrderByNomdist();
     }
+
+    @Override
+    public List<Distrito> listarTodosPorProvIdOrdenadosPorNombreAsc(Integer provinciaid) {
+        return distritoRepository.findAllByProvIdOrderByNomdist(provinciaid);
+    }
+
     @Override
     public void eliminarDistrito(Integer distrintoid){
         distritoRepository.deleteById(distrintoid);
