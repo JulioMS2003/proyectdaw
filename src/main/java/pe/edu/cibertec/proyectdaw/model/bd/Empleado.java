@@ -15,13 +15,14 @@ public class Empleado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer empleadoid;
     @Column(name="nomemp")
-    private Integer nomemp;
+    private String nomemp;
     @Column(name="apeemp")
-    private Integer apeemp;
+    private String apeemp;
     @Column(name="estado")
     private Boolean estado;
-    @Column(name="fec_nac")
-    private Date fecNac;
+    @Column(name="fecnac")
+    @Temporal(TemporalType.DATE)
+    private Date fecnac;
     @Column(name="email")
     private String email;
     @Column(name="telefono")

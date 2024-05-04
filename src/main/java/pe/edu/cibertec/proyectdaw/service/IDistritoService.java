@@ -9,6 +9,7 @@ public interface IDistritoService {
     void guardarDistrito(DistritoRequest distritoRequest) throws Exception;
     List<Distrito> listarDistrito();
     List<Distrito> listarTodoOrdenadosPorNombreAsc();
+    List<Distrito> listarTodosPorProvIdOrdenadosPorNombreAsc(Integer provinciaid);
     void eliminarDistrito(Integer distritoid);
 
 }

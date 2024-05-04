@@ -1,131 +1,134 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="layout::head">
+<head th:replace="~{layout::head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<nav th:replace="layout::menu"></nav>
-
+<th:block th:replace="~{layout::sweetalert2}"></th:block>
+<script th:src="@{/js/web/backoffice/empleado/viewempleado.js}" type="text/javascript"></script>
+<nav th:replace="~{layout::menu}"></nav>
 <div class="card">
     <div class="card-header text-bg-danger">
-        Mantenimiento de empleado:
+        Mantenimiento de Empleados:
     </div>
     <div class="card-body">
-        <button id="btnagregar" type="button" class="btn btn-primary">Agregar</button>
+        <button id="btnnuevo" style="width: 100px" type="button" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nuevo Empleado
+        </button>
         <hr />
-        <div id="divmensaje"></div>
-        <table id="tblempleado" class="table">
+        <table id="tblempleado" class="table table-bordered table-striped">
             <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Fecha de Nacimiento</th>
-                <th scope="col">Email</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Foto</th>
-                <th scope="col">Direccion</th>
-                <th scope="col">Distrito</th>
-                <th>Actualizar</th>
-            </tr>
+                <tr>
+                    <th scope="col" class="text-center">Empleado</th>
+                    <th scope="col" class="text-center">Email</th>
+                    <th scope="col" class="text-center">Teléfono</th>
+                    <th scope="col" class="text-center">Estado</th>
+                    <th scope="col" class="text-center">Detalles</th>
+                    <th scope="col" class="text-center">Actualizar</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="empleado : ${empleado}"> <!-- Cambiar aca -->
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td>
-                    <button type="button" class="btn btn-primary btnactualizar"
-                            th:data-empleadoid="${}"
-                            th:data-empleadonom="${}"
-                            th:data-empleadoape-="${}"
-                            th:data-estado="${}"
-                            th:data-empleadonac="${}"
-                            th:data-empleadoemail="${}"
-                            th:data-empleadofono="${}"
-                            th:data-empleadofoto="${}"
-                            th:data-empleadodirec="${}"
-                            th:data-distritoid="${}">actualizar</button>
-                </td>
-            </tr>
-            </tbody> <!-- Cambiar hasta aca -->
+                <tr th:each="empleado : ${listaEmpleados}">
+                    <td class="text-center" th:text="${empleado.apeemp + ' ' + empleado.nomemp}"></td>
+                    <td class="text-center" th:text="${empleado.email}"></td>
+                    <td class="text-center" th:text="${empleado.telefono}"></td>
+                    <td class="text-center" th:text="${empleado.estado == true ? 'Activo' : 'Inactivo'}"></td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-success btndetalles" th:data-empid="${empleado.empleadoid}">
+                            <i class="bi bi-file-earmark-richtext"></i>
+                        </button>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-primary btneditar" th:data-empid="${empleado.empleadoid}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>
 
-<!-- Modal registro y actualizacion de empleado-->
-<div class="modal fade" id="modalempleado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal registro, lectura y actualizacion de empleado-->
+<div class="modal fade" id="modalempleado" tabindex="-1" aria-labelledby="empleadoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Empleado</h1>
+                <h1 class="modal-title fs-5" id="empleadoModalLabel"></h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <input type="hidden" id="hddempleadoid" value="0">
+                <input type="hidden" id="hddfoto" value="">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtidempleado"
-                           placeholder="name@example.com">
-                    <label for="txtidempleado">Ingrese el Id del empleado</label>
+                    <input type="text" class="form-control" id="txtnomemp"
+                           placeholder="Nombres" autocomplete="off">
+                    <label for="txtnomemp">Nombres</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtnomempleado"
-                           placeholder="name@example.com">
-                    <label for="txtnomempleado">Ingrese nombre del empleado</label>
+                    <input type="text" class="form-control" id="txtapeemp"
+                           placeholder="Apellidos" autocomplete="off">
+                    <label for="txtapeemp">Apellidos</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtapeempleado"
-                           placeholder="name@example.com">
-                    <label for="txtapeempleado">Ingrese apellido del empleado</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="txtfechanacimiento"
-                           placeholder="name@example.com">
-                    <label for="txtfechanacimiento">Ingrese fecha del empleado</label>
+                    <input type="date" class="form-control" id="txtfecnac"
+                           placeholder="Fecha de Nacimiento">
+                    <label for="txtfecnac">Fecha de Nacimiento</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="txtemail"
-                           placeholder="name@example.com">
-                    <label for="txtemail">Ingrese email del empleado</label>
+                           placeholder="Email" autocomplete="off">
+                    <label for="txtemail">Email</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="number" class="form-control" id="txttelefono"
-                           placeholder="name@example.com">
-                    <label for="txttelefono">Ingrese telefono del empleado</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtfoto"
-                           placeholder="name@example.com">
-                    <label for="txtfoto">Ingrese foto del empleado</label>
+                           placeholder="Teléfono" autocomplete="off">
+                    <label for="txttelefono">Teléfono</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="txtdireccion"
-                           placeholder="name@example.com">
-                    <label for="txtdireccion">Ingrese direccion del empleado</label>
+                           placeholder="Dirección" autocomplete="off">
+                    <label for="txtdireccion">Dirección</label>
+                </div>
+                <div class="form-floating mb-3" id="divfoto">
+                    <input type="file" class="form-control" id="txtfoto"
+                           placeholder="Foto">
+                    <label for="txtfoto">Foto</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtdistritoid"
-                           placeholder="name@example.com">
-                    <label for="txtdistritoid">Ingrese distrito del empleado</label>
+                    <select id="cbodepartamento" class="form-select" aria-label="Floating label select example">
+                        <option value="-1">Seleccionar opción</option>
+                    </select>
+                    <label for="cbodepartamento">Departamento</label>
                 </div>
-                <div class="form-check form-switch" id="switchempleado">
-                    <input class="form-check-input" type="checkbox" role="switch" id="cboestado">
-                    <label class="form-check-label" for="cboestado">Activo</label>
+                <div class="form-floating mb-3">
+                    <select id="cboprovincia" class="form-select" aria-label="Floating label select example">
+                        <option value="-1">Seleccionar opción</option>
+                    </select>
+                    <label for="cboprovincia">Provincia</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <select id="cbodistrito" class="form-select" aria-label="Floating label select example">
+                        <option value="-1">Seleccionar opción</option>
+                    </select>
+                    <label for="cbodistrito">Distrito</label>
+                </div>
+                <div class="form-check form-switch" id="divestado">
+                    <input class="form-check-input" type="checkbox" role="switch" id="switchestado">
+                    <label class="form-check-label" for="switchestado">Activo</label>
+                </div>
+                <div id="alertactivo" class="text-center alert alert-primary" role="alert">
+                    Usuario Activo
+                </div>
+                <div id="alertinactivo" class="text-center alert alert-secondary" role="alert">
+                    Usuario Inactivo
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" id="btncerrar" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" id="btnguardar">Guardar</button>
             </div>
-            <input type="hidden" id="hddempleado" value="0">
         </div>
     </div>
 </div>

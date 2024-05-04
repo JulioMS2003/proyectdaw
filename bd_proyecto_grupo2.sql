@@ -6,30 +6,19 @@ Create Table Rol(
 rolid Int Primary Key Auto_Increment,
 nomrol Varchar(30) Not Null);
 
-Insert Into Rol
-Values (null, 'Admin');
-
 Create Table Usuario(
-usuarioid Char(7) Primary Key, 
+usuarioid Char(7) Primary Key,
 clave Char(60) Not Null,
 nomusuario Varchar(50) Not Null,
 apeusuario Varchar(50) Not Null,
 estado Bit Not Null,
 ultimo_login TimeStamp Null);
 
-Insert Into Usuario
-Values ('caba123', '$2a$12$zgsaMiI6UJlzBq3xzpaEMe2xNyJh7DR.tbNa8BLIu29n3okq5kJey',
-'Carlos Gabriel', 'Baca Manrique',
-true, null);
-
 Create Table Usuario_Rol(
 usuarioid Char(7),
 rolid Int,
 Foreign Key (usuarioid) References Usuario (usuarioid),
 Foreign Key (rolid) References Rol (rolid));
-
-Insert Into Usuario_Rol
-Values ('caba123', 1);
 
 Create Table Departamento(
 departamentoid Int Primary Key Auto_Increment,
@@ -52,7 +41,7 @@ empleadoid Int Primary Key Auto_Increment,
 nomemp Varchar(50) Not Null,
 apeemp Varchar(50) Not Null,
 estado Bit Not Null,
-fecNac Date Not Null,
+fecnac Date Not Null,
 email Varchar(50) Not Null,
 telefono Char(9) Not Null,
 foto Varchar(100) Null,
@@ -88,3 +77,55 @@ empleadoid Int Not Null,
 Foreign Key (proyectoid) References Proyecto (proyectoid),
 Foreign Key (planoid) References Plano (planoid),
 Foreign Key (empleadoid) References Empleado (empleadoid));
+
+-- Inserciones
+Insert Into Rol
+Values (null, 'Admin');
+
+Insert Into Usuario
+Values ('adad123',
+'$2y$12$xWy7jG32CA4ZsjpfiILujurhpeU987XJzBfmSy2BwFKQZDEUIwuk6', -- Contraseña: 123
+'Admin', 'Admin',
+true, null);
+
+Insert Into Usuario_Rol
+Values ('adad123', 1);
+
+Insert Into Departamento
+Values (Null, 'Amazonas'), (Null, 'Ancash'), (Null, 'Apurímac'),
+       (Null, 'Arequipa'), (Null, 'Ayacucho'), (Null, 'Cajamarca'),
+       (Null, 'Cusco'), (Null, 'Huancavelica'), (Null, 'Huánuco'),
+       (Null, 'Ica'), (Null, 'Junín'), (Null, 'La Libertad'),
+       (Null, 'Lambayeque'), (Null, 'Lima'), (Null, 'Loreto'),
+       (Null, 'Madre de Dios'), (Null, 'Moquegua'), (Null, 'Pasco'),
+       (Null, 'Piura'), (Null, 'Puno'), (Null, 'San Martín'),
+       (Null, 'Tacna'), (Null, 'Tumbes'), (Null, 'Ucayali');
+
+Insert Into Provincia
+Values (Null, 'Bagua', 1),(Null, 'Bongara', 1),(Null, 'Chachapoyas', 1),(Null, 'Condorcanqui', 1),(Null, 'Luya', 1),(Null, 'Rodríguez de Méndoza', 1),(Null, 'Utcubamba', 1),
+       (Null, 'Aija', 2),(Null, 'Antonio Raimondi', 2),(Null, 'Asunción', 2),(Null, 'Bolognesi', 2),(Null, 'Carhuaz', 2),(Null, 'Carlos Fermin Fitzcarrald', 2),(Null, 'Casma', 2),(Null, 'Corongo', 2),(Null, 'Huaraz', 2),(Null, 'Huari', 2),(Null, 'Huarmey', 2),(Null, 'Huaylas', 2),(Null, 'Mariscal Luzuriaga', 2),(Null, 'Ocros', 2),(Null, 'Pallasca', 2),(Null, 'Pomabamba', 2),(Null, 'Recuay', 2),(Null, 'Santa', 2),(Null, 'Sihuas', 2),(Null, 'Yungay', 2),
+       (Null, 'Abancay', 3),(Null, 'Andahuaylas', 3),(Null, 'Antabamba', 3),(Null, 'Aymaraes', 3),(Null, 'Chincheros', 3),(Null, 'Cotabambas', 3),(Null, 'Grau', 3),
+       (Null, 'Arequipa', 4),(Null, 'Camana', 4),(Null, 'Caraveli', 4),(Null, 'Castilla', 4),(Null, 'Caylloma', 4),(Null, 'Condesuyos', 4),(Null, 'Islay', 4),(Null, 'La Unión', 4),
+       (Null, 'Cangallo', 5),(Null, 'Huamanga', 5),(Null, 'Huanca Sancos', 5),(Null, 'Huanta', 5),(Null, 'La Mar', 5),(Null, 'Lucanas', 5),(Null, 'Parinacochas', 5),(Null, 'Paucar del Sara Sara', 5),(Null, 'Sucre', 5),(Null, 'Víctor Fajardo', 5),(Null, 'Vilcas Huáman', 5),
+       (Null, 'Cajabamba', 6),(Null, 'Cajamarca', 6),(Null, 'Celendín', 6),(Null, 'Chota', 6),(Null, 'Contumaza', 6),(Null, 'Cutervo', 6),(Null, 'Hualgayoc', 6),(Null, 'Jaen', 6),(Null, 'San Ignacio', 6),(Null, 'San Marcos', 6),(Null, 'San Miguel', 6),(Null, 'San Pablo', 6),(Null, 'Santa Cruz', 6),
+       (Null, 'Acomayo', 7),(Null, 'Anta', 7),(Null, 'Calca', 7),(Null, 'Canas', 7),(Null, 'Canchis', 7),(Null, 'Chumbivilcas', 7),(Null, 'Cusco', 7),(Null, 'Espinar', 7),(Null, 'La Convención', 7),(Null, 'Paruro', 7),(Null, 'Paucartambo', 7),(Null, 'Quispicanchi', 7),(Null, 'Urubamba', 7),
+       (Null, 'Acobamba', 8),(Null, 'Angaraes', 8),(Null, 'Castrovirreyna', 8),(Null, 'Churcampa', 8),(Null, 'Huancavelica', 8),(Null, 'Huaytara', 8),(Null, 'Tayacaja', 8),
+       (Null, 'Ambo', 9),(Null, 'Dos de Mayo', 9),(Null, 'Huacaybamba', 9),(Null, 'Huamalies', 9),(Null, 'Huánuco', 9),(Null, 'Lauricocha', 9),(Null, 'Leoncio Prado', 9),(Null, 'Marañon', 9),(Null, 'Pachitea', 9),(Null, 'Puerto Inca', 9),(Null, 'Yarowilca', 9),
+       (Null, 'Barranca', 14),(Null, 'Cajatambo', 14),(Null, 'Canta', 14),(Null, 'Cañete', 14),(Null, 'Huaral', 14),(Null, 'Huarochiri', 14),(Null, 'Huaura', 14),(Null, 'Lima', 14),(Null, 'Oyon', 14),(Null, 'Yauyos', 14),(Null, 'Callao', 14);
+
+Insert Into Distrito
+Values (Null, 'Aramango', 1),(Null, 'Bagua', 1),(Null, 'Copallin', 1),(Null, 'Chisquilla', 2),(Null, 'Churuja', 2),(Null, 'Corosha', 2),(Null, 'Asunción', 3),(Null, 'Balsas', 3),(Null, 'Chachapoyas', 3),(Null, 'El Cenepa', 4),
+	   (Null, 'Nieva', 4),(Null, 'Río Santiago', 4),(Null, 'Camporredondo', 5),(Null, 'Cocabamba', 5),(Null, 'Colcamar', 5),(Null, 'Chirimoto', 6),(Null, 'Cochamal', 6),(Null, 'Huambo', 6),(Null, 'Bagua Grande', 7),(Null, 'Cajaruro', 7),
+	   (Null, 'Cumba', 7),(Null, 'Aija', 8),(Null, 'Coris', 8),(Null, 'Huacllan', 8),(Null, 'Aczo', 9),(Null, 'Chaccho', 9),(Null, 'Chingas', 9),(Null, 'Acochaca', 10),(Null, 'Chacas', 10),
+       (Null, 'Chiquian', 11),(Null, 'Abelardo Pardo Lezameta', 11),(Null, 'Mangas', 11),(Null, 'Pariahuanca', 12),(Null, 'San Miguel de Aco', 12),(Null, 'Shilla', 12),(Null, 'San Luis', 13),(Null, 'Yauya', 13),(Null, 'San Nicolas', 13),(Null, 'Casma', 14),
+       (Null, 'Buena Vista Alta', 14),(Null, 'Comandante Noel', 14),(Null, 'Corongo', 15),(Null, 'Aco', 15),(Null, 'Bambas', 15),(Null, 'Huaraz', 16),(Null, 'Jangas', 16),(Null, 'La Libertad', 16),(Null, 'Huari', 17),(Null, 'Cajay', 17),
+       (Null, 'Chavín de Huantar', 17),(Null, 'Huarmey', 18),(Null, 'Cochapeti', 18),(Null, 'Huayan', 18),(Null, 'Caraz', 19),(Null, 'Huallanca', 19),(Null, 'Huata', 19),(Null, 'Piscobamba', 20),(Null, 'Casca', 20),(Null, 'Lucma', 20),
+       (Null, 'Abancay', 28),(Null, 'Lima', 105),(Null, 'Ancón', 105),(Null, 'Ate', 105),(Null, 'Breña', 105),(Null, 'Carabayllo', 105),(Null, 'Comas', 105),(Null, 'Chaclayo', 105),(Null, 'Chorrillos', 105),(Null, 'La Victoria', 105),
+       (Null, 'La Molina', 105),(Null, 'Lince', 105),(Null, 'Lurigancho', 105),(Null, 'Lurín', 105),(Null, 'Magdalena del Mar', 105),(Null, 'Miraflores', 105),(Null, 'Pachacamac', 105),(Null, 'Pueblo Libre', 105),(Null, 'Pucusana', 105),(Null, 'Puente Piedra', 105),
+       (Null, 'Punta Hermosa', 105),(Null, 'Punta Negra', 105),(Null, 'Rímac', 105),(Null, 'San Bartolo', 105),(Null, 'San Isi', 105),(Null, 'Cajatambo', 99),(Null, 'Copa', 99),(Null, 'Gorgor', 99),(Null, 'Huancapon', 99),(Null, 'Manas', 99),(Null, 'Callao', 108),
+       (Null, 'Bellavista', 108),(Null, 'La Punta', 108),(Null, 'Carmen de la Legua Reynoso', 108),(Null, 'La Perla', 108),(Null, 'Ventanilla', 108);
+
+Insert Into Empleado
+Values (Null, 'Carlos Gabriel', 'Baca Manrique', true,
+'20000919', 'carlosgabrielbacamanrique@hotmail.com', '972118439',
+Null, 'Av. Manco Capac 781', 93);
