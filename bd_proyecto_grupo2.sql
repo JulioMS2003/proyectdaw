@@ -81,10 +81,15 @@ Foreign Key (empleadoid) References Empleado (empleadoid));
 
 -- Inserciones
 Insert Into Rol
-Values (null, 'Administrador');
+Values (Null, 'Administrador'),
+       (Null, 'Operador de Proyectos'),
+       (Null, 'Operador de Empleados'),
+       (Null, 'Operador de Planos'),
+       (Null, 'Operador de Ubigeos'),
+       (Null, 'Operador de Empresas');
 
 Insert Into Usuario
-Values (Null, 'admin1234',
+Values (Null, 'admin',
 '$2a$12$1LfV01H5j8HnQEIq0EXkjeP5ktdkbwOt7od2Kb5CHSjUroolKKxca',
 'Penélope Pura', 'Nelson Taylor',
 true, null);
@@ -94,6 +99,9 @@ true, null);
 
 Insert Into Usuario_Rol
 Values (1, 1);
+
+Select * From Usuario;
+Select * From Usuario_Rol;
 
 Insert Into Departamento
 Values (Null, 'Amazonas'), (Null, 'Ancash'), (Null, 'Apurímac'),

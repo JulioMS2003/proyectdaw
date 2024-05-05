@@ -3,19 +3,51 @@ package pe.edu.cibertec.proyectdaw.service;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pe.edu.cibertec.proyectdaw.model.bd.Rol;
 import pe.edu.cibertec.proyectdaw.model.bd.Usuario;
+import pe.edu.cibertec.proyectdaw.model.dto.request.UsuarioRequest;
+import pe.edu.cibertec.proyectdaw.repository.RolRepository;
 import pe.edu.cibertec.proyectdaw.repository.UsuarioRepository;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
 public class UsuarioService implements IUsuarioService{
 
     private UsuarioRepository usuarioRepository;
+    private RolRepository rolRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Override
+    public void registrarNuevoUsuario(UsuarioRequest usuarioRequest) throws Exception {
+        usuarioRequest.setNomusuario(usuarioRequest.getNomusuario().trim());
+        usuarioRequest.setApeusuario(usuarioRequest.getApeusuario().trim());
+        if(usuarioRequest.getNomusuario() == null || usuarioRequest.getNomusuario().isEmpty())
+            throw new Exception("Ingresar nombres del nuevo usuario");
+        if(usuarioRequest.getNomusuario().length() > 50)
+            throw new Exception("Nombres ingresados superan el límite de 50 caracteres");
+        if(usuarioRequest.getApeusuario() == null || usuarioRequest.getApeusuario().isEmpty())
+            throw new Exception("Ingresar apellidos del nuevo usuario");
+        if(usuarioRequest.getApeusuario().length() > 50)
+            throw new Exception("Apellidos ingresados superan el límite de 50 caracteres");
+        if(usuarioRequest.getIdroles().length == 0)
+            throw new Exception("Seleccionar al menos un rol");
+
+        Usuario usuario = new Usuario();
+        usuario.setUsername(this.generarNuevoUsername());
+        usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getUsername()));
+        usuario.setNomusuario(usuarioRequest.getNomusuario());
+        usuario.setApeusuario(usuarioRequest.getApeusuario());
+        usuario.setActivo(true);
+        Set<Rol> roles = new HashSet<>();
+        for(int rolid: usuarioRequest.getIdroles()) {
+            Rol rol = rolRepository.findById(rolid).orElse(null);
+            roles.add(rol);
+        }
+        usuario.setRoles(roles);
+        usuarioRepository.save(usuario);
+    }
 
     @Override
     public List<Usuario> listarUsuario() {
@@ -54,5 +86,16 @@ public class UsuarioService implements IUsuarioService{
     @Override
     public void actualizarUltimoLogin(Date ultimologin, String username) {
         usuarioRepository.actualizarUltimoLogin(ultimologin, username);
+    }
+
+    private String generarNuevoUsername(){
+        String username = "usuario";
+        do {
+            if(username.length() == 11)
+                username = username.substring(0, 6);
+            int digito = (int) (Math.random() * 10);
+            username += digito;
+        } while(username.length() != 11 || this.obtenerPorUsername(username) != null);
+        return username;
     }
 }

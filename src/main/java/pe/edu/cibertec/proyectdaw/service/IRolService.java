@@ -7,5 +7,5 @@ import java.util.List;
 public interface IRolService {
 
     List<Rol> listarRol();
-
+    List<Rol> listarRolesOrdenadosPorNombre();
 }
