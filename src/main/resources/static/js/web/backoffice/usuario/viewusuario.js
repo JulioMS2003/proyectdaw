@@ -3,13 +3,21 @@ var idroles = [];
 $(document).on("click", "#btnnuevo", function(){
     $("#usuarioModalLabel").html("Nuevo Usuario")
     $("#hddusuarioid").val("0");
+    desactivarCampos(false);
     $("#txtnomusuario").val("");
     $("#txtapeusuario").val("");
+    $("#divultimologin").hide();
     $("#switchactivo").prop("checked", true);
     $("#divactivo").hide();
     $("#btnaceptar").hide();
     cargarRoles();
+    mostrarAlertaEstado(false, false);
     $("#modalusuario").modal("show");
+})
+
+$(document).on("click", ".btndetalles", function(){
+    $("#divultimologin").show();
+    cargarModalUsuario($(this).attr("data-usuarioid"), true, true);
 })
 
 $(document).on("click", "#btnguardar", function(){
@@ -43,6 +51,30 @@ $(document).on("change", ".checkboxrol", function() {
     }
 })
 
+function cargarModalUsuario(usuarioid, mostrarEstado, desactivar) {
+    $.ajax({
+        type: "GET",
+        url: "/usuario/" + usuarioid,
+        dataType: "json",
+        success: function(resultado) {
+            $("#usuarioModalLabel").html("Usuario #" + resultado.username.substring(7, 11));
+            desactivarCampos(desactivar);
+            $("#txtnomusuario").val(resultado.nomusuario);
+            $("#txtapeusuario").val(resultado.apeusuario);
+            mostrarAlertaEstado(resultado.activo, mostrarEstado);
+            $("#txtultimologin").val(resultado.ultimologin == null ? 'No registra' :
+                                     moment(resultado.ultimologin).format('YYYY-MM-DD HH:mm:ss'));
+            $("#divroles").html("");
+            $.each(resultado.roles, function(index, value) {
+                $("#divroles").append(
+                    `<p>- ${value.nomrol}</p>`
+                );
+            });
+            $("#modalusuario").modal("show");
+        }
+    })
+}
+
 function cargarRoles(){
     $.ajax({
         type: "GET",
@@ -50,10 +82,6 @@ function cargarRoles(){
         dataType: "json",
         success: function(resultado) {
             $("#divroles").html("");
-            $("#divroles").append(
-                `<hr />` +
-                `<h5 class="text-center fw-bold">Seleccionar roles:</h5>`
-            )
             $.each(resultado, function(index, value){
                 if(value.nomrol != "Administrador") {
                     $("#divroles").append(
@@ -100,6 +128,31 @@ function listarUsuarios(){
             })
         }
     })
+}
+
+function desactivarCampos(desactivar) {
+    if(desactivar) {
+        $("#txtnomusuario").prop("readonly", true);
+        $("#txtapeusuario").prop("readonly", true);
+    } else {
+        $("#txtnomusuario").prop("readonly", false);
+        $("#txtapeusuario").prop("readonly", false)
+    }
+}
+
+function mostrarAlertaEstado(activo, mostrar){
+    if(!mostrar) {
+        $("#alertactivo").hide();
+        $("#alertinactivo").hide();
+    } else {
+        if(activo) {
+            $("#alertactivo").show();
+            $("#alertinactivo").hide();
+        } else {
+            $("#alertactivo").hide();
+            $("#alertinactivo").show();
+        }
+    }
 }
 
 function alertaDeRespuesta(_title, _text, _icon) {

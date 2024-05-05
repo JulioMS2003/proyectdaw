@@ -45,4 +45,10 @@ public class UsuarioController {
         }
         return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
     }
+
+    @GetMapping("/{usuarioid}")
+    @ResponseBody
+    public Usuario obtenerPorId(@PathVariable("usuarioid") Integer usuarioid) {
+        return iUsuarioService.obtenerPorId(usuarioid);
+    }
 }

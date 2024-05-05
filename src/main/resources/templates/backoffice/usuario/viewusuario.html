@@ -74,8 +74,21 @@
                            placeholder="Apellidos" autocomplete="off">
                     <label for="txtapeusuario">Apellidos</label>
                 </div>
+                <div class="form-floating mb-3" id="divultimologin">
+                    <input type="text" class="form-control" id="txtultimologin" readonly>
+                    <label for="txtultimologin">Último Login</label>
+                </div>
+                <hr />
+                <h5 class="text-center fw-bold">Roles</h5>
                 <div class="mb-3" id="divroles">
 
+                </div>
+                <hr />
+                <div class="alert alert-primary text-center" id="alertactivo">
+                    Usuario Activo
+                </div>
+                <div class="alert alert-secondary text-center" id="alertinactivo">
+                    Usuario Inactivo
                 </div>
                 <div class="form-check form-switch" id="divactivo">
                     <input class="form-check-input" type="checkbox" role="switch" id="switchactivo">
