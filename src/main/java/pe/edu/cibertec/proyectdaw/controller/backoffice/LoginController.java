@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pe.edu.cibertec.proyectdaw.model.dto.security.UsuarioSecurity;
 import pe.edu.cibertec.proyectdaw.service.IUsuarioService;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping("/auth")
 @AllArgsConstructor
@@ -30,7 +32,8 @@ public class LoginController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UsuarioSecurity usuario = (UsuarioSecurity) userDetails;
         session.setAttribute("nombres", usuario.getNombres() + " " + usuario.getApellidos());
-        session.setAttribute("usuarioid", usuario.getUsuarioid());
+        session.setAttribute("username", usuario.getUsername());
+        iUsuarioService.actualizarUltimoLogin(new Date(), usuario.getUsername());
         return "redirect:/auth/dashboard";
     }
 
@@ -52,7 +55,7 @@ public class LoginController {
             return "redirect:/auth/cambiarPassword?error";
         } else {
             HttpSession session = request.getSession();
-            iUsuarioService.actualizarPassword(password1, session.getAttribute("usuarioid").toString());
+            iUsuarioService.actualizarPassword(password1, session.getAttribute("username").toString());
             return "redirect:/auth/cambiarPassword?success";
         }
     }

@@ -18,8 +18,8 @@ public class UsuarioController {
     private IUsuarioService iUsuarioService;
     @GetMapping("")
     public String viewUsuario(Model model){
-        model.addAttribute("usuario",
-                iUsuarioService.listarUsuario());
+        model.addAttribute("listaUsuarios",
+                iUsuarioService.listarUsuariosOrdenadosPorApellidos());
         return "backoffice/usuario/viewusuario";
     }
 

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pe.edu.cibertec.proyectdaw.model.bd.Usuario;
 import pe.edu.cibertec.proyectdaw.repository.UsuarioRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +22,12 @@ public class UsuarioService implements IUsuarioService{
         return usuarioRepository.findAll();    }
 
     @Override
-    public Usuario obtenerPorId(String usuarioid) {
+    public List<Usuario> listarUsuariosOrdenadosPorApellidos() {
+        return usuarioRepository.findAllByOrderByApeusuario();
+    }
+
+    @Override
+    public Usuario obtenerPorId(Integer usuarioid) {
         Usuario usuario = null;
         Optional<Usuario> optional = usuarioRepository.findById(usuarioid);
         if(optional.isPresent())
@@ -30,12 +36,23 @@ public class UsuarioService implements IUsuarioService{
     }
 
     @Override
+    public Usuario obtenerPorUsername(String username) {
+        return usuarioRepository.findByUsername(username);
+    }
+
+    @Override
     public void registrarUsuario(Usuario usuario) {
         usuarioRepository.save(usuario);
     }
 
     @Override
-    public void actualizarPassword(String nuevaClave, String usuarioid) {
-        usuarioRepository.actualizarPassword(bCryptPasswordEncoder.encode(nuevaClave), usuarioid);
+    public void actualizarPassword(String nuevaClave, String username) {
+        String encriptado = bCryptPasswordEncoder.encode(nuevaClave);
+        usuarioRepository.actualizarPassword(encriptado, username);
+    }
+
+    @Override
+    public void actualizarUltimoLogin(Date ultimologin, String username) {
+        usuarioRepository.actualizarUltimoLogin(ultimologin, username);
     }
 }
