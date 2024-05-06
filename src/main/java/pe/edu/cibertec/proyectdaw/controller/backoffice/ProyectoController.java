@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pe.edu.cibertec.proyectdaw.service.IEmpresaService;
 import pe.edu.cibertec.proyectdaw.service.IProyectoService;
 
 @AllArgsConstructor
@@ -13,6 +14,7 @@ import pe.edu.cibertec.proyectdaw.service.IProyectoService;
 public class ProyectoController {
 
     private IProyectoService iProyectoService;
+    private IEmpresaService iEmpresaService;
     @GetMapping("")
     public String generarProyecto(Model model){
         model.addAttribute("listaProyectos",
@@ -20,4 +22,10 @@ public class ProyectoController {
         return "backoffice/proyecto/generarproyecto";
     }
 
+    @GetMapping("/nuevo")
+    public String nuevoProyecto(Model model) {
+        model.addAttribute("listaEmpresas",
+                iEmpresaService.listarEmpresasOrdenadasPorNombreAsc());
+        return "backoffice/proyecto/nuevoproyecto";
+    }
 }
