@@ -7,5 +7,5 @@ import java.util.List;
 public interface IEmpresaService{
 
     List<Empresa> listarEmpresa();
-
+    List<Empresa> listarEmpresasOrdenadasPorNombreAsc();
 }

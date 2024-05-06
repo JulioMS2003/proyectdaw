@@ -6,39 +6,39 @@
 </head>
 <body>
 <nav th:replace="layout::menu"></nav>
-
 <div class="card">
     <div class="card-header text-bg-danger">
-        Mantenimiento de la empresa:
+        Mantenimiento de Empresas:
     </div>
     <div class="card-body">
-        <button id="btnagregar" type="button" class="btn btn-primary">Agregar</button>
+        <button id="btnnuevo" type="button" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nueva Empresa
+        </button>
         <hr />
-        <div id="divmensaje"></div>
-        <table id="tblempresa" class="table">
+        <table id="tblempresa" class="table table-bordered table-striped">
             <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Ruc</th>
-                <th scope="col">Estado</th>
-                <th>Actualizar</th>
-            </tr>
+                <tr>
+                    <th scope="col">Empresa</th>
+                    <th scope="col">RUC</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col" class="text-center">Actualizar</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="empresa : ${empresa}">
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${}"></td>
-                <td>
-                    <button type="button" class="btn btn-primary btnactualizar"
-                            th:data-empresaid="${}"
-                            th:data-empresanom="${}"
-                            th:data-empresaruc="${}"
-                            th:data-empresaestado="${}">actualizar</button>
-                </td>
-            </tr>
+                <tr th:each="empresa : ${listaEmpresas}">
+                    <td th:text="${empresa.nomempresa}"></td>
+                    <td th:text="${empresa.ruc}"></td>
+                    <td th:text="${empresa.activo ? 'Activo' : 'Inactivo'}"></td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-primary btneditar"
+                                      th:data-empid="${empresa.empresaid}"
+                                      th:data-empnom="${empresa.nomempresa}"
+                                      th:data-empruc="${empresa.ruc}"
+                                      th:data-empact="${empresa.activo}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

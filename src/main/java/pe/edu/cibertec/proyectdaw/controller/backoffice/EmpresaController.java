@@ -17,8 +17,8 @@ public class EmpresaController {
 
     @GetMapping("")
     public String viewEmpresa(Model model){
-        model.addAttribute("empresa",
-                iEmpresaService.listarEmpresa());
+        model.addAttribute("listaEmpresas",
+                iEmpresaService.listarEmpresasOrdenadasPorNombreAsc());
         return  "backoffice/empresa/viewempresa";
     }
 }

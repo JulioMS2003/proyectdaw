@@ -17,4 +17,9 @@ public class EmpresaService implements IEmpresaService{
     public List<Empresa> listarEmpresa() {
         return empresaRepository.findAll();
     }
+
+    @Override
+    public List<Empresa> listarEmpresasOrdenadasPorNombreAsc() {
+        return empresaRepository.findAllByOrderByNomempresa();
+    }
 }
