@@ -42,7 +42,7 @@
                             </th:block>
                             <th:block th:if="${session.authorities.contains('Administrador') ||
                                                session.authorities.contains('Operador de Planos')}">
-                                <li><a class="dropdown-item" th:href="@{/plano/asignacion}">Asignación de Planos</a></li>
+                                <li><a class="dropdown-item" th:href="@{/plano}">Asignación de Planos</a></li>
                             </th:block>
                         </ul>
                     </li>
