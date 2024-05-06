@@ -30,7 +30,7 @@
                 <tr th:each="empresa : ${listaEmpresas}">
                     <td th:text="${empresa.nomempresa}"></td>
                     <td th:text="${empresa.ruc}"></td>
-                    <td th:text="${empresa.activo ? 'Activo' : 'Inactivo'}"></td>
+                    <td th:text="${empresa.activo ? 'Activa' : 'Inactiva'}"></td>
                     <td class="text-center">
                         <button type="button" class="btn btn-primary btneditar"
                                       th:data-empid="${empresa.empresaid}"
@@ -62,7 +62,7 @@
                     <label for="txtnomempresa">Empresa</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="txtruc"
+                    <input type="number" class="form-control" id="txtruc"
                            placeholder="RUC" autocomplete="off">
                     <label for="txtruc">RUC</label>
                 </div>

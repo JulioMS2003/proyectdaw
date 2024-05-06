@@ -53,7 +53,7 @@ Foreign Key (distritoid) References Distrito (distritoid));
 Create Table Empresa(
 empresaid Int Primary Key Auto_Increment,
 nomempresa Varchar(70) Not Null,
-ruc Char(11) Not Null,
+ruc Integer Not Null,
 activo Bit Not Null);
 
 Create Table Plano(
