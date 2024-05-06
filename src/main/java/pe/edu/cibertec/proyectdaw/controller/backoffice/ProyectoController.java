@@ -15,8 +15,8 @@ public class ProyectoController {
     private IProyectoService iProyectoService;
     @GetMapping("")
     public String generarProyecto(Model model){
-        model.addAttribute("proyecto",
-                iProyectoService.listarProyecto());
+        model.addAttribute("listaProyectos",
+                iProyectoService.listarProyectos());
         return "backoffice/proyecto/generarproyecto";
     }
 

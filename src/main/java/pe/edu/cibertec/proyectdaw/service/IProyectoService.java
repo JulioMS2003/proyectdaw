@@ -5,5 +5,5 @@ import pe.edu.cibertec.proyectdaw.model.bd.Proyecto;
 import java.util.List;
 
 public interface IProyectoService {
-    List<Proyecto> listarProyecto();
+    List<Proyecto> listarProyectos();
 }
