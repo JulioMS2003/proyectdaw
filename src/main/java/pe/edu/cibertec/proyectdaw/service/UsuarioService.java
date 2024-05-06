@@ -1,5 +1,6 @@
 package pe.edu.cibertec.proyectdaw.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class UsuarioService implements IUsuarioService{
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
+    @Transactional
     public void registrarNuevoUsuario(UsuarioRequest usuarioRequest) throws Exception {
         usuarioRequest.setNomusuario(usuarioRequest.getNomusuario().trim());
         usuarioRequest.setApeusuario(usuarioRequest.getApeusuario().trim());
@@ -74,6 +76,37 @@ public class UsuarioService implements IUsuarioService{
 
     @Override
     public void registrarUsuario(Usuario usuario) {
+        usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public void actualizarDatosUsuario1(UsuarioRequest usuarioRequest) throws Exception {
+        usuarioRequest.setNomusuario(usuarioRequest.getNomusuario().trim());
+        usuarioRequest.setApeusuario(usuarioRequest.getApeusuario().trim());
+        if(usuarioRequest.getNomusuario() == null || usuarioRequest.getNomusuario().isEmpty())
+            throw new Exception("Ingresar nombres del nuevo usuario");
+        if(usuarioRequest.getNomusuario().length() > 50)
+            throw new Exception("Nombres ingresados superan el límite de 50 caracteres");
+        if(usuarioRequest.getApeusuario() == null || usuarioRequest.getApeusuario().isEmpty())
+            throw new Exception("Ingresar apellidos del nuevo usuario");
+        if(usuarioRequest.getApeusuario().length() > 50)
+            throw new Exception("Apellidos ingresados superan el límite de 50 caracteres");
+        if(usuarioRequest.getIdroles().length == 0)
+            throw new Exception("Seleccionar al menos un rol");
+
+        Usuario usuario = this.obtenerPorId(usuarioRequest.getUsuarioid());
+        usuario.setNomusuario(usuarioRequest.getNomusuario());
+        usuario.setApeusuario(usuarioRequest.getApeusuario());
+        usuario.setActivo(usuarioRequest.getActivo());
+        List<Rol> nuevosRoles = new ArrayList<>();
+        for(int rolid: usuarioRequest.getIdroles()) {
+            Rol rol = rolRepository.findById(rolid).orElse(null);
+            nuevosRoles.add(rol);
+        }
+        usuario.getRoles().removeIf(rol -> !nuevosRoles.contains(rol));
+        for(Rol rol: nuevosRoles) {
+                usuario.getRoles().add(rol);
+        }
         usuarioRepository.save(usuario);
     }
 

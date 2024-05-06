@@ -10,14 +10,21 @@ $(document).on("click", "#btnnuevo", function(){
     $("#switchactivo").prop("checked", true);
     $("#divactivo").hide();
     $("#btnaceptar").hide();
-    cargarRoles();
+    cargarRoles(false, []);
     mostrarAlertaEstado(false, false);
+    mostrarBotones(false, true, false);
+    cargarIdRoles(true, []);
     $("#modalusuario").modal("show");
 })
 
 $(document).on("click", ".btndetalles", function(){
     $("#divultimologin").show();
-    cargarModalUsuario($(this).attr("data-usuarioid"), true, true);
+    cargarModalUsuario($(this).attr("data-usuarioid"), true, true, false, true, false, false, true, false, false);
+})
+
+$(document).on("click", ".btneditar", function() {
+    $("#divultimologin").hide();
+    cargarModalUsuario($(this).attr("data-usuarioid"), false, false, true, false, false, true, false, true, true);
 })
 
 $(document).on("click", "#btnguardar", function(){
@@ -42,40 +49,73 @@ $(document).on("click", "#btnguardar", function(){
     })
 })
 
+$(document).on("click", "#btnactualizar", function(){
+    $.ajax({
+        type: "PUT",
+        url: "/usuario/actualizar",
+        contentType: "application/json",
+        data:JSON.stringify({
+            usuarioid: $("#hddusuarioid").val(),
+            nomusuario: $("#txtnomusuario").val(),
+            apeusuario: $("#txtapeusuario").val(),
+            activo: $("#switchactivo").prop("checked"),
+            idroles: idroles
+        }),
+        success: function(resultado) {
+            alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success" : "error");
+            if(resultado.respuesta) {
+                listarUsuarios();
+                $("#modalusuario").modal("hide");
+            }
+        }
+    })
+})
+
 $(document).on("change", ".checkboxrol", function() {
     let rolid = $(this).val();
     if($(this).prop("checked")) {
         idroles.push(rolid);
     } else {
-        idroles = idroles.filter(id => id !== rolid);
+        idroles = idroles.filter(id => id != rolid);
     }
 })
 
-function cargarModalUsuario(usuarioid, mostrarEstado, desactivar) {
+function cargarModalUsuario(usuarioid, mostrarEstado, desactivarC,
+                            mostrarSwitch, mostrarBtnAceptar, mostrarBtnGuardar,
+                            mostrarBtnActualizar, soloMostrarRoles, actualizando,
+                            cargar) {
     $.ajax({
         type: "GET",
         url: "/usuario/" + usuarioid,
         dataType: "json",
         success: function(resultado) {
             $("#usuarioModalLabel").html("Usuario #" + resultado.username.substring(7, 11));
-            desactivarCampos(desactivar);
+            desactivarCampos(desactivarC);
+            $("#hddusuarioid").val(resultado.usuarioid);
             $("#txtnomusuario").val(resultado.nomusuario);
             $("#txtapeusuario").val(resultado.apeusuario);
             mostrarAlertaEstado(resultado.activo, mostrarEstado);
             $("#txtultimologin").val(resultado.ultimologin == null ? 'No registra' :
                                      moment(resultado.ultimologin).format('YYYY-MM-DD HH:mm:ss'));
             $("#divroles").html("");
-            $.each(resultado.roles, function(index, value) {
-                $("#divroles").append(
-                    `<p>- ${value.nomrol}</p>`
-                );
-            });
+            cargarIdRoles(cargar, resultado.roles);
+            if(soloMostrarRoles)
+                mostrarRoles(resultado.roles);
+            else
+                cargarRoles(actualizando, resultado.roles);
+            mostrarSwitch ? $("#divactivo").show() : $("#divactivo").hide();
+            $("#switchactivo").prop("checked", resultado.activo);
+            mostrarBotones(mostrarBtnAceptar, mostrarBtnGuardar, mostrarBtnActualizar);
             $("#modalusuario").modal("show");
         }
     })
 }
 
-function cargarRoles(){
+function cargarRoles(actualizando, roles){
+    let rolesIds = roles.map(function(rol) {
+        return rol.rolid;
+    });
+
     $.ajax({
         type: "GET",
         url: "/rol/lista",
@@ -84,9 +124,10 @@ function cargarRoles(){
             $("#divroles").html("");
             $.each(resultado, function(index, value){
                 if(value.nomrol != "Administrador") {
+                    let checked = rolesIds.includes(value.rolid) && actualizando ? "checked" : "";
                     $("#divroles").append(
                         `<div class="form-check">` +
-                            `<input class="form-check-input checkboxrol" type="checkbox" value="${value.rolid}" id="check${value.rolid}">` +
+                            `<input class="form-check-input checkboxrol" type="checkbox" value="${value.rolid}" id="check${value.rolid}" ${checked}>` +
                             `<label class="form-check-label" for="check${value.rolid}">${value.nomrol}` +
                             `<label>` +
                         `</div>`
@@ -95,6 +136,23 @@ function cargarRoles(){
             });
         }
     })
+}
+
+function mostrarRoles(roles) {
+    $.each(roles, function(index, value) {
+        $("#divroles").append(
+            `<p>- ${value.nomrol}</p>`
+        );
+    })
+}
+
+function cargarIdRoles(cargar, roles){
+    idroles = [];
+    if(cargar) {
+        $.each(roles, function(index, value) {
+            idroles.push(value.rolid);
+        });
+    }
 }
 
 function listarUsuarios(){
@@ -153,6 +211,12 @@ function mostrarAlertaEstado(activo, mostrar){
             $("#alertinactivo").show();
         }
     }
+}
+
+function mostrarBotones(mostrarBtnAceptar, mostrarBtnGuardar, mostrarBtnActualizar) {
+    mostrarBtnAceptar ? $("#btnaceptar").show() : $("#btnaceptar").hide();
+    mostrarBtnGuardar ? $("#btnguardar").show() : $("#btnguardar").hide();
+    mostrarBtnActualizar ? $("#btnactualizar").show() : $("#btnactualizar").hide();
 }
 
 function alertaDeRespuesta(_title, _text, _icon) {

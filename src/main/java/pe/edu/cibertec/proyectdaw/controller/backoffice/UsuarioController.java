@@ -46,6 +46,20 @@ public class UsuarioController {
         return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
     }
 
+    @PutMapping("/actualizar")
+    @ResponseBody
+    public ResultadoResponse actualizarUsuario(@RequestBody UsuarioRequest usuarioRequest) {
+        String mensaje = "Usuario actualizado";
+        boolean respuesta = true;
+        try{
+            iUsuarioService.actualizarDatosUsuario1(usuarioRequest);
+        } catch(Exception ex){
+            mensaje = ex.getMessage();
+            respuesta = false;
+        }
+        return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
+    }
+
     @GetMapping("/{usuarioid}")
     @ResponseBody
     public Usuario obtenerPorId(@PathVariable("usuarioid") Integer usuarioid) {
