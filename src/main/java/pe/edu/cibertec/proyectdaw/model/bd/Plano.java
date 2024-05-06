@@ -9,6 +9,7 @@ import lombok.Data;
 public class Plano {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer planoid;
     @Column(name="estado")
     private Boolean estado;

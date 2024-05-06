@@ -3,9 +3,14 @@ package pe.edu.cibertec.proyectdaw.controller.backoffice;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import pe.edu.cibertec.proyectdaw.model.bd.Empleado;
+import pe.edu.cibertec.proyectdaw.model.bd.Plano;
+import pe.edu.cibertec.proyectdaw.model.dto.request.PlanoRequest;
+import pe.edu.cibertec.proyectdaw.model.dto.response.ResultadoResponse;
 import pe.edu.cibertec.proyectdaw.service.IPlanoService;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Controller
@@ -16,9 +21,53 @@ public class PlanoController {
 
     @GetMapping("")
     public String viewPlano(Model model){
-        model.addAttribute("plano",
+        model.addAttribute("listaPlano",
                 iPlanoService.listarPlano());
         return "backoffice/plano/viewplano";
+    }
+
+    @GetMapping("/buscar/{planoid}")
+    @ResponseBody
+    public Plano encontrarPlano(@PathVariable("planoid") Integer planoid) {
+        return iPlanoService.obtenerPlanoPorId(planoid);
+    }
+
+    @GetMapping("/lista")
+    @ResponseBody
+    public List<Plano> listarPlanos(){ return iPlanoService.listarTodasOrdenadasPorIdAsc();}
+
+    @GetMapping("/lista/{distritoid}")
+    @ResponseBody
+        public List<Plano> listarPlanoPorDistrito(@PathVariable("distritoid") Integer distritoid){
+            return iPlanoService.listarTodasPorDistritoIdOrdenadasPorNombreAsc(distritoid);
+        }
+
+    @RequestMapping(value = "/guardar", method = {RequestMethod.POST, RequestMethod.PUT})
+    @ResponseBody
+    public ResultadoResponse guardarPlano(@RequestBody PlanoRequest planoRequest){
+        String mensaje = "Plano guardado";
+        boolean respuesta = true;
+        try{
+            iPlanoService.guardarPlano(planoRequest);
+        } catch (Exception ex){
+            mensaje = "Error: " + ex.getMessage();
+            respuesta = false;
+        }
+        return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    @ResponseBody
+    public ResultadoResponse eliminarPlano(@PathVariable("id") Integer planoid){
+        String mensaje = "Plano eliminado";
+        boolean respuesta = true;
+        try{
+            iPlanoService.eliminarPlano(planoid);
+        }catch (Exception ex){
+            mensaje = ex.getMessage();
+            respuesta = false;
+        }
+        return  ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
     }
 
 }
