@@ -3,6 +3,7 @@ package pe.edu.cibertec.proyectdaw.controller.backoffice;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pe.edu.cibertec.proyectdaw.model.dto.security.UsuarioSecurity;
 import pe.edu.cibertec.proyectdaw.service.IUsuarioService;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/auth")
@@ -33,6 +37,11 @@ public class LoginController {
         UsuarioSecurity usuario = (UsuarioSecurity) userDetails;
         session.setAttribute("nombres", usuario.getNombres() + " " + usuario.getApellidos());
         session.setAttribute("username", usuario.getUsername());
+        List<String> authorities = new ArrayList<>();
+        for(GrantedAuthority authority: usuario.getAuthorities()) {
+            authorities.add(authority.toString());
+        }
+        session.setAttribute("authorities", authorities);
         iUsuarioService.actualizarUltimoLogin(new Date(), usuario.getUsername());
         return "redirect:/auth/dashboard";
     }
