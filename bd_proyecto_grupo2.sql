@@ -53,8 +53,8 @@ Foreign Key (distritoid) References Distrito (distritoid));
 Create Table Empresa(
 empresaid Int Primary Key Auto_Increment,
 nomempresa Varchar(70) Not Null,
-ruc Char(11) Not Null,
-estado Bit Not Null);
+ruc Integer Not Null,
+activo Bit Not Null);
 
 Create Table Plano(
 planoid Char(7) Primary Key,
@@ -80,6 +80,7 @@ Foreign Key (planoid) References Plano (planoid),
 Foreign Key (empleadoid) References Empleado (empleadoid));
 
 -- Inserciones
+-- Todos los Roles
 Insert Into Rol
 Values (Null, 'Administrador'),
        (Null, 'Operador de Proyectos'),
@@ -88,22 +89,53 @@ Values (Null, 'Administrador'),
        (Null, 'Operador de Ubigeos'),
        (Null, 'Operador de Empresas');
 
+-- Único Administrador
+-- username: admin
+-- password: admin1234
 Insert Into Usuario
 Values (Null, 'admin',
 '$2a$12$1LfV01H5j8HnQEIq0EXkjeP5ktdkbwOt7od2Kb5CHSjUroolKKxca',
 'Penélope Pura', 'Nelson Taylor',
 true, null);
--- Credenciales:
--- username: admin
--- password: admin1234
+
+-- Operador de Proyectos y de Planos
+-- username: usuario1453
+-- password: usuario1453
+Insert Into Usuario
+Values (Null, 'usuario1453',
+'$2a$10$7c/voM1.rWnFROGRoiSJFeptVO/aPkwJ1abv1ttKoY2b/.CrKlKVC',
+'Carlos Gabriel', 'Baca Manrique',
+true, null);
+
+-- Operador de Empleados y de Planos
+-- username: usuario6266
+-- password: usuario6266
+Insert Into Usuario
+Values (Null, 'usuario6266',
+'$2a$10$ZU9wKNJt3pc8R6nK1578teTYI4uUG.BDiMB5mJSvj77lW9QF1oZOa',
+'Fernando', 'Castillo Vinces',
+true, null);
+
+-- Operador de Ubigeos
+-- username: usuario7252
+-- password: usuario7252
+Insert Into Usuario
+Values (Null, 'usuario7252',
+'$2a$10$grikvmqivXolnoin3rdGA.NveSEud.8HDEx.H6wB8sl2wdlGR12Km',
+'Anilu Camila', 'Díaz Lopéz',
+true, null);
+
+-- Operador de Ubigeos y Empresas
+-- username: usuario2476
+-- password: usuario2476
+Insert Into Usuario
+Values (Null, 'usuario2476',
+'$2a$10$ZQtS326fqNVLxVNdyQ9ILuE3QQH7rXKeayRfYOCqaD9G0SWGt2xIS',
+'Julio Adriano', 'Manchay Seminario',
+true, null); 
 
 Insert Into Usuario_Rol
-Values (1, 1);
-
-Select * From Usuario;
-Select U.*, R.nomrol From Usuario_Rol UR
-Join Usuario U On UR.usuarioid = U.usuarioid
-Join Rol R On R.rolid = UR.rolid;
+Values (1, 1), (2, 2), (2, 4), (3, 3), (3, 4), (4, 5), (5, 5), (5, 6);
 
 Insert Into Departamento
 Values (Null, 'Amazonas'), (Null, 'Ancash'), (Null, 'Apurímac'),
@@ -140,6 +172,16 @@ Values (Null, 'Aramango', 1),(Null, 'Bagua', 1),(Null, 'Copallin', 1),(Null, 'Ch
        (Null, 'Bellavista', 108),(Null, 'La Punta', 108),(Null, 'Carmen de la Legua Reynoso', 108),(Null, 'La Perla', 108),(Null, 'Ventanilla', 108);
 
 Insert Into Empleado
-Values (Null, 'Carlos Gabriel', 'Baca Manrique', true,
-'20000919', 'carlosgabrielbacamanrique@hotmail.com', '972118439',
-Null, 'Av. Manco Capac 781', 93);
+Values (Null, 'Christian Alberto', 'Goméz Méndoza', true,
+'19980702', 'christiangm@gmail.com', '974128219',
+Null, 'Av. Las Manzanas 483', 20);
+
+Select * From Rol;
+Select * From Usuario;
+Select U.*, R.nomrol From Usuario_Rol UR
+Join Usuario U On UR.usuarioid = U.usuarioid
+Join Rol R On R.rolid = UR.rolid
+Order By U.apeusuario;
+
+Insert Into Empresa
+Values (Null, 'Viettel Peru S.A.C.', '20543254798', true);

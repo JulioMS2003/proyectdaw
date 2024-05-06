@@ -16,7 +16,6 @@ public class Empresa {
     private String nomempresa;
     @Column(name="ruc")
     private String ruc;
-    @Column(name="estado")
-    private Boolean estado;
-
+    @Column(name="activo")
+    private Boolean activo;
 }
