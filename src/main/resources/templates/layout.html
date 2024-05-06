@@ -28,35 +28,58 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/auth/dashboard}">Home</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Mantenimientos
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/usuario}">Usuarios</a></li>
-                        <li><a class="dropdown-item" th:href="@{/plano}">Planos</a></li>
-                        <li><a class="dropdown-item" th:href="@{/departamento}">Departamentos</a></li>
-                        <li><a class="dropdown-item" th:href="@{/provincia}">Provincias</a></li>
-                        <li><a class="dropdown-item" th:href="@{/distrito}">Distritos</a></li>
-                        <li><a class="dropdown-item" th:href="@{/empresa}">Empresas</a></li>
-                        <li><a class="dropdown-item" th:href="@{/empleado}">Empleados</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Otros
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/proyecto}">Generar proyectos</a></li>
-                        <li><a class="dropdown-item" th:href="@{/}">Asignacion de planos</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                    </ul>
-                </li>
+                <th:block th:if="${session.authorities.contains('Administrador') ||
+                                   session.authorities.contains('Operador de Proyectos') ||
+                                   session.authorities.contains('Operador de Planos')}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Generar
+                        </a>
+                        <ul class="dropdown-menu">
+                            <th:block th:if="${session.authorities.contains('Administrador') ||
+                                               session.authorities.contains('Operador de Proyectos')}">
+                                <li><a class="dropdown-item" th:href="@{/proyecto}">Proyectos</a></li>
+                            </th:block>
+                            <th:block th:if="${session.authorities.contains('Administrador') ||
+                                               session.authorities.contains('Operador de Planos')}">
+                                <li><a class="dropdown-item" th:href="@{/plano/asignacion}">Asignación de Planos</a></li>
+                            </th:block>
+                        </ul>
+                    </li>
+                </th:block>
+                <th:block th:if="${session.authorities.contains('Administrador') ||
+                                   session.authorities.contains('Operador de Ubigeos') ||
+                                   session.authorities.contains('Operador de Empleados') ||
+                                   session.authorities.contains('Operador de Empresas')}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Mantenimiento
+                        </a>
+                        <ul class="dropdown-menu">
+                            <th:block th:if="${session.authorities.contains('Administrador')}">
+                                <li><a class="dropdown-item" th:href="@{/usuario}">Usuarios</a></li>
+                            </th:block>
+                            <th:block th:if="${session.authorities.contains('Administrador') ||
+                                               session.authorities.contains('Operador de Empleados')}">
+                                <li><a class="dropdown-item" th:href="@{/empleado}">Empleados</a></li>
+                            </th:block>
+                            <th:block th:if="${session.authorities.contains('Administrador') ||
+                                               session.authorities.contains('Operador de Empresas')}">
+                                <li><a class="dropdown-item" th:href="@{/empresa}">Empresas</a></li>
+                            </th:block>
+                            <th:block th:if="${session.authorities.contains('Administrador') ||
+                                               session.authorities.contains('Operador de Ubigeos')}">
+                                <li><a class="dropdown-item" th:href="@{/departamento}">Departamentos</a></li>
+                                <li><a class="dropdown-item" th:href="@{/provincia}">Provincias</a></li>
+                                <li><a class="dropdown-item" th:href="@{/distrito}">Distritos</a></li>
+                            </th:block>
+                        </ul>
+                    </li>
+                </th:block>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="${session.nombres}"></a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/auth/cambiarPassword}">Cambiar Clave</a></li>
+                        <li><a class="dropdown-item" th:href="@{/auth/cambiarPassword}">Cambiar Password</a></li>
                         <li>
                             <form th:action="@{/logout}" method="post">
                                 <button type="submit" class="dropdown-item">Cerrar Sesión</button>

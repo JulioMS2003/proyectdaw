@@ -94,14 +94,16 @@ Values (Null, 'admin',
 'Penélope Pura', 'Nelson Taylor',
 true, null);
 -- Credenciales:
--- username: admin1234
+-- username: admin
 -- password: admin1234
 
 Insert Into Usuario_Rol
 Values (1, 1);
 
 Select * From Usuario;
-Select * From Usuario_Rol;
+Select U.*, R.nomrol From Usuario_Rol UR
+Join Usuario U On UR.usuarioid = U.usuarioid
+Join Rol R On R.rolid = UR.rolid;
 
 Insert Into Departamento
 Values (Null, 'Amazonas'), (Null, 'Ancash'), (Null, 'Apurímac'),
