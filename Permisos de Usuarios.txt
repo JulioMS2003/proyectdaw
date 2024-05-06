@@ -1,0 +1,91 @@
+**********PERMISOS DE VISTAS**********
+Administrador:
+- Login Usuario
+- Cambiar Password
+- Dashboard
+- Generar Proyectos
+- Generar Asignación de Planos
+- Mantenimiento de Usuarios
+- Mantenimiento de Empleados
+- Mantenimiento de Empresas
+- Mantenimiento de Departamentos
+- Mantenimiento de Provincias
+- Mantenimiento de Distritos
+
+Operador de Proyectos:
+- Login Usuario
+- Cambiar Password
+- Dashboard
+- Generar Proyectos
+
+ Operador de Empleados:
+- Login Usuario
+- Cambiar Password
+- Dashboard
+- Mantenimiento de Empleados
+
+Operador de Planos:
+- Login Usuario
+- Cambiar Password
+- Dashboard
+- Generar Asignación de Planos
+
+Operador de Ubigeos
+- Login Usuario
+- Cambiar Password
+- Dashboard
+- Mantenimiento de Departamentos
+- Mantenimiento de Provincias
+- Mantenimiento de Distritos
+
+Operador de Empresas
+- Login Usuario
+- Cambiar Password
+- Dashboard
+- Mantenimiento de Empresas
+
+**********PERMISOS DE RECURSOS**********
+IMPORTANTE: Administrador debe poder acceder a cualquier recurso
+
+"/auth/login" -> Todos
+"/auth/login-success" -> Usuario Autenticado
+"/auth/dashboard" -> Usuario Autenticado
+"/auth/cambiarPassword" -> Usuario Autenticado
+
+"/departamento" -> Operador de Ubigeos
+"/departamento/lista" -> Operador de Ubigeos, Operador de Empleados
+"/departamento/registro" -> Operador de Ubigeos
+"/departamento/actualizacion" -> Operador de Ubigeos
+"/departamento/eliminación/{id}" -> Operador de Ubigeos
+"/departamento/obtener/{id}" -> Operador de Ubigeos
+
+"/provincia" -> Operador de Ubigeos
+"/provincia/lista" -> Operador de Ubigeos
+"/provincia/lista/{depaid}" -> Operador de Ubigeos, Operador de Empleados
+"/provincia/guardar" -> Operador de Ubigeos
+"/provincia/eliminar/{id}" -> Operador de Ubigeos
+
+"/distrito" -> Operador de Ubigeos
+"/distrito/lista" -> Operador de Ubigeos
+"/distrito/lista/{provinciaid}" -> Operador de Ubigeos, Operador de Empleados
+"/distrito/guardar" -> Operador de Ubigeos
+"/distrito/eliminar/{id}" -> Operador de Ubigeos
+
+"/empleado" -> Operador de Empleados
+"/empleado/lista" -> Operador de Empleados
+"/empleado/buscar/{empid}" -> Operador de Empleados
+"/empleado/guardar" -> Operador de Empleados
+
+"/empresa" -> Operador de Empresas
+
+"/plano" -> Operador de Planos
+
+"/proyecto" -> Operador de Proyectos
+
+"/rol/lista" -> Administrador
+
+"/usuario" -> Administrador
+"/usuario/lista" -> Administrador
+"/usuario/guardar/nuevo" -> Administrador
+"/usuario/actualizar" -> Administrador
+"/usuario/{usuarioid}" -> Administrador
