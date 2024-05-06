@@ -4,16 +4,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Data
 public class UsuarioRequest {
 
-    private String usuarioid;
-    private String clave;
+    private Integer usuarioid;
     private String nomusuario;
     private String apeusuario;
-    private Integer rolid;
-    private Boolean estado;
-    private Timestamp ultimologin;
+    private Boolean activo;
+    private int[] idroles;
 }

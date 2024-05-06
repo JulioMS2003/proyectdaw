@@ -18,10 +18,10 @@ public class RolController {
 
     private IRolService iRolService;
 
-    @GetMapping("/get")
+    @GetMapping("/lista")
     @ResponseBody
     public List<Rol> listRol(){
-        return iRolService.listarRol();
+        return iRolService.listarRolesOrdenadosPorNombre();
     }
 
 }

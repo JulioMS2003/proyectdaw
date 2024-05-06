@@ -134,6 +134,6 @@ function listarProvincias(){
     text: _text,
     icon:_icon,
     timer:1500,
-    showCancelButton: false
+    showConfirmButton: false
  })
  }
