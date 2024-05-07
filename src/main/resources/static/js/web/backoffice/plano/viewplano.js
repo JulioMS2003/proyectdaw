@@ -30,7 +30,7 @@ function cargarCboDistrito (distritoid) {
 $(document).on("click", ".btnactualizar", function(){
     $("#planoModalLabel").html("Editar Plano");
     cargarModalPlano($(this).attr("data-planoid"), false, false, false, false);
-    $("#modalempleado").modal("show");
+    $("#modalplano").modal("show");
 })
 
 function vaciarCbo(cbo,disabled){
