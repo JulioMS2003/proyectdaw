@@ -1,3 +1,35 @@
+$(document).on("click", ".btndetalles", function(){
+    $.ajax({
+        type: "GET",
+        url: "/proyecto/buscar/" + $(this).attr("data-proyid"),
+        dataType: "json",
+        success: function(resultado) {
+            $("#txtempresa").val(resultado.empresa.nomempresa);
+            $("#txtfecinicio").val(moment(resultado.fecinicio).format('YYYY-MM-DD'));
+            $("#txtfecfin").val(moment(resultado.fecfin).format('YYYY-MM-DD'));
+            ocultarMostrarAlertas(resultado.estado);
+        }
+    });
+    $.ajax({
+        type: "GET",
+        url: "/asignacion/buscar/" + $(this).attr("data-proyid"),
+        dataType: "json",
+        success: function(resultado) {
+            $("#tblplanos > tbody").html("");
+            $.each(resultado, function(index, value){
+                $("#tblplanos > tbody").append(
+                    `<tr>` +
+                        `<td>${value.plano.planoid}</td>` +
+                        `<td>${value.empleado == null ? 'Sin Asignación' : value.empleado.nomemp + ' ' + value.empleado.apeemp}</td>` +
+                    `</tr>`
+                )
+            });
+        }
+    })
+
+    $("#modalproyecto").modal("show");
+})
+
 $(document).on("click", ".btncancelar", function(){
     Swal.fire({
         title: "¿Cancelar Proyecto?",
@@ -56,6 +88,22 @@ function listarProyectos(){
             });
         }
     })
+}
+
+function ocultarMostrarAlertas(estado) {
+    if(estado == 'E') {
+        $("#divenproceso").show();
+        $("#divfinalizado").hide();
+        $("#divcancelado").hide();
+    } else if(estado == 'F') {
+        $("#divenproceso").hide();
+        $("#divfinalizado").show();
+        $("#divcancelado").hide();
+    } else {
+        $("#divenproceso").hide();
+        $("#divfinalizado").hide();
+        $("#divcancelado").show();
+    }
 }
 
 function alertaDeRespuesta(_title, _text,_icon){

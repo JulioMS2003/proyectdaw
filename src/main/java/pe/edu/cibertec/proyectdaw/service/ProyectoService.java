@@ -28,6 +28,8 @@ public class ProyectoService implements IProyectoService{
             throw new Exception("Seleccionar ubigeo");
         if(proyectoRequest.getFecinicio() == null)
             throw new Exception("Ingresar fecha de inicio");
+        if(proyectoRequest.getPlanos().length == 0)
+            throw new Exception("Debe registrar al menos un plano");
         for(String idplano: proyectoRequest.getPlanos()){
             if(planoRepository.findById(idplano).isPresent())
                 throw new Exception("Plano '" + idplano + "' ya existe en otro proyecto");

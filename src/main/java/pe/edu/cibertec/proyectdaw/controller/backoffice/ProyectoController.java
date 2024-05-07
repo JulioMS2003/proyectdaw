@@ -29,6 +29,12 @@ public class ProyectoController {
         return "backoffice/proyecto/generarproyecto";
     }
 
+    @GetMapping("/buscar/{id}")
+    @ResponseBody
+    public Proyecto buscarPorId(@PathVariable("id") Integer proyectoid) {
+        return iProyectoService.buscarPorId(proyectoid);
+    }
+
     @GetMapping("/lista")
     @ResponseBody
     public List<Proyecto> listarProyectos(){

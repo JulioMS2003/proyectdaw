@@ -36,7 +36,7 @@
                     <td th:text="${#dates.format(proyecto.fecinicio, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     <td th:text="${proyecto.estado == 'E' ? 'En Proceso' : proyecto.estado == 'C' ? 'Cancelado' : 'Finalizado' }"></td>
                     <td class="text-center">
-                        <button type="submit" class="btn btn-success btndetalless"
+                        <button type="submit" class="btn btn-success btndetalles"
                                 th:data-proyid="${proyecto.proyectoid}">
                             <i class="bi bi-file-earmark-richtext"></i>
                         </button>
@@ -52,6 +52,60 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modalproyecto" tabindex="-1" aria-labelledby="proyectoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="proyectoModalLabel">Detalles Proyecto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtempresa"
+                           placeholder="Empresa" readonly>
+                    <label for="txtempresa">Empresa</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="txtfecinicio"
+                           placeholder="Fecha de Inicio" readonly>
+                    <label for="txtfecinicio">Fecha de Inicio</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="txtfecfin"
+                           placeholder="Fecha de Fin" readonly>
+                    <label for="txtfecfin">Fecha de Fin</label>
+                </div>
+                <hr />
+                <h3>Planos</h3>
+                <table id="tblplanos" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Plano</th>
+                            <th scope="col">Empleado Asignado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <hr />
+                <div id="divenproceso" class="alert alert-primary text-center" role="alert">
+                    Proyecto en Proceso
+                </div>
+                <div id="divfinalizado" class="alert alert-success text-center" role="alert">
+                    Proyecto Finalizado
+                </div>
+                <div id="divcancelado" class="alert alert-danger text-center" role="alert">
+                    Proyecto Cancelado
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
 </body>
