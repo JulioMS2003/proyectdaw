@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout::head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script th:replace="~{layout::sweetalert2}"></script>
+<script th:src="@{/js/web/backoffice/proyecto/nuevoproyecto.js}" type="text/javascript"></script>
+<nav th:replace="~{layout::menu}"></nav>
+    <div class="p-5">
+        <div class="p-5 container col-8">
+            <h1 class="fw-bold">Nuevo Proyecto</h1>
+            <hr class="border-black">
+            <div class="card">
+                <div class="card-header text-bg-primary p-4">
+                    <h1 class="fw-bold text-center">Datos del Proyecto</h1>
+                </div>
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="txtfecinicio"
+                                       placeholder="Fecha de Inicio" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+                                <label for="txtfecinicio">Fecha de Inicio</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="cboempresa" aria-label="Floating label select example">
+                                    <option value="-1">Seleccionar opción</option>
+                                    <th:block th:each="empresa: ${listaEmpresas}">
+                                        <option th:value="${empresa.empresaid}" th:text="${empresa.nomempresa}"></option>
+                                    </th:block>
+                                </select>
+                                <label for="cboempresa">Empresa</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="cbodepartamento" aria-label="Floating label select example">
+                                    <option value="-1">Seleccionar opción</option>
+                                    <th:block th:each="departamento: ${listaDepartamentos}">
+                                        <option th:value="${departamento.departamentoid}" th:text="${departamento.nomdepa}"></option>
+                                    </th:block>
+                                </select>
+                                <label for="cbodepartamento">Departamento</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="cboprovincia" aria-label="Floating label select example" disabled>
+                                    <option value="-1">Seleccionar opción</option>
+                                </select>
+                                <label for="cboprovincia">Provincia</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="cbodistrito" aria-label="Floating label select example" disabled>
+                                    <option value="-1">Seleccionar opción</option>
+                                </select>
+                                <label for="cbodistrito">Distrito</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-header text-bg-primary p-4">
+                    <h1 class="fw-bold text-center">Planos</h1>
+                </div>
+                <div class="card-body p-3">
+                    <div id="divplanos" class="d-flex justify-content-around flex-wrap">
+
+                    </div>
+                    <hr/>
+                    <div id="divnuevoplano" class="row">
+                        <div class="col-9">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="txtplanoid"
+                                       placeholder="Código" autocomplete="off">
+                                <label for="txtplanoid">Código de Plano</label>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <button type="button"
+                                    class="btn btn-primary btn-lg mt-1" id="btnagregarplano">
+                                <i class="bi bi-plus-circle"></i> Agregar Plano
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer p-3">
+                    <div class="d-flex justify-content-around">
+                        <button style="width: 250px" type="button"
+                                class="btn btn-success btn-lg" id="btngenerar">
+                            <i class="bi bi-check"></i> Generar Proyecto
+                        </button>
+                        <a style="width: 250px" class="btn btn-danger btn-lg" th:href="@{/proyecto}">
+                            <i class="bi bi-arrow-left"></i> Regresar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

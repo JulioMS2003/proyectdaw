@@ -18,7 +18,7 @@ public class PlanoService implements IPlanoService{
     private PlanoRepository planoRepository;
 
     @Override
-    public Plano obtenerPlanoPorId(Integer planoid) {
+    public Plano obtenerPlanoPorId(String planoid) {
         Plano plano = null;
         Optional<Plano> optional = planoRepository.findById(planoid);
         if(optional.isPresent())
@@ -36,7 +36,7 @@ public class PlanoService implements IPlanoService{
         if(planoRequest.getDistritoid()==-1)
             throw new Exception("Debe seleccionar un distrito");
         Plano plano = new Plano();
-        if(planoRequest.getPlanoid()>0)
+        if(this.obtenerPlanoPorId(planoRequest.getPlanoid()) != null)
             plano.setPlanoid(planoRequest.getPlanoid());
         Distrito distrito = new Distrito();
         distrito.setDistritoid(planoRequest.getDistritoid());
@@ -56,7 +56,7 @@ public class PlanoService implements IPlanoService{
     }
 
     @Override
-    public void eliminarPlano(Integer planoid) {
+    public void eliminarPlano(String planoid) {
         planoRepository.deleteById(planoid);
     }
 }

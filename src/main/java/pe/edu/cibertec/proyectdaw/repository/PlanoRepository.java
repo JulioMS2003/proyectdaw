@@ -9,7 +9,7 @@ import pe.edu.cibertec.proyectdaw.model.bd.Plano;
 import java.util.List;
 
 @Repository
-public interface PlanoRepository extends JpaRepository<Plano, Integer> {
+public interface PlanoRepository extends JpaRepository<Plano, String> {
 
     List<Plano> findAllByOrderByPlanoid();
 

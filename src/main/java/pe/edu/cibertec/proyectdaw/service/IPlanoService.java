@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface IPlanoService {
 
-    Plano obtenerPlanoPorId(Integer planoid);
+    Plano obtenerPlanoPorId(String planoid);
     List<Plano> listarPlano();
     void guardarPlano(PlanoRequest planoRequest) throws Exception;
     List<Plano> listarTodasOrdenadasPorIdAsc();
     List<Plano> listarTodasPorDistritoIdOrdenadasPorNombreAsc(Integer distritoid);
-    void eliminarPlano(Integer Planoid);
+    void eliminarPlano(String Planoid);
 }
