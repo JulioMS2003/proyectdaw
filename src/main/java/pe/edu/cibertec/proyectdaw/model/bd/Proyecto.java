@@ -18,7 +18,7 @@ public class Proyecto {
     @Column(name="fecfin")
     private Date fecfin;
     @Column(name="estado")
-    private Boolean estado;
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name="empresaid")

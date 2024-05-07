@@ -11,7 +11,7 @@ public class Asignacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer asignacionid;
     @ManyToOne
-    @JoinColumn(name = "proyectid")
+    @JoinColumn(name = "proyectoid")
     private Proyecto proyecto;
     @ManyToOne
     @JoinColumn(name = "planoid")

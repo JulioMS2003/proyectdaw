@@ -1,10 +1,17 @@
 package pe.edu.cibertec.proyectdaw.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pe.edu.cibertec.proyectdaw.model.bd.Proyecto;
+import pe.edu.cibertec.proyectdaw.model.bd.*;
+import pe.edu.cibertec.proyectdaw.model.dto.request.ProyectoRequest;
+import pe.edu.cibertec.proyectdaw.repository.AsignacionRepository;
+import pe.edu.cibertec.proyectdaw.repository.PlanoRepository;
 import pe.edu.cibertec.proyectdaw.repository.ProyectoRepository;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -12,9 +19,56 @@ import java.util.List;
 public class ProyectoService implements IProyectoService{
 
     private ProyectoRepository proyectoRepository;
+    private PlanoRepository planoRepository;
+    private AsignacionRepository asignacionRepository;
+
+    @Override
+    @Transactional
+    public void generarProyecto(ProyectoRequest proyectoRequest) throws Exception {
+        if(proyectoRequest.getEmpresaid() == -1)
+            throw new Exception("Seleccionar una empresa");
+        if(proyectoRequest.getDistritoid() == -1)
+            throw new Exception("Seleccionar ubigeo");
+        if(proyectoRequest.getFecinicio() == null)
+            throw new Exception("Ingresar fecha de inicio");
+        for(String idplano: proyectoRequest.getPlanos()){
+            if(planoRepository.findById(idplano).isPresent())
+                throw new Exception("Plano '" + idplano + "' ya existe en otro proyecto");
+        }
+
+        Proyecto proyecto = new Proyecto();
+        Empresa empresa = new Empresa();
+        empresa.setEmpresaid(proyectoRequest.getEmpresaid());
+        proyecto.setEmpresa(empresa);
+        proyecto.setEstado("E");
+        proyecto.setFecinicio(unDiaMas(proyectoRequest.getFecinicio()));
+        proyecto = proyectoRepository.save(proyecto);
+
+        for(String idplano: proyectoRequest.getPlanos()) {
+            Plano plano = new Plano();
+            plano.setPlanoid(idplano);
+            Distrito distrito = new Distrito();
+            distrito.setDistritoid(proyectoRequest.getDistritoid());
+            plano.setDistrito(distrito);
+            plano.setEstado(false);
+            plano = planoRepository.save(plano);
+
+            Asignacion asignacion = new Asignacion();
+            asignacion.setProyecto(proyecto);
+            asignacion.setPlano(plano);
+            asignacionRepository.save(asignacion);
+        }
+    }
 
     @Override
     public List<Proyecto> listarProyectos() {
         return proyectoRepository.findAll();
+    }
+
+    private Date unDiaMas(Date fecha){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTime();
     }
 }

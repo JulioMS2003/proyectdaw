@@ -9,10 +9,9 @@ import lombok.Data;
 public class Plano {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer planoid;
+    private String planoid;
     @Column(name="estado")
-    private String estado;
+    private Boolean estado;
     @ManyToOne
     @JoinColumn(name="distritoid")
     private Distrito distrito;

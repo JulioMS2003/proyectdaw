@@ -28,7 +28,7 @@ public class PlanoController {
 
     @GetMapping("/buscar/{planoid}")
     @ResponseBody
-    public Plano encontrarPlano(@PathVariable("planoid") Integer planoid) {
+    public Plano encontrarPlano(@PathVariable("planoid") String planoid) {
         return iPlanoService.obtenerPlanoPorId(planoid);
     }
 
@@ -58,7 +58,7 @@ public class PlanoController {
 
     @DeleteMapping("/eliminar/{id}")
     @ResponseBody
-    public ResultadoResponse eliminarPlano(@PathVariable("id") Integer planoid){
+    public ResultadoResponse eliminarPlano(@PathVariable("id") String planoid){
         String mensaje = "Plano eliminado";
         boolean respuesta = true;
         try{

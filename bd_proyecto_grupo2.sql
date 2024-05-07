@@ -59,7 +59,7 @@ activo Bit Not Null);
 Create Table Plano(
 planoid Char(7) Primary Key,
 distritoid Int Not Null,
-estado Char(1) Not Null,
+estado Bit Not Null,
 Foreign Key (distritoid) References Distrito (distritoid));
 
 Create Table Proyecto(
@@ -74,7 +74,7 @@ Create Table Asignacion(
 asignacionid Int Primary Key Auto_Increment,
 proyectoid Int Not Null,
 planoid Char(7) Not Null,
-empleadoid Int Not Null,
+empleadoid Int Null,
 Foreign Key (proyectoid) References Proyecto (proyectoid),
 Foreign Key (planoid) References Plano (planoid),
 Foreign Key (empleadoid) References Empleado (empleadoid));
