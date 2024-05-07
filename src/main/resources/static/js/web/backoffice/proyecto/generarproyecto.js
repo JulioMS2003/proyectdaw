@@ -5,8 +5,8 @@ $(document).on("click", ".btndetalles", function(){
         dataType: "json",
         success: function(resultado) {
             $("#txtempresa").val(resultado.empresa.nomempresa);
-            $("#txtfecinicio").val(moment(resultado.fecinicio).format('YYYY-MM-DD'));
-            $("#txtfecfin").val(moment(resultado.fecfin).format('YYYY-MM-DD'));
+            $("#txtfecinicio").val(moment(resultado.fecinicio).format('DD/MM/YYYY'));
+            $("#txtfecfin").val(resultado.fecfin == null ? 'No registra' : moment(resultado.fecfin).format('DD/MM/YYYY'));
             ocultarMostrarAlertas(resultado.estado);
         }
     });
@@ -67,7 +67,7 @@ function listarProyectos(){
                     `<tr>` +
                         `<td>${value.proyectoid}</td>` +
                         `<td>${value.empresa.nomempresa}</td>` +
-                        `<td>${moment(value.fecinicio).format('YYYY-MM-DD HH:mm:ss')}</td>` +
+                        `<td>${moment(value.fecinicio).format('YYYY-MM-DD')}</td>` +
                         `<td>${value.estado == 'E' ? 'En Proceso' : value.estado == 'C' ? 'Cancelado' : 'Finalizado'}</td>` +
                         `<td class="text-center">` +
                             `<button type="button" class="btn btn-success btndetalles" ` +

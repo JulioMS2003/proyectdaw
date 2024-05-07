@@ -33,7 +33,7 @@
                 <tr th:each="proyecto : ${listaProyectos}">
                     <td th:text="${proyecto.proyectoid}"></td>
                     <td th:text="${proyecto.empresa.nomempresa}"></td>
-                    <td th:text="${#dates.format(proyecto.fecinicio, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${#dates.format(proyecto.fecinicio, 'yyyy-MM-dd')}"></td>
                     <td th:text="${proyecto.estado == 'E' ? 'En Proceso' : proyecto.estado == 'C' ? 'Cancelado' : 'Finalizado' }"></td>
                     <td class="text-center">
                         <button type="submit" class="btn btn-success btndetalles"
@@ -69,17 +69,16 @@
                     <label for="txtempresa">Empresa</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="txtfecinicio"
+                    <input type="text" class="form-control" id="txtfecinicio"
                            placeholder="Fecha de Inicio" readonly>
                     <label for="txtfecinicio">Fecha de Inicio</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="txtfecfin"
+                    <input type="text" class="form-control" id="txtfecfin"
                            placeholder="Fecha de Fin" readonly>
                     <label for="txtfecfin">Fecha de Fin</label>
                 </div>
                 <hr />
-                <h3>Planos</h3>
                 <table id="tblplanos" class="table table-bordered table-striped">
                     <thead>
                         <tr>

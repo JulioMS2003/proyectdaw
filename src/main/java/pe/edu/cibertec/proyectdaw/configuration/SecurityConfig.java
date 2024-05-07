@@ -26,20 +26,23 @@ public class SecurityConfig {
                    "/resources/**", "/static/**", "/css/**",
                    "/js/**").permitAll();
 
-           auth.requestMatchers("/departamento/lista").hasAnyAuthority("Administrador", "Operador de Ubigeos", "Operador de Empleados");
+           auth.requestMatchers("/departamento/lista").hasAnyAuthority("Administrador", "Operador de Ubigeos", "Operador de Empleados", "Operador de Proyectos");
            auth.requestMatchers("/departamento/**").hasAnyAuthority("Administrador", "Operador de Ubigeos");
 
-           auth.requestMatchers("/provincia/lista/**").hasAnyAuthority("Administrador", "Operador de Ubigeos", "Operador de Empleados");
+           auth.requestMatchers("/provincia/lista/**").hasAnyAuthority("Administrador", "Operador de Ubigeos", "Operador de Empleados", "Operador de Proyectos");
            auth.requestMatchers("/provincia/**").hasAnyAuthority("Administrador", "Operador de Ubigeos");
 
-           auth.requestMatchers("/distrito/lista/**").hasAnyAuthority("Administrador", "Operador de Ubigeos", "Operador de Empleados");
+           auth.requestMatchers("/distrito/lista/**").hasAnyAuthority("Administrador", "Operador de Ubigeos", "Operador de Empleados", "Operador de Proyectos");
            auth.requestMatchers("/distrito/**").hasAnyAuthority("Administrador", "Operador de Ubigeos");
 
            auth.requestMatchers("/empleado/**").hasAnyAuthority("Administrador", "Operador de Empleados");
 
            auth.requestMatchers("/empresa/**").hasAnyAuthority("Administrador", "Operador de Empresas");
            auth.requestMatchers("/plano/**").hasAnyAuthority("Administrador", "Operador de Planos");
+
            auth.requestMatchers("/proyecto/**").hasAnyAuthority("Administrador", "Operador de Proyectos");
+
+           auth.requestMatchers("/asignacion/**").hasAnyAuthority("Administrador", "Operador de Proyectos", "Operador de Planos");
 
            auth.requestMatchers("/rol/**").hasAnyAuthority("Administrador");
            auth.requestMatchers("/usuario/**").hasAnyAuthority("Administrador");
