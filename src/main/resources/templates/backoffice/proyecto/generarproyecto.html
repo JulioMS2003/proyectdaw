@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+<th:block th:replace="~{layout::momentjs}"></th:block>
+<th:block th:replace="~{layout::sweetalert2}"></th:block>
+<script th:src="@{/js/web/backoffice/proyecto/generarproyecto.js}"></script>
 <nav th:replace="~{layout::menu}"></nav>
 <div class="card">
     <div class="card-header text-bg-danger">
@@ -31,15 +34,18 @@
                     <td th:text="${proyecto.proyectoid}"></td>
                     <td th:text="${proyecto.empresa.nomempresa}"></td>
                     <td th:text="${#dates.format(proyecto.fecinicio, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                    <td th:text="${proyecto.estado}"></td>
+                    <td th:text="${proyecto.estado == 'E' ? 'En Proceso' : proyecto.estado == 'C' ? 'Cancelado' : 'Finalizado' }"></td>
                     <td class="text-center">
-                        <a th:href="@{/proyecto/detalles/${proyecto.proyectoid}}"
-                           class="btn btn-success btndetalles">
+                        <button type="submit" class="btn btn-success btndetalless"
+                                th:data-proyid="${proyecto.proyectoid}">
                             <i class="bi bi-file-earmark-richtext"></i>
-                        </a>
+                        </button>
                     </td>
                     <td class="text-center">
-                        <button type="submit" class="btn btn-danger btncancelar">
+                        <button type="submit"
+                                th:disabled="${proyecto.estado == 'C' || proyecto.estado == 'F'}"
+                                th:class="${proyecto.estado == 'C' || proyecto.estado == 'F' ? 'btn btn-secondary' : 'btn btn-danger btncancelar'}"
+                                th:data-proyid="${proyecto.proyectoid}">
                             <i class="bi bi-x-circle"></i>
                         </button>
                     </td>

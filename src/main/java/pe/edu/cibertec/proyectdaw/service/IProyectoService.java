@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface IProyectoService {
     void generarProyecto(ProyectoRequest proyectoRequest) throws Exception;
+    Proyecto buscarPorId(Integer proyectoid);
     List<Proyecto> listarProyectos();
+    void cancelarProyecto(Integer proyectoid);
 }

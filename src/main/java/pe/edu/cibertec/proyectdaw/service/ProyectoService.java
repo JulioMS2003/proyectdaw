@@ -9,10 +9,7 @@ import pe.edu.cibertec.proyectdaw.repository.AsignacionRepository;
 import pe.edu.cibertec.proyectdaw.repository.PlanoRepository;
 import pe.edu.cibertec.proyectdaw.repository.ProyectoRepository;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -61,8 +58,25 @@ public class ProyectoService implements IProyectoService{
     }
 
     @Override
+    public Proyecto buscarPorId(Integer proyectoid) {
+        Proyecto proyecto = null;
+        Optional<Proyecto> optional = proyectoRepository.findById(proyectoid);
+        if(optional.isPresent())
+            proyecto = optional.get();
+        return proyecto;
+    }
+
+    @Override
     public List<Proyecto> listarProyectos() {
         return proyectoRepository.findAll();
+    }
+
+    @Override
+    public void cancelarProyecto(Integer proyectoid) {
+        Proyecto proyecto = this.buscarPorId(proyectoid);
+        proyecto.setEstado("C");
+        proyecto.setFecfin(new Date());
+        proyectoRepository.save(proyecto);
     }
 
     private Date unDiaMas(Date fecha){

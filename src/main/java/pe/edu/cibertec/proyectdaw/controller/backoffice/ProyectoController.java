@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.cibertec.proyectdaw.model.bd.Proyecto;
 import pe.edu.cibertec.proyectdaw.model.dto.request.ProyectoRequest;
 import pe.edu.cibertec.proyectdaw.model.dto.response.ResultadoResponse;
 import pe.edu.cibertec.proyectdaw.service.IDepartamentoService;
@@ -11,6 +12,7 @@ import pe.edu.cibertec.proyectdaw.service.IEmpresaService;
 import pe.edu.cibertec.proyectdaw.service.IProyectoService;
 
 import java.util.Arrays;
+import java.util.List;
 
 @AllArgsConstructor
 @Controller
@@ -25,6 +27,12 @@ public class ProyectoController {
         model.addAttribute("listaProyectos",
                 iProyectoService.listarProyectos());
         return "backoffice/proyecto/generarproyecto";
+    }
+
+    @GetMapping("/lista")
+    @ResponseBody
+    public List<Proyecto> listarProyectos(){
+        return iProyectoService.listarProyectos();
     }
 
     @GetMapping("/nuevo")
@@ -43,6 +51,20 @@ public class ProyectoController {
         boolean respuesta = true;
         try{
             iProyectoService.generarProyecto(proyectoRequest);
+        } catch(Exception ex){
+            mensaje = ex.getMessage();
+            respuesta = false;
+        }
+        return ResultadoResponse.builder().respuesta(respuesta).mensaje(mensaje).build();
+    }
+
+    @PutMapping("/cancelar/{id}")
+    @ResponseBody
+    public ResultadoResponse cancelarProyecto(@PathVariable("id") Integer proyectid) {
+        String mensaje = "Proyecto cancelado";
+        boolean respuesta = true;
+        try{
+            iProyectoService.cancelarProyecto(proyectid);
         } catch(Exception ex){
             mensaje = ex.getMessage();
             respuesta = false;
