@@ -1,11 +1,57 @@
-$(document).on("click","#btnagregar", function(){
+$(document).on("click", "#btnagregar", function(){
     $("#exampleModalLabel").html("Nuevo Plano");
-    $("#hddplanoid").val("0");
-    cargarCboDistrito(0);
-    vaciarCbo("#cbodistrito", true);
-    $("#switchestado").prop("checked", true);
-    $("#modalplano").modal("show");
+        $("#hddplanoid").val("0");
+        cargarCboDistrito(0);
+        vaciarCbo("#cbodistrito", true);
+        $("#switchestado").prop("checked", true);
+        $("#modalplano").modal("show");
 })
+
+$(document).on("click","#btnguardar", function(){
+$.ajax({
+        type: "POST",
+        url: "/plano/guardar",
+        contentType: "application/json",
+        data: JSON.stringify({
+            planoid: $("#hddplanoid").val(),
+            distritoid: $("#cbodistrito").val(),
+            estado: $("#switchestado").val()
+        }),
+        success: function(resultado) {
+                    if(resultado.respuesta){
+                        listarPlano();
+                        $("#msjerror").hide();
+                        $("#divmensaje").html("");
+                        $("#divmensaje").append(
+                            `<div class="alert alert-success text-center" role="alert">${resultado.mensaje}` +
+                            `</div>`
+                        );
+                        $("#modaldepartamento").modal("hide");
+                    } else {
+                        $("#msjerror").show();
+                        $("#msjerror").html("");
+                        $("#msjerror").html(resultado.mensaje);
+                    }
+                }
+    })
+})
+
+
+$(document).on("click", ".btneliminar", function() {
+            $.ajax({
+                type: "DELETE",
+                url: "/plano/eliminar/" + $(this).attr("data-planoid"),
+                contentType: "application/json",
+                success: function (resultado) {
+                    if (resultado.respuesta) {
+                            listarPlano();
+                            alertaDeRespuesta("", resultado.mensaje, "success");
+                    } else {
+                        alertaDeRespuesta ("", resultado.mensaje, "error");
+                    }
+                }
+            })
+            })
 
 function cargarCboDistrito (distritoid) {
     $.ajax({
@@ -28,10 +74,32 @@ function cargarCboDistrito (distritoid) {
 }
 
 $(document).on("click", ".btnactualizar", function(){
-    $("#planoModalLabel").html("Editar Plano");
-    cargarModalPlano($(this).attr("data-planoid"), false, false, false, false);
-    $("#modalplano").modal("show");
-})
+    $.ajax({
+            type: "PUT",
+            url: "/plano/actualizacion",
+            contentType: "application/json",
+            data: JSON.stringify({
+                planoid: $("#hddplanoid").val(),
+                distritoid: $("#cbodistrito").val(),
+                estado: $("#switchestado").val()
+            }),
+            success: function(resultado){
+                if(resultado.respuesta) {
+                    listarPlano();
+                    $("#divmensaje").html("");
+                    $("#divmensaje").append(
+                        `<div class="alert alert-primary text-center" role="alert">${resultado.mensaje}` +
+                        `</div>`
+                    );
+                    $("#modalplano").modal("hide");
+                } else {
+                    $("#msjerror").show();
+                    $("#msjerror").html("");
+                    $("#msjerror").html(resultado.mensaje);
+                }
+            }
+        })
+    })
 
 function vaciarCbo(cbo,disabled){
     $(cbo).empty();
