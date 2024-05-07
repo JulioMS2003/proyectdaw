@@ -51,6 +51,11 @@ public class DistritoService implements IDistritoService{
     }
 
     @Override
+    public List<Distrito> paginacionDistritos(Integer nropagina) {
+        return distritoRepository.paginacionDistritos((nropagina - 1) * 20);
+    }
+
+    @Override
     public void eliminarDistrito(Integer distrintoid){
         distritoRepository.deleteById(distrintoid);
     }

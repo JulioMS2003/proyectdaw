@@ -195,4 +195,13 @@ Begin
     Limit _skip, 20;
 End //
 Delimiter ;
-Call PaginacionProvincias(140);
+
+Delimiter //
+Create Procedure PaginacionDistritos(In _skip Int)
+Begin
+    Select *
+    From Distrito
+    Order By nomdist Asc
+    Limit _skip, 20;
+End //
+Delimiter ;

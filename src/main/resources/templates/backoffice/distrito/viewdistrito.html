@@ -6,53 +6,108 @@
 </head>
 <body>
 <th:block th:replace="~{layout::sweetalert2}"></th:block>
+<th:block th:replace="~{layout::sweetalert2-personalizado}"></th:block>
 <script th:src="@{/js/web/backoffice/distrito/viewdistrito.js}" type="text/javascript"></script>
 <nav th:replace="layout::menu"></nav>
-
-<div class="card">
-    <div class="card-header text-bg-danger">
-        Mantenimiento de distrito:
-    </div>
-    <div class="card-body">
-        <button id="btnnuevo" type="button" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i>Nuevo Distrito
-        </button>
-        <hr />
-        <table id="tbldistrito" class="table">
-            <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Distrito</th>
-                <th scope="col">Provincia</th>
-                <th scope="col">Departamento</th>
-                <th scope="col">Actualizar</th>
-                <th scope="col">Eliminar</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="distrito : ${listaDistritos}">
-                <td th:text="${distrito.distritoid}"></td>
-                <td th:text="${distrito.nomdist}"></td>
-                <td th:text="${distrito.provincia.nomprov}"></td>
-                <td th:text="${distrito.provincia.departamento.nomdepa}"></td>
-                <td>
-                    <button type="button" class="btn btn-primary btneditar"
-                            th:data-distid="${distrito.distritoid}"
-                            th:data-nomdist="${distrito.nomdist}"
-                            th:data-provid="${distrito.provincia.provinciaid}"
-                            th:data-depaid="${distrito.provincia.departamento.departamentoid}">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger btneliminar" th:data-distid="${distrito.distritoid}">
-
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<div class="container col-lg-8 col-md-10 col-sm-12 mt-5 mb-5">
+    <div class="card">
+        <div class="card-header text-bg-danger">
+            Mantenimiento de Distritos:
+        </div>
+        <div class="card-body">
+            <button id="btnnuevo" type="button" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Nuevo Distrito
+            </button>
+            <hr />
+            <table id="tbldistrito" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Distrito</th>
+                    <th scope="col">Provincia</th>
+                    <th scope="col">Departamento</th>
+                    <th scope="col" class="text-center">Editar</th>
+                    <th scope="col" class="text-center">Eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="distrito : ${listaDistritos}">
+                    <td th:text="${distrito.nomdist}"></td>
+                    <td th:text="${distrito.provincia.nomprov}"></td>
+                    <td th:text="${distrito.provincia.departamento.nomdepa}"></td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-primary btneditar"
+                                th:data-distid="${distrito.distritoid}"
+                                th:data-nomdist="${distrito.nomdist}"
+                                th:data-provid="${distrito.provincia.provinciaid}"
+                                th:data-depaid="${distrito.provincia.departamento.departamentoid}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger btneliminar" th:data-distid="${distrito.distritoid}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li th:class="${nropag == 1 ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'/distrito?nropag=' + ${nropag - 1}}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:if="${nropag > 1}">
+                            <a class="page-link" th:href="@{/distrito?nropag=1}">1</a>
+                        </li>
+                        <li class="page-item" th:if="${nropag > 4}">
+                            <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item" th:if="${nropag > 3}">
+                            <a class="page-link" th:href="@{'/distrito?nropag=' + ${nropag - 2}}" th:text="${nropag - 2}"></a>
+                        </li>
+                        <li class="page-item" th:if="${nropag > 2}">
+                            <a class="page-link" th:href="@{'/distrito?nropag=' + ${nropag - 1}}" th:text="${nropag - 1}"></a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" th:href="@{'/distrito?nropag=' + ${nropag}}" th:text="${nropag}"></a>
+                        </li>
+                        <li class="page-item" th:if="${nropag < nropaginas - 1}">
+                            <a class="page-link" th:href="@{'/distrito?nropag=' + ${nropag + 1}}" th:text="${nropag + 1}"></a>
+                        </li>
+                        <li class="page-item" th:if="${nropag < nropaginas - 2}">
+                            <a class="page-link" th:href="@{'/distrito?nropag=' + ${nropag + 2}}" th:text="${nropag + 2}"></a>
+                        </li>
+                        <li class="page-item" th:if="${nropag < nropaginas - 3}">
+                            <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item" th:if="${nropag < nropaginas}">
+                            <a class="page-link" th:href="@{'/distrito?nropag=' + ${nropaginas}}" th:text="${nropaginas}"></a>
+                        </li>
+                        <li th:class="${nropag == nropaginas ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'/distrito?nropag=' + ${nropag + 1}}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="d-flex justify-content-center">
+                <form th:action="@{/distrito}" method="get">
+                    <div class="form-floating mb-3">
+                        <input style="width: 60px;" type="number" name="nropag"
+                               autocomplete="off" aria-describedby="btnbuscarpag" min="1" th:max="${nropaginas}">
+                        <button style="margin-bottom: 4px;" type="submit" class="btn btn-primary btn-sm" id="btnbuscarpag">
+                            <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
