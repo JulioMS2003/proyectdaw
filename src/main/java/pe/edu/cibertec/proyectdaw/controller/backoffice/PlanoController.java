@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.cibertec.proyectdaw.model.bd.Empleado;
 import pe.edu.cibertec.proyectdaw.model.bd.Plano;
+import pe.edu.cibertec.proyectdaw.model.dto.request.DepartamentoRequest;
 import pe.edu.cibertec.proyectdaw.model.dto.request.PlanoRequest;
 import pe.edu.cibertec.proyectdaw.model.dto.response.ResultadoResponse;
 import pe.edu.cibertec.proyectdaw.service.IPlanoService;
@@ -50,6 +51,20 @@ public class PlanoController {
         try{
             iPlanoService.guardarPlano(planoRequest);
         } catch (Exception ex){
+            mensaje = "Error: " + ex.getMessage();
+            respuesta = false;
+        }
+        return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
+    }
+
+    @PutMapping("/actualizacion")
+    @ResponseBody
+    public ResultadoResponse actualizarPlano(@RequestBody PlanoRequest planoRequest) {
+        String mensaje = "Plano actualizado con éxito";
+        boolean respuesta = true;
+        try{
+            iPlanoService.guardarPlano(planoRequest);
+        } catch(Exception ex){
             mensaje = "Error: " + ex.getMessage();
             respuesta = false;
         }
