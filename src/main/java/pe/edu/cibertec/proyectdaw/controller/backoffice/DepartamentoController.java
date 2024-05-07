@@ -34,12 +34,12 @@ public class DepartamentoController {
     @PostMapping("/registro")
     @ResponseBody
     public ResultadoResponse registrarDepartamento(@RequestBody DepartamentoRequest departamentoRequest) {
-        String mensaje = "Departamento registrada con éxito";
+        String mensaje = "Departamento guardado";
         boolean respuesta = true;
         try{
             iDepartamentoService.registrarDepartamento(departamentoRequest);
         } catch(Exception ex){
-            mensaje = "Error: " + ex.getMessage();
+            mensaje = ex.getMessage();
             respuesta = false;
         }
         return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
@@ -48,12 +48,12 @@ public class DepartamentoController {
     @PutMapping("/actualizacion")
     @ResponseBody
     public ResultadoResponse actualizarDepartamento(@RequestBody DepartamentoRequest departamentoRequest) {
-        String mensaje = "Departamento actualizado con éxito";
+        String mensaje = "Departamento guardado";
         boolean respuesta = true;
         try{
             iDepartamentoService.registrarDepartamento(departamentoRequest);
         } catch(Exception ex){
-            mensaje = "Error: " + ex.getMessage();
+            mensaje = ex.getMessage();
             respuesta = false;
         }
         return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
@@ -67,7 +67,7 @@ public class DepartamentoController {
         try{
             iDepartamentoService.eliminarDepartamento(departamentoid);
         } catch(Exception ex){
-            mensaje = "Error: " + ex.getMessage();
+            mensaje = ex.getMessage();
             respuesta = false;
         }
         return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();

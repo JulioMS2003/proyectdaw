@@ -6,7 +6,6 @@ $(document).on("click", "#btnagregar", function(){
     $("#btnactualizar").hide();
     $("#btneliminar").hide();
     $("#btncerrar").hide();
-    $("#msjerror").hide();
     $("#modaldepartamento").modal("show");
 })
 
@@ -20,19 +19,10 @@ $(document).on("click", "#btnguardar", function(){
             nomdepa: $("#txtnomdepa").val()
         }),
         success: function(resultado) {
+            alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success": "error");
             if(resultado.respuesta){
                 listarDepartamentos();
-                $("#msjerror").hide();
-                $("#divmensaje").html("");
-                $("#divmensaje").append(
-                    `<div class="alert alert-success text-center" role="alert">${resultado.mensaje}` +
-                    `</div>`
-                );
                 $("#modaldepartamento").modal("hide");
-            } else {
-                $("#msjerror").show();
-                $("#msjerror").html("");
-                $("#msjerror").html(resultado.mensaje);
             }
         }
     })
@@ -48,18 +38,10 @@ $(document).on("click", "#btnactualizar", function() {
             nomdepa: $("#txtnomdepa").val()
         }),
         success: function(resultado){
+            alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success": "error");
             if(resultado.respuesta) {
                 listarDepartamentos();
-                $("#divmensaje").html("");
-                $("#divmensaje").append(
-                    `<div class="alert alert-primary text-center" role="alert">${resultado.mensaje}` +
-                    `</div>`
-                );
                 $("#modaldepartamento").modal("hide");
-            } else {
-                $("#msjerror").show();
-                $("#msjerror").html("");
-                $("#msjerror").html(resultado.mensaje);
             }
         }
     })
@@ -78,10 +60,9 @@ $(document).on("click", ".btneditar", function(){
             $("#btncerrar").hide();
             $("#btneliminar").hide();
             $("#btnactualizar").show();
-            $("#msjerror").hide();
+            $("#modaldepartamento").modal("show");
         }
     });
-    $("#modaldepartamento").modal("show");
 })
 
 $(document).on("click", ".btneliminar", function() {
@@ -92,8 +73,8 @@ $(document).on("click", ".btneliminar", function() {
         showCancelButton: true,
         cancelButtonText: "Cancelar",
         confirmButtonText: "Sí, eliminar",
-        confirmButtonColor: "#00FF09",
-        cancelButtonColor: "#FF0C27"
+        confirmButtonColor: "#198754",
+        cancelButtonColor: "#dc3545"
     }).then((result) => {
         if(result.isConfirmed) {
             $.ajax({
@@ -101,21 +82,9 @@ $(document).on("click", ".btneliminar", function() {
                 url: "/departamento/eliminacion/" + $(this).attr("data-depaid"),
                 contentType: "application/json",
                 success: function(resultado) {
+                    alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success": "error");
                     if(resultado.respuesta) {
                         listarDepartamentos();
-                        Swal.fire({
-                            title: resultado.mensaje,
-                            icon: "success",
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                    } else {
-                        Swal.fire({
-                            title: resultado.mensaje,
-                            icon: "error",
-                            timer: 2000,
-                            showConfirmButton: false
-                        })
                     }
                 }
             })
@@ -133,21 +102,32 @@ function listarDepartamentos(){
             $.each(resultado, function(index, value){
                 $("#tbldepartamento > tbody").append(
                     `<tr>` +
-                        `<td class="text-center">${value.departamentoid}</td>` +
-                        `<td class="text-center">${value.nomdepa}</td>` +
+                        `<td>${value.nomdepa}</td>` +
                         `<td class="text-center">` +
-                            `<button style="width: 100px" type="button" class="btn btn-primary btneditar"` +
-                                     `data-depaid="${value.departamentoid}">Editar` +
+                            `<button type="button" class="btn btn-primary btneditar"` +
+                                     `data-depaid="${value.departamentoid}">` +
+                                `<i class="bi bi-pencil"></i>` +
                             `</button>` +
                         `</td>` +
                         `<td class="text-center">` +
-                            `<button style="width: 100px" type="button" class="btn btn-danger btneliminar"` +
-                                     `data-depaid="${value.departamentoid}">Eliminar` +
+                            `<button type="button" class="btn btn-danger btneliminar"` +
+                                     `data-depaid="${value.departamentoid}">` +
+                                `<i class="bi bi-trash"></i>` +
                             `</button>` +
                         `</td>` +
                     `</tr>`
                 )
             })
         }
+    })
+}
+
+function alertaDeRespuesta(_title, _text, _icon) {
+    Swal.fire({
+        title: _title,
+        text: _text,
+        icon: _icon,
+        timer: 5000,
+        showConfirmButton: false
     })
 }
