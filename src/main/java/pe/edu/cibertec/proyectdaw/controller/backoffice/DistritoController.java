@@ -19,9 +19,16 @@ public class DistritoController {
     private IDistritoService iDistritoService;
 
     @GetMapping("")
-    public String viewDistrito(Model model){
+    public String viewDistrito(Model model,
+                               @RequestParam(value = "nropag", defaultValue = "1", required = false) Integer nropag){
+        List<Distrito> listaDistritos = iDistritoService.listarDistrito();
+        Integer nropaginas = listaDistritos.size() % 20 == 0 ? listaDistritos.size() / 20 : listaDistritos.size() / 20 + 1;
+        if(nropag < 1) nropag = 1;
+        if(nropag > nropaginas) nropag = nropaginas;
         model.addAttribute("listaDistritos",
-                iDistritoService.listarTodoOrdenadosPorNombreAsc());
+                iDistritoService.paginacionDistritos(nropag));
+        model.addAttribute("nropaginas", nropaginas);
+        model.addAttribute("nropag", nropag);
         return "backoffice/distrito/viewdistrito";
     }
     @GetMapping("/lista")

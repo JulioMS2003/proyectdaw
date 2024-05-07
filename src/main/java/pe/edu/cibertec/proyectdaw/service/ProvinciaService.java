@@ -49,6 +49,12 @@ public class ProvinciaService implements IProvinciaService {
     }
 
     @Override
+    public List<Provincia> paginacionProvincias(Integer nropagina) {
+        int skip = nropagina * 20;
+        return provinciaRepository.paginacionProvincias(skip);
+    }
+
+    @Override
     public void eliminarProvincia(Integer provinciaid) {
         provinciaRepository.deleteById(provinciaid);
     }

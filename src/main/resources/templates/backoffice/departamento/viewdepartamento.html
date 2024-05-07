@@ -1,49 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="layout::head">
+<head th:replace="~{layout::head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <th:block th:replace="~{layout::sweetalert2}"></th:block>
 <script th:src="@{/js/web/backoffice/departamento/viewdepartamento.js}"></script>
-<nav th:replace="layout::menu"></nav>
+<nav th:replace="~{layout::menu}"></nav>
 
-<div class="card">
-    <div class="card-header text-bg-danger">
-        Mantenimiento de departamentos:
-    </div>
-    <div class="card-body">
-        <button id="btnagregar" type="button" class="btn btn-primary">Agregar</button>
-        <hr />
-        <div id="divmensaje"></div>
-        <table id="tbldepartamento" class="table">
-            <thead>
-            <tr>
-                <th scope="col" class="text-center">Id</th>
-                <th scope="col" class="text-center">Nombre</th>
-                <th scope="col" class="text-center" colspan="2">Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="departamento : ${listaDepartamentos}">
-                <td class="text-center" th:text="${departamento.departamentoid}"></td>
-                <td class="text-center" th:text="${departamento.nomdepa}"></td>
-                <td class="text-center">
-                    <button style="width: 100px" type="button" class="btn btn-primary btneditar"
-                        th:data-depaid="${departamento.departamentoid}">
-                        Editar
-                    </button>
-                </td>
-                <td class="text-center">
-                    <button style="width: 100px" type="button" class="btn btn-danger btneliminar"
-                        th:data-depaid="${departamento.departamentoid}">
-                        Eliminar
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<div class="container col-lg-6 col-md-8 col-sm-10 mt-5">
+    <div class="card">
+        <div class="card-header text-bg-danger">
+            Mantenimiento de Departamentos:
+        </div>
+        <div class="card-body">
+            <button id="btnagregar" type="button" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Nuevo Departamento
+            </button>
+            <hr />
+            <table id="tbldepartamento" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Departamento</th>
+                    <th scope="col" class="text-center">Editar</th>
+                    <th scope="col" class="text-center">Eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="departamento : ${listaDepartamentos}">
+                    <td th:text="${departamento.nomdepa}"></td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-primary btneditar"
+                                th:data-depaid="${departamento.departamentoid}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger btneliminar"
+                                th:data-depaid="${departamento.departamentoid}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -61,7 +63,6 @@
                     <input type="text" class="form-control" id="txtnomdepa" placeholder="Nombre" autocomplete="off">
                     <label for="txtnomdepa">Nombre</label>
                 </div>
-                <div class="alert alert-danger text-center" role="alert" id="msjerror"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" id="btnguardar">Guardar</button>

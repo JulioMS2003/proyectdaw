@@ -10,6 +10,7 @@ public interface IDistritoService {
     List<Distrito> listarDistrito();
     List<Distrito> listarTodoOrdenadosPorNombreAsc();
     List<Distrito> listarTodosPorProvIdOrdenadosPorNombreAsc(Integer provinciaid);
+    List<Distrito> paginacionDistritos(Integer nropagina);
     void eliminarDistrito(Integer distritoid);
 
 }

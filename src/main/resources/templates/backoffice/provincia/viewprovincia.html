@@ -6,42 +6,71 @@
 </head>
 <body>
 <th:block th:replace="~{layout::sweetalert2}"></th:block>
+<th:block th:replace="~{layout::sweetalert2-personalizado}"></th:block>
 <script th:src="@{/js/web/backoffice/provincia/viewprovincia.js}"></script>
 <nav th:replace="~{layout::menu}"></nav>
-<div class="card">
-    <div class="card-header text-bg-danger">
-        Mantenimiento de provincias:
-    </div>
-    <div class="card-body">
-        <button id="btnnuevo" type="button" class="btn btn-primary">Nueva Provincia</button>
-        <hr />
-        <table id="tblprovincia" class="table">
-            <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Provincia</th>
-                <th scope="col">Departamento</th>
-                <th scope="col">Editar</th>
-                <th scope="col">Eliminar</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="provincia : ${listaProvincias}">
-                <td th:text="${provincia.provinciaid}"></td>
-                <td th:text="${provincia.nomprov}"></td>
-                <td th:text="${provincia.departamento.nomdepa}"></td>
-                <td>
-                    <button type="button" class="btn btn-primary btneditar"
-                            th:data-proviid="${provincia.provinciaid}"
-                            th:data-nomprov="${provincia.nomprov}"
-                            th:data-depaid="${provincia.departamento.departamentoid}"><i class="bi bi-pencil"></i></button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger btneliminar" th:data-provid="${provincia.provinciaid}"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<div class="container col-lg-6 col-md-8 col-sm-10 mt-5 mb-5">
+    <div class="card">
+        <div class="card-header text-bg-danger">
+            Mantenimiento de Provincias:
+        </div>
+        <div class="card-body">
+            <button id="btnnuevo" type="button" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Nueva Provincia
+            </button>
+            <hr />
+            <table id="tblprovincia" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Provincia</th>
+                    <th scope="col">Departamento</th>
+                    <th scope="col" class="text-center">Editar</th>
+                    <th scope="col" class="text-center">Eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="provincia : ${listaProvincias}">
+                    <td th:text="${provincia.nomprov}"></td>
+                    <td th:text="${provincia.departamento.nomdepa}"></td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-primary btneditar"
+                                th:data-provid="${provincia.provinciaid}"
+                                th:data-nomprov="${provincia.nomprov}"
+                                th:data-depaid="${provincia.departamento.departamentoid}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger btneliminar"
+                                th:data-provid="${provincia.provinciaid}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li th:class="${pagactual == 0 ? 'page-item disabled' : 'page-item'}">
+                        <a class="page-link" th:href="@{'/provincia?np=' + ${pagactual - 1}}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <th:block th:each="nropagina: ${#numbers.sequence(1, nropaginas)}">
+                        <li th:class="${nropagina - 1 == pagactual ? 'page-item active' : 'page-item'}">
+                            <a class="page-link" th:href="@{'/provincia?np=' + ${nropagina - 1}}" th:text="${nropagina}"></a>
+                        </li>
+                    </th:block>
+                    <li th:class="${pagactual == nropaginas - 1 ? 'page-item disabled' : 'page-item'}">
+                        <a class="page-link" th:href="@{'/provincia?np=' + ${pagactual + 1}}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 

@@ -33,12 +33,12 @@ $(document).on("click","#btnguardar",function(){
             provinciaid: $("#cboprovincia").val()
         }),
         success: function(resultado){
+            alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success" : "error");
             if(resultado.respuesta){
-                listarDistritos();
-                alertaDeRespuesta("",resultado.mensaje,"success");
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
                 $("#modaldistrito").modal("hide");
-            }else{
-                alertaDeRespuesta("",resultado.mensaje,"error");
             }
         }
     })
@@ -61,54 +61,17 @@ $(document).on("click", ".btneliminar", function() {
                 url: "/distrito/eliminar/" + $(this).attr("data-distid"),
                 contentType: "application/json",
                 success: function (resultado) {
+                    alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success" : "error");
                     if (resultado.respuesta) {
-                            listarDistritos();
-                            alertaDeRespuesta("", resultado.mensaje, "success");
-                    } else {
-                        alertaDeRespuesta ("", resultado.mensaje, "error");
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1000);
                     }
                 }
             })
         }
     })
  })
-
- function listarDistritos(){
-
-    $.ajax({
-        type: "GET",
-        url: "/distrito/lista",
-        dataType: "json",
-        success: function (resultado) {
-            $("#tbldistrito > tbody").html("");
-            $.each(resultado, function(index, value){
-            $("#tbldistrito > tbody").append(
-                `<tr>` +
-                    `<td>${value.distritoid}</td>` +
-                    `<td>${value.nomdist}</td>` +
-                     `<td>${value.provincia.nomprov}</td>` +
-                    `<td>${value.provincia.departamento.nomdepa}</td>` +
-                    `<td>` +
-                        `<button type="button" class="btn btn-primary btneditar"`+
-                                    `data-distid="${value.distritoid}"` +
-                                    `data-nomdist="${value.nomdist}"` +
-                                    `data-provid="${value.provincia.provinciaid}"` +
-                                    `data-depaid="${value.provincia.departamento.departamentoid}">` +
-                                    `<i class="bi bi-pencil"></i>` +
-                        `</button>` +
-                    `</td>` +
-                    `<td>` +
-                        `<button type="button" class="btn btn-danger btneliminar" ` +
-                            `data-distid="${value.distritoid}">` +
-                            `<i class="bi bi-trash"></i>` +
-                         `</button>` +
-                    `</td>` +
-                    `</tr>`
-                )
-            })
-        }
-    })
- }
 
  function cargarCboDepartamento (departamentoid) {
     $.ajax({
@@ -156,14 +119,4 @@ function vaciarCbo(cbo,disabled){
         `<option value="-1">Seleccionar opción</option>`
     );
     $(cbo).prop("disabled", disabled);
-}
-
-function alertaDeRespuesta(_title, _text,_icon){
-    Swal.fire({
-        title: _title,
-        text: _text,
-        icon: _icon,
-        timer: 1500,
-        showConfirmButton: false
-    })
 }

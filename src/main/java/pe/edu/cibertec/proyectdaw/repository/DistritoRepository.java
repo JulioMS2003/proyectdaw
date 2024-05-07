@@ -14,4 +14,7 @@ public interface DistritoRepository extends JpaRepository<Distrito, Integer> {
 
     @Query("Select D From Distrito D Where D.provincia.provinciaid=:provinciaid")
     List<Distrito> findAllByProvIdOrderByNomdist(@Param("provinciaid") Integer provinciaid);
+
+    @Query(value = "Call PaginacionDistritos(:skip)", nativeQuery = true)
+    List<Distrito> paginacionDistritos(@Param("skip") Integer skip);
 }
