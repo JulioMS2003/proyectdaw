@@ -21,7 +21,7 @@ public class ProvinciaCrontroller {
     @GetMapping("")
     public String viewProvincia(Model model) {
         model.addAttribute("listaProvincias",
-                iProvinciaService.listarProvincia());
+                iProvinciaService.listarTodasOrdenadasPorNombresAsc());
         return "backoffice/provincia/viewprovincia";
     }
 

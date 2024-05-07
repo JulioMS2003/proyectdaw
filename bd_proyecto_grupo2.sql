@@ -186,6 +186,8 @@ Order By U.apeusuario;
 Insert Into Empresa
 Values (Null, 'Viettel Peru S.A.C.', '20543254798', true);
 
+Select * From Departamento;
+Select * From Provincia;
 Select * From Proyecto;
 Select * From Plano;
 Select * From Asignacion;

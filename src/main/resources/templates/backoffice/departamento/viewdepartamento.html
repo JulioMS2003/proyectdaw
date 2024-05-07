@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="layout::head">
+<head th:replace="~{layout::head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <th:block th:replace="~{layout::sweetalert2}"></th:block>
 <script th:src="@{/js/web/backoffice/departamento/viewdepartamento.js}"></script>
-<nav th:replace="layout::menu"></nav>
+<nav th:replace="~{layout::menu}"></nav>
 
-<div class="container col-6 mt-5">
+<div class="container col-lg-6 col-md-8 col-sm-10 mt-5">
     <div class="card">
         <div class="card-header text-bg-danger">
             Mantenimiento de Departamentos:

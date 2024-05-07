@@ -10,7 +10,7 @@ $(document).on("click", ".btneditar", function() {
     $("#exampleModalLabel").html("Editar Provincia");
     $("#hddprovinciaid").val($(this).attr("data-provid"));
     $("#txtnomprov").val($(this).attr("data-nomprov"));
-    cargarCboDepartamento ($(this).attr("data-depaid"));
+    cargarCboDepartamento($(this).attr("data-depaid"));
     $("#modalprovincia").modal("show");
 })
 
@@ -21,9 +21,9 @@ $(document).on("click", ".btneliminar", function() {
         icon: "warning",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
-        cancelButtonColor: "#FF0C27",
+        cancelButtonColor: "#dc3545",
         confirmButtonText: "Si, eliminar",
-        confirmButtonColor: "#00FF09"
+        confirmButtonColor: "#198754"
 }).then((result) => {
     if(result.isConfirmed) {
         $.ajax({
@@ -37,15 +37,10 @@ $(document).on("click", ".btneliminar", function() {
                 } else {
                     alertaDeRespuesta (resultado.mensaje, "", "error");
                     }
-
                 }
-
             })
-
         }
-
     })
-
 })
 
 $(document).on("click", "#btnguardar", function() {
@@ -59,12 +54,10 @@ $(document).on("click", "#btnguardar", function() {
             departamentoid: $("#cbodepartamento").val()
         }),
         success: function (resultado) {
-        if (resultado.respuesta) {
-            listarProvincias();
-            alertaDeRespuesta (resultado.mensaje, "","success");
-            $("#modalprovincia").modal("hide");
-        } else {
-            alertaDeRespuesta (resultado.mensaje,"", "error");
+            alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success" : "error");
+            if (resultado.respuesta) {
+                listarProvincias();
+                $("#modalprovincia").modal("hide");
             }
         }
     })
@@ -79,10 +72,9 @@ function listarProvincias(){
             $.each(resultado, function(index, value) {
                 $("#tblprovincia > tbody").append(
                     `<tr>` +
-                         `<td>${value.provinciaid}</td>` +
                          `<td>${value.nomprov}</td>` +
                          `<td>${value.departamento.nomdepa}</td>` +
-                         `<td>` +
+                         `<td class="text-center">` +
                             `<button type="button" class="btn btn-primary btneditar"` +
                             `data-provid="${value.provinciaid}" ` +
                             `data-nomprov="${value.nomprov}"` +
@@ -90,7 +82,7 @@ function listarProvincias(){
                             `<i class="bi bi-pencil"></i>` +
                             `</button>` +
                          `</td>` +
-                          `<td>` +
+                          `<td class="text-center">` +
                             `<button type="button" class="btn btn-danger btneliminar"` +
                             `data-provid="${value.provinciaid}">` +
                             `<i class="bi bi-trash"></i>` +
@@ -127,13 +119,4 @@ function listarProvincias(){
         }
 
     });
- }
- function alertaDeRespuesta(_title,_text,_icon){
- Swal.fire({
-    title:_title,
-    text: _text,
-    icon:_icon,
-    timer:1500,
-    showConfirmButton: false
- })
  }
