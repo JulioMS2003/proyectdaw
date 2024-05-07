@@ -186,8 +186,13 @@ Order By U.apeusuario;
 Insert Into Empresa
 Values (Null, 'Viettel Peru S.A.C.', '20543254798', true);
 
-Select * From Departamento;
-Select * From Provincia;
-Select * From Proyecto;
-Select * From Plano;
-Select * From Asignacion;
+Delimiter //
+Create Procedure PaginacionProvincias(In _skip Int)
+Begin
+    Select *
+    From Provincia
+    Order By nomprov Asc
+    Limit _skip, 20;
+End //
+Delimiter ;
+Call PaginacionProvincias(140);

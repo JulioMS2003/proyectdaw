@@ -19,9 +19,16 @@ public class ProvinciaCrontroller {
     private IProvinciaService iProvinciaService;
 
     @GetMapping("")
-    public String viewProvincia(Model model) {
-        model.addAttribute("listaProvincias",
-                iProvinciaService.listarTodasOrdenadasPorNombresAsc());
+    public String viewProvincia(Model model,
+                                @RequestParam(value = "np", defaultValue = "0", required = false) Integer np) {
+        List<Provincia> listaProvincias = iProvinciaService.listarTodasOrdenadasPorNombresAsc();
+        int nropaginas = listaProvincias.size() % 20 == 0 ?
+                listaProvincias.size() / 20 : listaProvincias.size() / 20 + 1;
+        if(np > nropaginas) np = nropaginas - 1;
+        if(np < 0) np = 0;
+        model.addAttribute("nropaginas", nropaginas);
+        model.addAttribute("pagactual", np);
+        model.addAttribute("listaProvincias", iProvinciaService.paginacionProvincias(np));
         return "backoffice/provincia/viewprovincia";
     }
 

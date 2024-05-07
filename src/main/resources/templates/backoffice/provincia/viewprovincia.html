@@ -9,7 +9,7 @@
 <th:block th:replace="~{layout::sweetalert2-personalizado}"></th:block>
 <script th:src="@{/js/web/backoffice/provincia/viewprovincia.js}"></script>
 <nav th:replace="~{layout::menu}"></nav>
-<div class="container col-lg-6 col-md-8 col-sm-10 mt-5">
+<div class="container col-lg-6 col-md-8 col-sm-10 mt-5 mb-5">
     <div class="card">
         <div class="card-header text-bg-danger">
             Mantenimiento de Provincias:
@@ -49,6 +49,27 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="card-footer">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li th:class="${pagactual == 0 ? 'page-item disabled' : 'page-item'}">
+                        <a class="page-link" th:href="@{'/provincia?np=' + ${pagactual - 1}}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <th:block th:each="nropagina: ${#numbers.sequence(1, nropaginas)}">
+                        <li th:class="${nropagina - 1 == pagactual ? 'page-item active' : 'page-item'}">
+                            <a class="page-link" th:href="@{'/provincia?np=' + ${nropagina - 1}}" th:text="${nropagina}"></a>
+                        </li>
+                    </th:block>
+                    <li th:class="${pagactual == nropaginas - 1 ? 'page-item disabled' : 'page-item'}">
+                        <a class="page-link" th:href="@{'/provincia?np=' + ${pagactual + 1}}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
