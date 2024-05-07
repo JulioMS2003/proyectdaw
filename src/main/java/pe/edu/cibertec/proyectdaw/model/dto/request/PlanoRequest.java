@@ -8,7 +8,6 @@ import lombok.Setter;
 public class PlanoRequest {
 
     private Integer planoid;
-    private Boolean estado;
+    private String estado;
     private Integer distritoid;
-
 }

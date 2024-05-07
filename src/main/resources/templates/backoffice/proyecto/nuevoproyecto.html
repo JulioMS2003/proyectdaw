@@ -10,25 +10,13 @@
 <nav th:replace="~{layout::menu}"></nav>
     <div class="p-5">
         <div class="p-5">
+            <h1 class="fw-bold">Nuevo Proyecto</h1>
+            <hr class="border-black">
             <div class="card">
                 <div class="card-header text-bg-primary p-4">
-                    <h1 class="fw-bold text-center">Nuevo Proyecto</h1>
+                    <h1 class="fw-bold text-center">Datos del Proyecto</h1>
                 </div>
                 <div class="card-body p-3">
-                    <div class="d-flex justify-content-around">
-                        <button style="width: 250px" type="button"
-                                class="btn btn-success btn-lg" id="btngenerar">
-                            <i class="bi bi-check"></i> Generar Proyecto
-                        </button>
-                        <button style="width: 250px" type="button"
-                                class="btn btn-primary btn-lg" id="btnnuevoplano">
-                            <i class="bi bi-plus-circle"></i> Nuevo Plano
-                        </button>
-                        <a style="width: 250px" class="btn btn-danger btn-lg" th:href="@{/proyecto}">
-                            <i class="bi bi-arrow-left"></i> Regresar
-                        </a>
-                    </div>
-                    <hr />
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
@@ -48,6 +36,67 @@
                                 <label for="cboempresa">Empresa</label>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="cbodepartamento" aria-label="Floating label select example">
+                                    <option value="-1">Seleccionar opción</option>
+                                    <th:block th:each="departamento: ${listaDepartamentos}">
+                                        <option th:value="${departamento.departamentoid}" th:text="${departamento.nomdepa}"></option>
+                                    </th:block>
+                                </select>
+                                <label for="cbodepartamento">Departamento</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="cboprovincia" aria-label="Floating label select example" disabled>
+                                    <option value="-1">Seleccionar opción</option>
+                                </select>
+                                <label for="cboprovincia">Provincia</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="cbodistrito" aria-label="Floating label select example" disabled>
+                                    <option value="-1">Seleccionar opción</option>
+                                </select>
+                                <label for="cbodistrito">Distrito</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-header text-bg-primary p-4">
+                    <h1 class="fw-bold text-center">Planos</h1>
+                </div>
+                <div class="card-body p-3">
+                    <div class="container col-4 m-0">
+                        <div class="form-floating mb-3">
+                            <input style="width: 250px" type="text" class="form-control" id="txtplanoid"
+                                   placeholder="Código" autocomplete="off">
+                            <label for="txtplanoid">Código de Plano</label>
+                        </div>
+                        <button style="width: 250px" type="button"
+                                class="btn btn-primary btn-lg" id="btnnuevoplano">
+                            <i class="bi bi-plus-circle"></i> Agregar Plano
+                        </button>
+                    </div>
+
+                    <hr />
+                    <div id="divplanos">
+
+                    </div>
+                </div>
+                <div class="card-footer p-3">
+                    <div class="d-flex justify-content-around">
+                        <button style="width: 250px" type="button"
+                                class="btn btn-success btn-lg" id="btngenerar">
+                            <i class="bi bi-check"></i> Generar Proyecto
+                        </button>
+                        <a style="width: 250px" class="btn btn-danger btn-lg" th:href="@{/proyecto}">
+                            <i class="bi bi-arrow-left"></i> Regresar
+                        </a>
                     </div>
                 </div>
             </div>

@@ -59,7 +59,7 @@ activo Bit Not Null);
 Create Table Plano(
 planoid Char(7) Primary Key,
 distritoid Int Not Null,
-estado Bit Not Null,
+estado Char(1) Not Null,
 Foreign Key (distritoid) References Distrito (distritoid));
 
 Create Table Proyecto(

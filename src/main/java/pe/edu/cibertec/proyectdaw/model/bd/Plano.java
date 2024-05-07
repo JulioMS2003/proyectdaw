@@ -12,8 +12,7 @@ public class Plano {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer planoid;
     @Column(name="estado")
-    private Boolean estado;
-
+    private String estado;
     @ManyToOne
     @JoinColumn(name="distritoid")
     private Distrito distrito;
