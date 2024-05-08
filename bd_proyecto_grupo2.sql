@@ -229,12 +229,21 @@ Delimiter ;
 Delimiter //
 Create Procedure PaginacionUsuarios(In _skip Int)
 Begin
-    Select U.*
+    Select Distinct U.*
     From Usuario U
     Join Usuario_Rol UR On U.usuarioid = UR.usuarioid
     Join Rol R On R.rolid = UR.rolid
     Where R.nomrol != 'Administrador'
     Order By apeusuario Asc
+    Limit _skip, 20;
+End //
+Delimiter ;
+
+Delimiter //
+Create Procedure PaginacionProyectos(In _skip Int)
+Begin
+    Select *
+    From Proyecto
     Limit _skip, 20;
 End //
 Delimiter ;

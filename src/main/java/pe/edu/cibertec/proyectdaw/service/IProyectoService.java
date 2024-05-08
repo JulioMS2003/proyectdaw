@@ -9,5 +9,6 @@ public interface IProyectoService {
     void generarProyecto(ProyectoRequest proyectoRequest) throws Exception;
     Proyecto buscarPorId(Integer proyectoid);
     List<Proyecto> listarProyectos();
+    List<Proyecto> paginacionProyectos(Integer nropagina);
     void cancelarProyecto(Integer proyectoid);
 }

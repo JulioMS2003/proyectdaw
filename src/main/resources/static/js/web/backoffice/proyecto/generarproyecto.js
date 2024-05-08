@@ -47,48 +47,16 @@ $(document).on("click", ".btncancelar", function(){
                 url: "/proyecto/cancelar/" + $(this).attr("data-proyid"),
                 success: function(resultado) {
                     alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success": "error");
-                    if(resultado.respuesta)
-                        listarProyectos();
+                    if(resultado.respuesta){
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1000);
+                    }
                 }
             })
         }
     })
 })
-
-function listarProyectos(){
-    $.ajax({
-        type: "GET",
-        url: "/proyecto/lista",
-        dataType: "json",
-        success: function(resultado) {
-            $("#tblproyecto > tbody").html("");
-            $.each(resultado, function(index, value){
-                $("#tblproyecto > tbody").append(
-                    `<tr>` +
-                        `<td>${value.proyectoid}</td>` +
-                        `<td>${value.empresa.nomempresa}</td>` +
-                        `<td>${moment(value.fecinicio).format('YYYY-MM-DD')}</td>` +
-                        `<td>${value.estado == 'E' ? 'En Proceso' : value.estado == 'C' ? 'Cancelado' : 'Finalizado'}</td>` +
-                        `<td class="text-center">` +
-                            `<button type="button" class="btn btn-success btndetalles" ` +
-                                     `data-proyid="${value.proyectoid}">` +
-                                `<i class="bi bi-file-earmark-richtext"></i>` +
-                            `</button>` +
-                        `</td>` +
-                        `<td class="text-center">` +
-                            `<button type="button" ` +
-                                     `class="${value.estado == 'C' || value.estado == 'F' ? 'btn btn-secondary' : 'btn btn-danger btncancelar'}" ` +
-                                     `data-proyid="${value.proyectoid}" ` +
-                                     `${value.estado == 'C' || value.estado == 'F' ? 'disabled' : ''}>` +
-                                `<i class="bi bi-x-circle"></i>` +
-                            `</button>` +
-                        `</td>` +
-                    `</tr>`
-                )
-            });
-        }
-    })
-}
 
 function ocultarMostrarAlertas(estado) {
     if(estado == 'E') {
@@ -104,14 +72,4 @@ function ocultarMostrarAlertas(estado) {
         $("#divfinalizado").hide();
         $("#divcancelado").show();
     }
-}
-
-function alertaDeRespuesta(_title, _text,_icon){
-    Swal.fire({
-        title: _title,
-        text: _text,
-        icon: _icon,
-        timer: 5000,
-        showConfirmButton: false
-    })
 }
