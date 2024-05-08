@@ -10,4 +10,5 @@ public interface IEmpleadoService {
     Empleado buscarEmpleadoPorId(Integer empleadoid);
     List<Empleado> listarEmpleado();
     List<Empleado> listarEmpleadosOrdenadosPorApellido();
+    List<Empleado> paginacionEmpleados(Integer nropagina);
 }

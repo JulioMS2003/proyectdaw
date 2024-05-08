@@ -75,7 +75,9 @@ $(document).on("click", "#btnguardar", function(){
         success: function(resultado) {
             alertaDeRespuesta("", resultado.mensaje, resultado.respuesta ? "success" : "error");
             if(resultado.respuesta) {
-                listarEmpleados();
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
                 $("#modalempleado").modal("hide");
             }
         }
@@ -184,37 +186,6 @@ function cargarCboDistrito(distritoid, provinciaid){
     })
 }
 
-function listarEmpleados(){
-    $.ajax({
-        type: "GET",
-        url: "/empleado/lista",
-        dataType: "json",
-        success: function(resultado) {
-            $("#tblempleado > tbody").html("");
-            $.each(resultado, function(index, value){
-                $("#tblempleado > tbody").append(
-                    `<tr>` +
-                        `<td class="text-center">${value.apeemp + ' ' + value.nomemp}</td>` +
-                        `<td class="text-center">${value.email}</td>` +
-                        `<td class="text-center">${value.telefono}</td>` +
-                        `<td class="text-center">${value.estado == true ? "Activo" : "Inactivo"}</td>` +
-                        `<td class="text-center">` +
-                            `<button type="button" class="btn btn-success btndetalles" data-empid="${value.empleadoid}">` +
-                                `<i class="bi bi-file-earmark-richtext"></i>` +
-                            `</button>` +
-                        `</td>` +
-                        `<td class="text-center">` +
-                            `<button type="button" class="btn btn-primary btneditar" data-empid="${value.empleadoid}">` +
-                                `<i class="bi bi-pencil"></i>` +
-                            `</button>` +
-                        `</td>` +
-                    `</tr>`
-                );
-            });
-        }
-    })
-}
-
 function resetearCbo(cbo){
     $(cbo).empty();
     $(cbo).append(
@@ -233,14 +204,4 @@ function cambiarValCbo(cbo, val){
         $(cbo).val(val);
     else
         $(cbo).val(-1);
-}
-
-function alertaDeRespuesta(_title, _text, _icon) {
-    Swal.fire({
-        title: _title,
-        text: _text,
-        icon: _icon,
-        timer: 1500,
-        showConfirmButton: false
-    })
 }

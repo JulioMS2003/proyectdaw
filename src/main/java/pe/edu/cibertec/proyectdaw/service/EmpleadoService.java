@@ -89,6 +89,11 @@ public class EmpleadoService implements IEmpleadoService{
         return empleadoRepository.findAllByOrderByApeemp();
     }
 
+    @Override
+    public List<Empleado> paginacionEmpleados(Integer nropagina) {
+        return empleadoRepository.paginacionEmpleados((nropagina - 1) * 20);
+    }
+
     private Date unDiaMas(Date fecha){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha);

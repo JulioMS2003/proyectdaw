@@ -32,39 +32,14 @@ $(document).on("click", "#btnguardar", function(){
         success: function(resultado) {
             alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success": "error");
             if(resultado.respuesta) {
-                listarEmpresas();
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
                 $("#modalempresa").modal("hide");
             }
         }
     })
 })
-
-function listarEmpresas(){
-    $.ajax({
-        type: "GET",
-        url: "/empresa/lista",
-        dataType: "json",
-        success: function(resultado) {
-            $("#tblempresa > tbody").html("");
-            $.each(resultado, function(index, value) {
-                $("#tblempresa > tbody").append(
-                    `<tr>` +
-                        `<td>${value.nomempresa}</td>` +
-                        `<td>${value.ruc}</td>` +
-                        `<td>${value.activo ? 'Activa' : 'Inactiva'}</td>` +
-                        `<td class="text-center">` +
-                            `<button type="button" class="btn btn-primary btneditar" ` +
-                                     `data-empid="${value.empresaid}" data-empnom="${value.nomempresa}" ` +
-                                     `data-empruc="${value.ruc}" data-empact="${value.activo}">` +
-                                `<i class="bi bi-pencil"></i>` +
-                            `</button>` +
-                        `</td>` +
-                    `</tr>`
-                )
-            })
-        }
-    })
-}
 
 function alertaDeRespuesta(_title, _text, _icon){
     Swal.fire({
