@@ -24,7 +24,6 @@
                 <th scope="col">Distrito</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Editar</th>
-                <th scope="col">Eliminar</th>
             </tr>
             </thead>
             <tbody>
@@ -38,12 +37,6 @@
                             th:data-distritoid="${plano.distrito.distritoid}"
                             th:data-estadoid="${plano.estado}">
                         <i class="bi bi-pencil"></i>
-                    </button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger btneliminar" th:data-distid="${plano.planoid}">
-
-                        <i class="bi bi-trash"></i>
                     </button>
                 </td>
             </tr>
@@ -63,6 +56,11 @@
             <div class="modal-body">
                 <input type="hidden" id="hddplanoid" value="0">
                 <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtplanoid"
+                           placeholder="id" autocomplete="off">
+                    <label for="txtplanoid">Plano id</label>
+                </div>
+                <div class="form-floating mb-3">
                     <select id="cbodistrito" class="form-control"></select>
                     <label for="cbodistrito">Seleccione Distrito</label>
                 </div>
@@ -74,6 +72,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" id="btncerrar" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" id="btnguardar">Guardar</button>
+                <button type="button" class="btn btn-primary" id="btnactualizar">Actualizar</button>
             </div>
         </div>
     </div>
