@@ -20,9 +20,16 @@ public class EmpresaController {
     private IEmpresaService iEmpresaService;
 
     @GetMapping("")
-    public String viewEmpresa(Model model){
+    public String viewEmpresa(Model model,
+                              @RequestParam(value = "nropag", defaultValue = "1", required = false) Integer nropag){
+        List<Empresa> listaEmpresas = iEmpresaService.listarEmpresa();
+        Integer nropaginas = listaEmpresas.size() % 20 == 0 ? listaEmpresas.size() / 20 : listaEmpresas.size() / 20 + 1;
+        if(nropag < 1) nropag = 1;
+        if(nropag > nropaginas) nropag = nropaginas;
         model.addAttribute("listaEmpresas",
-                iEmpresaService.listarEmpresasOrdenadasPorNombreAsc());
+                iEmpresaService.paginacionEmpresas(nropag));
+        model.addAttribute("nropaginas", nropaginas);
+        model.addAttribute("nropag", nropag);
         return  "backoffice/empresa/viewempresa";
     }
 

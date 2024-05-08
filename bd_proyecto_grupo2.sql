@@ -205,3 +205,13 @@ Begin
     Limit _skip, 20;
 End //
 Delimiter ;
+
+Delimiter //
+Create Procedure PaginacionEmpresas(In _skip Int)
+Begin
+    Select *
+    From Empresa
+    Order By nomempresa Asc
+    Limit _skip, 20;
+End //
+Delimiter ;
