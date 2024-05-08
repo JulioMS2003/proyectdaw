@@ -215,3 +215,26 @@ Begin
     Limit _skip, 20;
 End //
 Delimiter ;
+
+Delimiter //
+Create Procedure PaginacionEmpleados(In _skip Int)
+Begin
+    Select * 
+    From Empleado
+    Order By apeemp Asc
+    Limit _skip, 20;
+End //
+Delimiter ;
+
+Delimiter //
+Create Procedure PaginacionUsuarios(In _skip Int)
+Begin
+    Select U.*
+    From Usuario U
+    Join Usuario_Rol UR On U.usuarioid = UR.usuarioid
+    Join Rol R On R.rolid = UR.rolid
+    Where R.nomrol != 'Administrador'
+    Order By apeusuario Asc
+    Limit _skip, 20;
+End //
+Delimiter ;

@@ -20,9 +20,18 @@ public class UsuarioController {
 
     private IUsuarioService iUsuarioService;
     @GetMapping("")
-    public String viewUsuario(Model model){
+    public String viewUsuario(Model model,
+                              @RequestParam(value = "nropag", defaultValue = "1", required = false) Integer nropag) {
+        List<Usuario> listaUsuarios = iUsuarioService.listarUsuario();
+        System.out.println(listaUsuarios.size());
+        Integer nropaginas = (listaUsuarios.size() - 1) % 20 == 0 ? (listaUsuarios.size() - 1) / 20 : (listaUsuarios.size() - 1) / 20 + 1;
+        System.out.println(nropaginas);
+        if(nropag < 1) nropag = 1;
+        if(nropag > nropaginas) nropag = nropaginas;
         model.addAttribute("listaUsuarios",
-                iUsuarioService.listarUsuariosOrdenadosPorApellidos());
+                iUsuarioService.paginacionUsuarios(nropag));
+        model.addAttribute("nropaginas", nropaginas);
+        model.addAttribute("nropag", nropag);
         return "backoffice/usuario/viewusuario";
     }
 

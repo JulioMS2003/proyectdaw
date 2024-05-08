@@ -61,6 +61,11 @@ public class UsuarioService implements IUsuarioService{
     }
 
     @Override
+    public List<Usuario> paginacionUsuarios(Integer nropagina) {
+        return usuarioRepository.paginacionUsuarios((nropagina - 1) * 20);
+    }
+
+    @Override
     public Usuario obtenerPorId(Integer usuarioid) {
         Usuario usuario = null;
         Optional<Usuario> optional = usuarioRepository.findById(usuarioid);
