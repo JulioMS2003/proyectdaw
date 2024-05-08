@@ -44,4 +44,9 @@ public class EmpresaService implements IEmpresaService{
     public List<Empresa> listarEmpresasOrdenadasPorNombreAsc() {
         return empresaRepository.findAllByOrderByNomempresa();
     }
+
+    @Override
+    public List<Empresa> paginacionEmpresas(Integer nropagina) {
+        return empresaRepository.paginacionEmpresas((nropagina - 1) * 20);
+    }
 }

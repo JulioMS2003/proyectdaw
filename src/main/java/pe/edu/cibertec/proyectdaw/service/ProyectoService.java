@@ -74,6 +74,11 @@ public class ProyectoService implements IProyectoService{
     }
 
     @Override
+    public List<Proyecto> paginacionProyectos(Integer nropagina) {
+        return proyectoRepository.paginacionProyectos((nropagina - 1) * 20);
+    }
+
+    @Override
     public void cancelarProyecto(Integer proyectoid) {
         Proyecto proyecto = this.buscarPorId(proyectoid);
         proyecto.setEstado("C");

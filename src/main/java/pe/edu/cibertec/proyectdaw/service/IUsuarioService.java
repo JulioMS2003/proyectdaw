@@ -13,6 +13,7 @@ public interface IUsuarioService {
     void registrarNuevoUsuario(UsuarioRequest usuarioRequest) throws Exception;
     List<Usuario> listarUsuario();
     List<Usuario> listarUsuariosOrdenadosPorApellidos();
+    List<Usuario> paginacionUsuarios(Integer nropagina);
     Usuario obtenerPorId(Integer usuarioid);
     Usuario obtenerPorUsername(String username);
     void registrarUsuario(Usuario usuario);

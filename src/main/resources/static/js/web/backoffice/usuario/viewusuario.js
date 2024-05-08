@@ -38,12 +38,12 @@ $(document).on("click", "#btnguardar", function(){
             idroles: idroles
         }),
         success: function(resultado) {
+            alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success" : "error");
             if(resultado.respuesta) {
-                listarUsuarios();
-                alertaDeRespuesta(" ", resultado.mensaje, "success");
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
                 $("#modalusuario").modal("hide");
-            } else {
-                alertaDeRespuesta(" ", resultado.mensaje, "error");
             }
         }
     })
@@ -64,7 +64,9 @@ $(document).on("click", "#btnactualizar", function(){
         success: function(resultado) {
             alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success" : "error");
             if(resultado.respuesta) {
-                listarUsuarios();
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
                 $("#modalusuario").modal("hide");
             }
         }
@@ -155,39 +157,6 @@ function cargarIdRoles(cargar, roles){
     }
 }
 
-function listarUsuarios(){
-    $.ajax({
-        type: "GET",
-        url: "/usuario/lista",
-        dataType: "json",
-        success: function(resultado) {
-            $("#tblusuario > tbody").html("");
-            $.each(resultado, function(index, value) {
-                $("#tblusuario > tbody").append(
-                    `<tr>` +
-                        `<td>${value.username}</td>` +
-                        `<td>${value.apeusuario + ' ' + value.nomusuario}</td>` +
-                        `<td>${value.activo == true ? 'Activo' : 'Inactivo'}</td>` +
-                        `<td>${value.ultimologin == null ? 'No registra' : moment(value.ultimologin).format('YYYY-MM-DD HH:mm:ss')}</td>` +
-                        `<td class="text-center">` +
-                            `<button type="button" class="btn btn-success btndetalles" ` +
-                                     `data-usuarioid="${value.usuarioid}">` +
-                                `<i class="bi bi-file-earmark-richtext"></i>` +
-                            `</button>` +
-                        `</td>` +
-                        `<td class="text-center">` +
-                            `<button type="button" class="btn btn-primary btneditar" ` +
-                                     `data-usuarioid="${value.usuarioid}">` +
-                                `<i class="bi bi-pencil"></i>` +
-                            `</button>` +
-                        `</td>` +
-                    `</tr>`
-                )
-            })
-        }
-    })
-}
-
 function desactivarCampos(desactivar) {
     if(desactivar) {
         $("#txtnomusuario").prop("readonly", true);
@@ -217,14 +186,4 @@ function mostrarBotones(mostrarBtnAceptar, mostrarBtnGuardar, mostrarBtnActualiz
     mostrarBtnAceptar ? $("#btnaceptar").show() : $("#btnaceptar").hide();
     mostrarBtnGuardar ? $("#btnguardar").show() : $("#btnguardar").hide();
     mostrarBtnActualizar ? $("#btnactualizar").show() : $("#btnactualizar").hide();
-}
-
-function alertaDeRespuesta(_title, _text, _icon) {
-    Swal.fire({
-        title: _title,
-        text: _text,
-        icon: _icon,
-        timer: 1500,
-        showConfirmButton: false
-    })
 }

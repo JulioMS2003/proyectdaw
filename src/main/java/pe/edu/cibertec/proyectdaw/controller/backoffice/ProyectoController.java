@@ -23,9 +23,16 @@ public class ProyectoController {
     private IEmpresaService iEmpresaService;
     private IDepartamentoService iDepartamentoService;
     @GetMapping("")
-    public String generarProyecto(Model model){
+    public String generarProyecto(Model model,
+                                  @RequestParam(value = "nropag", defaultValue = "1", required = false) Integer nropag){
+        List<Proyecto> listaProyectos = iProyectoService.listarProyectos();
+        Integer nropaginas = listaProyectos.size() % 20 == 0 ? listaProyectos.size() / 20 : listaProyectos.size() / 20 + 1;
+        if(nropag < 1) nropag = 1;
+        if(nropag > nropaginas) nropag = nropaginas;
         model.addAttribute("listaProyectos",
-                iProyectoService.listarProyectos());
+                iProyectoService.paginacionProyectos(nropag));
+        model.addAttribute("nropaginas", nropaginas);
+        model.addAttribute("nropag", nropag);
         return "backoffice/proyecto/generarproyecto";
     }
 

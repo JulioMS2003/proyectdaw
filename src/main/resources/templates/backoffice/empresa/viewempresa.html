@@ -8,41 +8,99 @@
 <th:block th:replace="~{layout::sweetalert2}"></th:block>
 <script th:src="@{/js/web/backoffice/empresa/viewempresa.js}" type="text/javascript"></script>
 <nav th:replace="layout::menu"></nav>
-<div class="card">
-    <div class="card-header text-bg-danger">
-        Mantenimiento de Empresas:
-    </div>
-    <div class="card-body">
-        <button id="btnnuevo" type="button" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Nueva Empresa
-        </button>
-        <hr />
-        <table id="tblempresa" class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Empresa</th>
-                    <th scope="col">RUC</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col" class="text-center">Actualizar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="empresa : ${listaEmpresas}">
-                    <td th:text="${empresa.nomempresa}"></td>
-                    <td th:text="${empresa.ruc}"></td>
-                    <td th:text="${empresa.activo ? 'Activa' : 'Inactiva'}"></td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-primary btneditar"
-                                      th:data-empid="${empresa.empresaid}"
-                                      th:data-empnom="${empresa.nomempresa}"
-                                      th:data-empruc="${empresa.ruc}"
-                                      th:data-empact="${empresa.activo}">
-                            <i class="bi bi-pencil"></i>
+<div class="container col-lg-7 col-md-9 col-sm-11 mt-5 mb-5">
+    <div class="card">
+        <div class="card-header text-bg-danger">
+            Mantenimiento de Empresas:
+        </div>
+        <div class="card-body">
+            <button id="btnnuevo" type="button" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Nueva Empresa
+            </button>
+            <hr />
+            <table id="tblempresa" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Empresa</th>
+                        <th scope="col">RUC</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col" class="text-center">Actualizar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="empresa : ${listaEmpresas}">
+                        <td th:text="${empresa.nomempresa}"></td>
+                        <td th:text="${empresa.ruc}"></td>
+                        <td th:text="${empresa.activo ? 'Activa' : 'Inactiva'}"></td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-primary btneditar"
+                                    th:data-empid="${empresa.empresaid}"
+                                    th:data-empnom="${empresa.nomempresa}"
+                                    th:data-empruc="${empresa.ruc}"
+                                    th:data-empact="${empresa.activo}">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li th:class="${nropag == 1 ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'/empresa?nropag=' + ${nropag - 1}}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:if="${nropag > 1}">
+                            <a class="page-link" th:href="@{/empresa?nropag=1}">1</a>
+                        </li>
+                        <li class="page-item" th:if="${nropag > 4}">
+                            <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item" th:if="${nropag > 3}">
+                            <a class="page-link" th:href="@{'/empresa?nropag=' + ${nropag - 2}}" th:text="${nropag - 2}"></a>
+                        </li>
+                        <li class="page-item" th:if="${nropag > 2}">
+                            <a class="page-link" th:href="@{'/empresa?nropag=' + ${nropag - 1}}" th:text="${nropag - 1}"></a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" th:href="@{'/empresa?nropag=' + ${nropag}}" th:text="${nropag}"></a>
+                        </li>
+                        <li class="page-item" th:if="${nropag < nropaginas - 1}">
+                            <a class="page-link" th:href="@{'/empresa?nropag=' + ${nropag + 1}}" th:text="${nropag + 1}"></a>
+                        </li>
+                        <li class="page-item" th:if="${nropag < nropaginas - 2}">
+                            <a class="page-link" th:href="@{'/empresa?nropag=' + ${nropag + 2}" th:text="${nropag + 2}"></a>
+                        </li>
+                        <li class="page-item" th:if="${nropag < nropaginas - 3}">
+                            <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item" th:if="${nropag < nropaginas}">
+                            <a class="page-link" th:href="@{'/empresa?nropag=' + ${nropaginas}}" th:text="${nropaginas}"></a>
+                        </li>
+                        <li th:class="${nropag == nropaginas ? 'page-item disabled' : 'page-item'}">
+                            <a class="page-link" th:href="@{'/empresa?nropag=' + ${nropag + 1}}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="d-flex justify-content-center">
+                <form th:action="@{/empresa}" method="get">
+                    <div class="form-floating mb-3">
+                        <input style="width: 60px;" type="number" name="nropag"
+                               autocomplete="off" aria-describedby="btnbuscarpag" min="1" th:max="${nropaginas}">
+                        <button style="margin-bottom: 4px;" type="submit" class="btn btn-primary btn-sm" id="btnbuscarpag">
+                            <i class="bi bi-arrow-right"></i>
                         </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

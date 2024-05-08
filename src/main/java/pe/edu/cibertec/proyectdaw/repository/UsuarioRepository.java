@@ -27,4 +27,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Modifying
     @Query(value = "Update Usuario Set ultimologin=:ultimologin Where username=:username")
     void actualizarUltimoLogin(@Param("ultimologin") Date ultimologin, @Param("username") String username);
+    @Query(value = "Call PaginacionUsuarios(:skip)", nativeQuery = true)
+    List<Usuario> paginacionUsuarios(@Param("skip") Integer skip);
 }

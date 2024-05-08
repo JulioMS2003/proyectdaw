@@ -19,9 +19,16 @@ public class EmpleadoController {
     private IEmpleadoService iEmpleadoService;
 
     @GetMapping("")
-    public String viewEmpleado(Model model){
+    public String viewEmpleado(Model model,
+                               @RequestParam(value = "nropag", defaultValue = "1", required = false) Integer nropag){
+        List<Empleado> listaEmpleados = iEmpleadoService.listarEmpleado();
+        Integer nropaginas = listaEmpleados.size() % 20 == 0 ? listaEmpleados.size() / 20 : listaEmpleados.size() / 20 + 1;
+        if(nropag < 1) nropag = 1;
+        if(nropag > nropaginas) nropag = nropaginas;
         model.addAttribute("listaEmpleados",
-                iEmpleadoService.listarEmpleadosOrdenadosPorApellido());
+                iEmpleadoService.paginacionEmpleados(nropag));
+        model.addAttribute("nropaginas", nropaginas);
+        model.addAttribute("nropag", nropag);
         return "backoffice/empleado/viewempleado";
     }
 
