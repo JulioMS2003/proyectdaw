@@ -1,41 +1,59 @@
 $(document).on("click", "#btnagregar", function(){
     $("#exampleModalLabel").html("Nuevo Plano");
         $("#hddplanoid").val("0");
+        $("txtplanoid").val();
         cargarCboDistrito(0);
         vaciarCbo("#cbodistrito", true);
         $("#switchestado").prop("checked", true);
+        $("#btnactualizar").hide();
         $("#modalplano").modal("show");
 })
 
 $(document).on("click","#btnguardar", function(){
 $.ajax({
-        type: "POST",
+        type: $("#hddplanoid").val() == 0 ? "POST": "PUT",
         url: "/plano/guardar",
         contentType: "application/json",
         data: JSON.stringify({
-            planoid: $("#hddplanoid").val(),
-            distritoid: $("#cbodistrito").val(),
-            estado: $("#switchestado").val()
+            planoid: $("#txtplanoid").val(),
+            distritoid : $("#cbodistrito").val(),
+            estadoid : $("#switchactivo").prop("checked")
         }),
         success: function(resultado) {
-                    if(resultado.respuesta){
-                        listarPlano();
-                        $("#msjerror").hide();
-                        $("#divmensaje").html("");
-                        $("#divmensaje").append(
-                            `<div class="alert alert-success text-center" role="alert">${resultado.mensaje}` +
-                            `</div>`
-                        );
-                        $("#modaldepartamento").modal("hide");
-                    } else {
-                        $("#msjerror").show();
-                        $("#msjerror").html("");
-                        $("#msjerror").html(resultado.mensaje);
-                    }
-                }
+            alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success": "error");
+            if(resultado.respuesta) {
+                listarPlano();
+                $("#modalplano").modal("hide");
+            }
+        }
     })
 })
 
+function listarPlano(){
+    $.ajax({
+        type: "GET",
+        url: "/plano/lista",
+        dataType: "json",
+        success: function(resultado) {
+            $("#tblplano > tbody").html("");
+            $.each(resultado, function(index, value) {
+                $("#tblplano > tbody").append(
+                    `<tr>` +
+                        `<td>${value.planoid}</td>` +
+                        `<td>${value.distritoid}</td>` +
+                        `<td>${value.estadoid ? 'true' : 'false' }</td>` +
+                        `<td class="text-center">` +
+                            `<button type="button" class="btn btn-primary btneditar" ` +
+                                     `data-planoid="${value.planoid}"
+                                     data-distritoid="${value.distritoid}" data-estadoid="${value.estado}" `                                `<i class="bi bi-pencil"></i>` +
+                            `</button>` +
+                        `</td>` +
+                    `</tr>`
+                )
+            })
+        }
+    })
+}
 
 $(document).on("click", ".btneliminar", function() {
             $.ajax({
@@ -74,31 +92,13 @@ function cargarCboDistrito (distritoid) {
 }
 
 $(document).on("click", ".btnactualizar", function(){
-    $.ajax({
-            type: "PUT",
-            url: "/plano/actualizacion",
-            contentType: "application/json",
-            data: JSON.stringify({
-                planoid: $("#hddplanoid").val(),
-                distritoid: $("#cbodistrito").val(),
-                estado: $("#switchestado").val()
-            }),
-            success: function(resultado){
-                if(resultado.respuesta) {
-                    listarPlano();
-                    $("#divmensaje").html("");
-                    $("#divmensaje").append(
-                        `<div class="alert alert-primary text-center" role="alert">${resultado.mensaje}` +
-                        `</div>`
-                    );
-                    $("#modalplano").modal("hide");
-                } else {
-                    $("#msjerror").show();
-                    $("#msjerror").html("");
-                    $("#msjerror").html(resultado.mensaje);
-                }
-            }
-        })
+                $("#exampleModalLabel").html("Actualizar Plano");
+                $("#hddplanoid").val($(this).attr("data-planoid"));
+                cargarCboDistrito($(this).attr("data-planoid"));
+                $("#switchestado").prop("checked", $(this).attr("data-estadoid") ? true : false);
+                $("#btnactualizar").hide();
+                $("#btnguardar").show();
+                $("#modalplano").modal("show");
     })
 
 function vaciarCbo(cbo,disabled){

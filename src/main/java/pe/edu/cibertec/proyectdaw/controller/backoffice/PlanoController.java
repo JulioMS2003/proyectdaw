@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.cibertec.proyectdaw.model.bd.Departamento;
 import pe.edu.cibertec.proyectdaw.model.bd.Empleado;
 import pe.edu.cibertec.proyectdaw.model.bd.Plano;
 import pe.edu.cibertec.proyectdaw.model.dto.request.DepartamentoRequest;
@@ -83,6 +84,12 @@ public class PlanoController {
             respuesta = false;
         }
         return  ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
+    }
+
+    @GetMapping("/obtener/{id}")
+    @ResponseBody
+    public Plano obtenerPorId(@PathVariable("id") String planoid) {
+        return iPlanoService.obtenerPlanoPorId(planoid);
     }
 
 }
