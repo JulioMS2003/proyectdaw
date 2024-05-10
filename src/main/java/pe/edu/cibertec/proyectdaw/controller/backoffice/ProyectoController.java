@@ -84,4 +84,18 @@ public class ProyectoController {
         }
         return ResultadoResponse.builder().respuesta(respuesta).mensaje(mensaje).build();
     }
+
+    @PutMapping("/finalizar/{id}")
+    @ResponseBody
+    public ResultadoResponse finalizarProyecto(@PathVariable("id") Integer proyectoid) {
+        String mensaje = "Proyecto finalizado";
+        boolean respuesta = true;
+        try{
+            iProyectoService.finalizarProyecto(proyectoid);
+        } catch(Exception ex){
+            mensaje = ex.getMessage();
+            respuesta = false;
+        }
+        return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
+    }
 }

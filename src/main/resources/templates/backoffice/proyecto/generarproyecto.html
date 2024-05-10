@@ -28,6 +28,7 @@
                         <th scope="col">Estado</th>
                         <th scope="col" class="text-center">Detalles</th>
                         <th scope="col" class="text-center">Cancelar</th>
+                        <th scope="col" class="text-center">Finalizar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,17 +37,25 @@
                         <td th:text="${#dates.format(proyecto.fecinicio, 'yyyy-MM-dd')}"></td>
                         <td th:text="${proyecto.estado == 'E' ? 'En Proceso' : proyecto.estado == 'C' ? 'Cancelado' : 'Finalizado' }"></td>
                         <td class="text-center">
-                            <button type="submit" class="btn btn-success btndetalles"
+                            <button type="button" class="btn btn-success btndetalles"
                                     th:data-proyid="${proyecto.proyectoid}">
                                 <i class="bi bi-file-earmark-richtext"></i>
                             </button>
                         </td>
                         <td class="text-center">
-                            <button type="submit"
+                            <button type="button"
                                     th:disabled="${proyecto.estado == 'C' || proyecto.estado == 'F'}"
                                     th:class="${proyecto.estado == 'C' || proyecto.estado == 'F' ? 'btn btn-secondary' : 'btn btn-danger btncancelar'}"
                                     th:data-proyid="${proyecto.proyectoid}">
                                 <i class="bi bi-x-circle"></i>
+                            </button>
+                        </td>
+                        <td class="text-center">
+                            <button type="button"
+                                    th:disabled="${proyecto.estado == 'C' || proyecto.estado == 'F'}"
+                                    th:class="${proyecto.estado == 'C' || proyecto.estado == 'F' ? 'btn btn-secondary' : 'btn btn-success btnfinalizar'}"
+                                    th:data-proyid="${proyecto.proyectoid}">
+                                <i class="bi bi-flag"></i>
                             </button>
                         </td>
                     </tr>

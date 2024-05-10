@@ -11,4 +11,5 @@ public interface IProyectoService {
     List<Proyecto> listarProyectos();
     List<Proyecto> paginacionProyectos(Integer nropagina);
     void cancelarProyecto(Integer proyectoid);
+    void finalizarProyecto(Integer proyectoid) throws Exception;
 }

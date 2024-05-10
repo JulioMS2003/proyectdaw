@@ -58,6 +58,33 @@ $(document).on("click", ".btncancelar", function(){
     })
 })
 
+$(document).on("click", ".btnfinalizar", function(){
+    Swal.fire({
+        title: "¿Finalizar Proyecto?",
+        icon: "question",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        cancelButtonColor: "#FF0C27",
+        confirmButtonText: "Si, cancelar",
+        confirmButtonColor: "#00FF09"
+    }).then((result) => {
+        if(result.isConfirmed) {
+            $.ajax({
+                type: "PUT",
+                url: "/proyecto/finalizar/" + $(this).attr("data-proyid"),
+                success: function(resultado) {
+                    alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success" : "error");
+                    if(resultado.respuesta) {
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1000);
+                    }
+                }
+            })
+        }
+    })
+})
+
 function ocultarMostrarAlertas(estado) {
     if(estado == 'E') {
         $("#divenproceso").show();
