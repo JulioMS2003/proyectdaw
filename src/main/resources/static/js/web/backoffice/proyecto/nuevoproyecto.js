@@ -36,12 +36,12 @@ $(document).on("click", "#btnagregarplano", function(){
 
     nroplano++;
     $("#divplanos").append(
-        `<div id="${'divplanonro' + nroplano}" class="container col-4 m-0">` +
-            `<div class="row mb-3">` +
+        `<div id="${'divplanonro' + nroplano}" class="container col-6">` +
+            `<div class="row mb-3 bg-white p-2 rounded border border-1 mx-3 my-2">` +
                 `<div class="col mt-2">` +
-                    `<h5>• ${$("#txtplanoid").val()}</h5>` +
+                    `<h5>${$("#txtplanoid").val()}</h5>` +
                 `</div>` +
-                `<div class="col">` +
+                `<div class="col text-end">` +
                     `<button type="button" class="btn btn-danger btneliminar" ` +
                              `data-planodiv="${'divplanonro' + nroplano}" data-planoid='${$("#txtplanoid").val()}'>` +
                         `<i class="bi bi-trash"></i>` +
