@@ -86,6 +86,37 @@ public class ProyectoService implements IProyectoService{
         proyectoRepository.save(proyecto);
     }
 
+    @Override
+    public void finalizarProyecto(Integer proyectoid) throws Exception {
+        Proyecto proyecto = this.buscarPorId(proyectoid);
+        if(proyecto == null)
+            throw new Exception("Este proyecto no existe");
+
+        List<Asignacion> asignaciones = asignacionRepository.findAllByProyectoId(proyectoid);
+        if(asignaciones == null)
+            throw new Exception("No se encontró asignaciones en este proyecto");
+
+        int nroplanos1 = 0;
+        int nroplanos2 = 0;
+        for(Asignacion asignacion: asignaciones) {
+            if(asignacion.getEmpleado() == null)
+                nroplanos1++;
+            if(!asignacion.getPlano().getEstado())
+                nroplanos2++;
+        }
+        if(nroplanos1 == 1)
+            throw new Exception("Proyecto no puede finalizarse porque existe 1 plano sin asignación");
+        if(nroplanos1 > 1)
+            throw new Exception("Proyecto no puede finalizarse porque existen " + nroplanos1 + " planos sin asignación");
+        if(nroplanos2 == 1)
+            throw new Exception("Proyecto no puede finalizarse porque existe 1 plano sin completar");
+        if(nroplanos2 > 1)
+            throw new Exception("Proyecto no puede finalizarse porque existen " + nroplanos2 + " planos sin completar");
+
+        proyecto.setEstado("F");
+        proyectoRepository.save(proyecto);
+    }
+
     private Date unDiaMas(Date fecha){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(fecha);
