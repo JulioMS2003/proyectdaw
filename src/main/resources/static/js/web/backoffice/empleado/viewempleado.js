@@ -10,7 +10,7 @@ $(document).on("click", "#btnnuevo", function(){
     $("#switchestado").prop("checked", true);
     $("#hdddisponible").val("true");
     deshabilitarCampos(false, true);
-    mostrarEstadoEmpleado(false, false);
+    mostrarEstadoEmpleado(false, false, false);
     cargarCboDepartamento(0);
     resetearCbo("#cboprovincia");
     resetearCbo("#cbodistrito");
@@ -101,7 +101,7 @@ function cargarModalEmpleado(empleadoid, deshabilitar, esconderSwitch, mostrarEs
             $("#switchestado").prop("checked", resultado.estado == true ? true : false);
             $("#hdddisponible").val(resultado.disponible);
             deshabilitarCampos(deshabilitar, esconderSwitch);
-            mostrarEstadoEmpleado(mostrarEstado, resultado.estado);
+            mostrarEstadoEmpleado(mostrarEstado, resultado.estado, resultado.disponible);
             cargarCboDepartamento(resultado.distrito.provincia.departamento.departamentoid);
             cargarCboProvincia(resultado.distrito.provincia.provinciaid,
                                resultado.distrito.provincia.departamento.departamentoid);
@@ -124,7 +124,7 @@ function deshabilitarCampos(deshabilitar, esconderSwitch) {
     $("#cbodistrito").prop("disabled", deshabilitar);
 }
 
-function mostrarEstadoEmpleado(mostrar, estado){
+function mostrarEstadoEmpleado(mostrar, estado, disponible){
     if(mostrar == true) {
         if(estado == true) {
             $("#alertactivo").show();
@@ -133,9 +133,18 @@ function mostrarEstadoEmpleado(mostrar, estado){
             $("#alertactivo").hide();
             $("#alertinactivo").show();
         }
+        if(disponible == true) {
+            $("#alertadisponible").show();
+            $("#alertanodisponible").hide();
+        } else {
+            $("#alertadisponible").hide();
+            $("#alertanodisponible").show();
+        }
     } else {
         $("#alertactivo").hide();
         $("#alertinactivo").hide();
+        $("#alertadisponible").hide();
+        $("#alertanodisponible").hide();
     }
 }
 

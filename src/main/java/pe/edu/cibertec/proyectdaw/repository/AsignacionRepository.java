@@ -13,4 +13,6 @@ public interface AsignacionRepository extends JpaRepository<Asignacion, Integer>
 
     @Query("Select A From Asignacion A Where A.proyecto.proyectoid=:proyectoid")
     List<Asignacion> findAllByProyectoId(@Param("proyectoid") Integer proyectoid);
+    @Query("Select A From Asignacion A Where A.empleado.empleadoid=:empleadoid")
+    List<Asignacion> findAllByEmpleadoId(@Param("empleadoid") Integer empleadoid);
 }

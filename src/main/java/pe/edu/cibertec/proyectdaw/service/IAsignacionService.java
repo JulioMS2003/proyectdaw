@@ -8,5 +8,6 @@ import java.util.List;
 public interface IAsignacionService {
 
     List<Asignacion> buscarAsignacionesPorProyecto(Integer proyectoid);
+    List<Asignacion> buscarAsignacionesPorEmpleado(Integer empleadoid);
     void registrarEmpleadosEnAsignaciones(AsignacionRequest[] asignacionRequests) throws Exception;
 }

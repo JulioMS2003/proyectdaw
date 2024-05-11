@@ -26,6 +26,11 @@ public class AsignacionService implements IAsignacionService {
     }
 
     @Override
+    public List<Asignacion> buscarAsignacionesPorEmpleado(Integer empleadoid) {
+        return asignacionRepository.findAllByEmpleadoId(empleadoid);
+    }
+
+    @Override
     @Transactional(rollbackOn = {Exception.class})
     public void registrarEmpleadosEnAsignaciones(AsignacionRequest[] asignacionRequests) throws Exception {
         for(AsignacionRequest asignacionRequest: asignacionRequests) {

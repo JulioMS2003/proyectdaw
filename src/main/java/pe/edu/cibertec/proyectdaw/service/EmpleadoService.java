@@ -2,9 +2,11 @@ package pe.edu.cibertec.proyectdaw.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pe.edu.cibertec.proyectdaw.model.bd.Asignacion;
 import pe.edu.cibertec.proyectdaw.model.bd.Distrito;
 import pe.edu.cibertec.proyectdaw.model.bd.Empleado;
 import pe.edu.cibertec.proyectdaw.model.dto.request.EmpleadoRequest;
+import pe.edu.cibertec.proyectdaw.repository.AsignacionRepository;
 import pe.edu.cibertec.proyectdaw.repository.EmpleadoRepository;
 
 import java.util.Calendar;
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class EmpleadoService implements IEmpleadoService{
 
     private EmpleadoRepository empleadoRepository;
+    private AsignacionRepository asignacionRepository;
 
     @Override
     public void guardarEmpleado(EmpleadoRequest empleadoRequest) throws Exception {
@@ -52,6 +55,14 @@ public class EmpleadoService implements IEmpleadoService{
             throw new Exception("Dirección supera el límite de 50 caracteres");
         if(empleadoRequest.getDistritoid() == -1)
             throw new Exception("Seleccionar un distrito");
+
+        List<Asignacion> asignaciones = asignacionRepository.findAllByEmpleadoId(empleadoRequest.getEmpleadoid());
+        if(!asignaciones.isEmpty()){
+            for(Asignacion asignacion: asignaciones) {
+                if(asignacion.getProyecto().getEstado().equals("E") && !asignacion.getPlano().getEstado())
+                    throw new Exception("No se puede inactivar a este empleado porque está participando en un proyecto");
+            }
+        }
 
         Empleado empleado = new Empleado();
         if(empleadoRequest.getEmpleadoid() > 0)
