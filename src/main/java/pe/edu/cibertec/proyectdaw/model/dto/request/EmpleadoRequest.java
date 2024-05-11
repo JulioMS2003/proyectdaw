@@ -15,7 +15,6 @@ public class EmpleadoRequest {
     private Date fecnac;
     private String email;
     private String telefono;
-    private String foto;
     private String direccion;
     private Integer distritoid;
 }

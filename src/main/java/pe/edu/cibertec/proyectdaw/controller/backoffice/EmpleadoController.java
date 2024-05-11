@@ -52,7 +52,7 @@ public class EmpleadoController {
         try{
             iEmpleadoService.guardarEmpleado(empleadoRequest);
         } catch(Exception ex){
-            mensaje = "Error: " + ex.getMessage();
+            mensaje = ex.getMessage();
             respuesta = false;
         }
         return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();

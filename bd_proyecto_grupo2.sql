@@ -45,9 +45,8 @@ estado Bit Not Null,
 fecnac Date Not Null,
 email Varchar(50) Not Null,
 telefono Char(9) Not Null,
-foto Varchar(100) Null,
-direccion Varchar(50) Null,
-distritoid Int Not Null,
+direccion Varchar(50) Not Null,
+distritoid Int Null,
 Foreign Key (distritoid) References Distrito (distritoid));
 
 Create Table Empresa(
@@ -173,8 +172,7 @@ Values (Null, 'Aramango', 1),(Null, 'Bagua', 1),(Null, 'Copallin', 1),(Null, 'Ch
 
 Insert Into Empleado
 Values (Null, 'Christian Alberto', 'Goméz Méndoza', true,
-'19980702', 'christiangm@gmail.com', '974128219',
-Null, 'Av. Las Manzanas 483', 20);
+'19980702', 'christiangm@gmail.com', '974128219', 'Av. Las Manzanas 483', 20);
 
 Select * From Rol;
 Select * From Usuario;

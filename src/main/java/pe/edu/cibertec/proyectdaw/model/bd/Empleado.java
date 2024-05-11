@@ -27,8 +27,8 @@ public class Empleado {
     private String email;
     @Column(name="telefono")
     private String telefono;
-    @Column(name="foto")
-    private String foto;
+
+
     @Column(name="direccion")
     private String direccion;
 

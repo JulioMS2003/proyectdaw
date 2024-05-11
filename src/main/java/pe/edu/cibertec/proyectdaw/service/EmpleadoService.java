@@ -62,7 +62,6 @@ public class EmpleadoService implements IEmpleadoService{
         empleado.setFecnac(empleadoRequest.getFecnac());
         empleado.setEmail(empleadoRequest.getEmail());
         empleado.setTelefono(empleadoRequest.getTelefono());
-        empleado.setFoto(null);
         empleado.setDireccion(empleadoRequest.getDireccion());
         Distrito distrito = new Distrito();
         distrito.setDistritoid(empleadoRequest.getDistritoid());

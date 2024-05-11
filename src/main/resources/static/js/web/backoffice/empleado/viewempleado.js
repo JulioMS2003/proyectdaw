@@ -1,7 +1,6 @@
 $(document).on("click", "#btnnuevo", function(){
     $("#empleadoModalLabel").html("Nuevo Empleado");
     $("#hddempleadoid").val("0");
-    $("#hddfoto").val("");
     $("#txtnomemp").val("");
     $("#txtapeemp").val("");
     $("#txtfecnac").val("");
@@ -68,7 +67,6 @@ $(document).on("click", "#btnguardar", function(){
             fecnac: $("#txtfecnac").val(),
             email: $("#txtemail").val(),
             telefono: $("#txttelefono").val(),
-            foto: $("#hddfoto").val(),
             direccion: $("#txtdireccion").val(),
             distritoid: $("#cbodistrito").val()
         }),
@@ -96,7 +94,6 @@ function cargarModalEmpleado(empleadoid, deshabilitar, esconderSwitch, mostrarEs
             $("#txtfecnac").val(resultado.fecnac);
             $("#txtemail").val(resultado.email);
             $("#txttelefono").val(resultado.telefono);
-            $("#hddfoto").val(resultado.foto);
             $("#txtdireccion").val(resultado.direccion != null ? resultado.direccion :
                                    soloLectura == true ? "No registrado" : "");
             $("#switchestado").prop("checked", resultado.estado == true ? true : false);
@@ -117,10 +114,8 @@ function deshabilitarCampos(deshabilitar, esconderSwitch) {
     $("#txtemail").prop("readonly", deshabilitar);
     $("#txttelefono").prop("readonly", deshabilitar);
     $("#txtdireccion").prop("readonly", deshabilitar);
-    $("#txtfoto").val("");
     esconderSwitch == true ? $("#divestado").hide() : $("#divestado").show();
     $("#switchestado").prop("disabled", deshabilitar);
-    deshabilitar == true ? $("#divfoto").hide() : $("#divfoto").show();
     $("#cbodepartamento").prop("disabled", deshabilitar);
     $("#cboprovincia").prop("disabled", deshabilitar);
     $("#cbodistrito").prop("disabled", deshabilitar);
