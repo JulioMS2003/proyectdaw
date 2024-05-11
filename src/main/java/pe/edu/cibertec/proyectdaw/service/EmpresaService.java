@@ -41,6 +41,11 @@ public class EmpresaService implements IEmpresaService{
     }
 
     @Override
+    public List<Empresa> listarEmpresasActivasOrdenadasPorNombreAsc(Boolean activo) {
+        return empresaRepository.findAllByActivoOrderByNomempresa(activo);
+    }
+
+    @Override
     public List<Empresa> listarEmpresasOrdenadasPorNombreAsc() {
         return empresaRepository.findAllByOrderByNomempresa();
     }

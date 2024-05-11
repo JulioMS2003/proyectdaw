@@ -75,7 +75,7 @@ $(document).on("click", "#btngenerar", function(){
             if(resultado.respuesta) {
                 setTimeout(function() {
                     window.location.href = "/proyecto";
-                }, 5000);
+                }, 1000);
             }
         }
     })

@@ -45,7 +45,7 @@
                     <tr th:each="proyecto : ${listaProyectos}">
                         <td th:text="${proyecto.empresa.nomempresa}"></td>
                         <td th:text="${#dates.format(proyecto.fecinicio, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${proyecto.estado == 'E' ? 'En Proceso' : proyecto.estado == 'C' ? 'Cancelado' : 'Finalizado' }"></td>
+                        <td th:text="${proyecto.estado == 'F' ? 'Finalizado' : proyecto.estado == 'C' ? 'Cancelado' : 'En Proceso' }"></td>
                         <td class="text-center">
                             <button type="button" class="btn btn-info btndetalles"
                                     th:data-proyid="${proyecto.proyectoid}">
@@ -56,8 +56,8 @@
                                            session.authorities.contains('Operador de Planos')}">
                             <td class="text-center">
                                 <button type="button"
-                                        th:disabled="${proyecto.estado == 'C' || proyecto.estado == 'F'}"
-                                        th:class="${proyecto.estado == 'C' || proyecto.estado == 'F' ? 'btn btn-secondary' : 'btn btn-primary btnasignacion'}"
+                                        th:disabled="${proyecto.estado == 'C' || proyecto.estado == 'F' || proyecto.estado == 'A'}"
+                                        th:class="${proyecto.estado == 'C' || proyecto.estado == 'F' || proyecto.estado == 'A' ? 'btn btn-secondary' : 'btn btn-primary btnasignacion'}"
                                         th:data-proyid="${proyecto.proyectoid}">
                                     <i class="bi bi-person-lines-fill"></i>
                                 </button>

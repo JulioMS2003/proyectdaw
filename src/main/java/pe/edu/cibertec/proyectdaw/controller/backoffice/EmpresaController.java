@@ -39,6 +39,12 @@ public class EmpresaController {
         return iEmpresaService.listarEmpresasOrdenadasPorNombreAsc();
     }
 
+    @GetMapping("/lista/activas")
+    @ResponseBody
+    public List<Empresa> listarEmpresasActivas(){
+        return iEmpresaService.listarEmpresasActivasOrdenadasPorNombreAsc(true);
+    }
+
     @RequestMapping(value = "/guardar", method = {RequestMethod.POST, RequestMethod.PUT})
     @ResponseBody
     public ResultadoResponse guardarEmpresa(@RequestBody EmpresaRequest empresaRequest) {

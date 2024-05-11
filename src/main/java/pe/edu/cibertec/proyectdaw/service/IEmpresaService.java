@@ -9,6 +9,7 @@ public interface IEmpresaService{
 
     void guardarEmpresa(EmpresaRequest empresaRequest) throws Exception;
     List<Empresa> listarEmpresa();
+    List<Empresa> listarEmpresasActivasOrdenadasPorNombreAsc(Boolean activo);
     List<Empresa> listarEmpresasOrdenadasPorNombreAsc();
     List<Empresa> paginacionEmpresas(Integer nropagina);
 }
