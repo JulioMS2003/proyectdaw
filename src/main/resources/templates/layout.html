@@ -22,7 +22,7 @@
 <nav th:fragment="menu"
      class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container">
-        <a class="navbar-brand">
+        <a class="navbar-brand" th:href="@{/auth/dashboard}">
             <img th:src="@{/imagenes/logo_hfc.jpeg}" style="height: 40px">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,9 +30,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/auth/dashboard}">Home</a>
-                </li>
                 <th:block th:if="${session.authorities.contains('Administrador') ||
                                    session.authorities.contains('Operador de Proyectos') ||
                                    session.authorities.contains('Operador de Planos')}">
@@ -47,7 +44,7 @@
                             </th:block>
                             <th:block th:if="${session.authorities.contains('Administrador') ||
                                                session.authorities.contains('Operador de Planos')}">
-                                <li><a class="dropdown-item" th:href="@{/plano}">Asignación de Planos</a></li>
+                                <li><a class="dropdown-item" th:href="@{/proyecto}">Asignación de Planos</a></li>
                             </th:block>
                         </ul>
                     </li>

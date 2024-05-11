@@ -40,7 +40,7 @@ public class SecurityConfig {
            auth.requestMatchers("/empresa/**").hasAnyAuthority("Administrador", "Operador de Empresas");
            auth.requestMatchers("/plano/**").hasAnyAuthority("Administrador", "Operador de Planos");
 
-           auth.requestMatchers("/proyecto/**").hasAnyAuthority("Administrador", "Operador de Proyectos");
+           auth.requestMatchers("/proyecto/**").hasAnyAuthority("Administrador", "Operador de Proyectos", "Operador de Planos");
 
            auth.requestMatchers("/asignacion/**").hasAnyAuthority("Administrador", "Operador de Proyectos", "Operador de Planos");
 
