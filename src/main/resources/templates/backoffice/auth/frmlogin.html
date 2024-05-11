@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Iniciar Sesión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Freeman&display=swap" rel="stylesheet">
     <link th:href="@{/css/bootstrap/bootstrap.css}" rel="stylesheet" />
     <script th:src="@{/js/bootstrap/bootstrap.bundle.js}" type="text/javascript"></script>
 </head>
-<body class="p-5">
-    <div class="p-5 border border-1 border-black container rounded col-5">
-        <h3 class="text-center">Iniciar Sesión</h3>
+<body class="p-5" style="background-color: #32412c;">
+    <div class="p-5 border border-1 border-black container rounded col-5" style="background-color: #ffffff;">
+        <h3 class="text-center"  style="font-family: 'Freeman'; font-size: 48px;">Iniciar Sesión</h3>
         <hr />
         <form th:action="@{/auth/login}" method="post">
             <div class="form-floating mb-3">
@@ -19,9 +20,11 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off">
                 <label for="password">Pasword</label>
             </div>
-            <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Ingresar</button>
+            <div class="mb-3 d-flex justify-content-center">
+                <button type="submit" class="btn btn-dark" style="width: 200px; padding: 10px;">Ingresar</button>
             </div>
+
+
             <div th:if="${param.error}" class="alert alert-danger text-center" role="alert">
                 Usuario y/o contraseña incorrectos
             </div>
