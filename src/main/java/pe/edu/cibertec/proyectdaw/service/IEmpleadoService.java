@@ -11,4 +11,5 @@ public interface IEmpleadoService {
     List<Empleado> listarEmpleado();
     List<Empleado> listarEmpleadosOrdenadosPorApellido();
     List<Empleado> paginacionEmpleados(Integer nropagina);
+    List<Empleado> listarEmpleadosPorEstadoYDisponibilidad(Boolean estado, Boolean disponible);
 }

@@ -59,6 +59,7 @@ public class EmpleadoService implements IEmpleadoService{
         empleado.setNomemp(empleadoRequest.getNomemp());
         empleado.setApeemp(empleadoRequest.getApeemp());
         empleado.setEstado(empleadoRequest.getEstado());
+        empleado.setDisponible(empleadoRequest.getDisponible());
         empleado.setFecnac(empleadoRequest.getFecnac());
         empleado.setEmail(empleadoRequest.getEmail());
         empleado.setTelefono(empleadoRequest.getTelefono());
@@ -91,6 +92,11 @@ public class EmpleadoService implements IEmpleadoService{
     @Override
     public List<Empleado> paginacionEmpleados(Integer nropagina) {
         return empleadoRepository.paginacionEmpleados((nropagina - 1) * 20);
+    }
+
+    @Override
+    public List<Empleado> listarEmpleadosPorEstadoYDisponibilidad(Boolean estado, Boolean disponible) {
+        return empleadoRepository.findAllByEstadoAndDisponibleOrderByApeemp(estado, disponible);
     }
 
     private Date unDiaMas(Date fecha){

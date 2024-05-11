@@ -36,11 +36,12 @@ public class SecurityConfig {
            auth.requestMatchers("/distrito/**").hasAnyAuthority("Administrador", "Operador de Ubigeos");
 
            auth.requestMatchers("/empleado/**").hasAnyAuthority("Administrador", "Operador de Empleados");
+           auth.requestMatchers("/empleado/lista/activos").hasAnyAuthority("Administrador", "Operador de Empleados", "Operador de Planos");
 
            auth.requestMatchers("/empresa/**").hasAnyAuthority("Administrador", "Operador de Empresas");
            auth.requestMatchers("/plano/**").hasAnyAuthority("Administrador", "Operador de Planos");
 
-           auth.requestMatchers("/proyecto/**").hasAnyAuthority("Administrador", "Operador de Proyectos");
+           auth.requestMatchers("/proyecto/**").hasAnyAuthority("Administrador", "Operador de Proyectos", "Operador de Planos");
 
            auth.requestMatchers("/asignacion/**").hasAnyAuthority("Administrador", "Operador de Proyectos", "Operador de Planos");
 

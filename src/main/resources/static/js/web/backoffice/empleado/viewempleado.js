@@ -8,6 +8,7 @@ $(document).on("click", "#btnnuevo", function(){
     $("#txttelefono").val("");
     $("#txtdireccion").val("");
     $("#switchestado").prop("checked", true);
+    $("#hdddisponible").val("true");
     deshabilitarCampos(false, true);
     mostrarEstadoEmpleado(false, false);
     cargarCboDepartamento(0);
@@ -64,6 +65,7 @@ $(document).on("click", "#btnguardar", function(){
             nomemp: $("#txtnomemp").val(),
             apeemp: $("#txtapeemp").val(),
             estado: $("#switchestado").prop("checked"),
+            disponible: $("#hdddisponible").val(),
             fecnac: $("#txtfecnac").val(),
             email: $("#txtemail").val(),
             telefono: $("#txttelefono").val(),
@@ -97,6 +99,7 @@ function cargarModalEmpleado(empleadoid, deshabilitar, esconderSwitch, mostrarEs
             $("#txtdireccion").val(resultado.direccion != null ? resultado.direccion :
                                    soloLectura == true ? "No registrado" : "");
             $("#switchestado").prop("checked", resultado.estado == true ? true : false);
+            $("#hdddisponible").val(resultado.disponible);
             deshabilitarCampos(deshabilitar, esconderSwitch);
             mostrarEstadoEmpleado(mostrarEstado, resultado.estado);
             cargarCboDepartamento(resultado.distrito.provincia.departamento.departamentoid);

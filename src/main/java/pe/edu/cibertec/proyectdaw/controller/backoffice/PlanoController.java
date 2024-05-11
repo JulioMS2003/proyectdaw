@@ -21,13 +21,6 @@ public class PlanoController {
 
     private IPlanoService iPlanoService;
 
-    @GetMapping("")
-    public String viewPlano(Model model){
-        model.addAttribute("listaPlano",
-                iPlanoService.listarPlano());
-        return "backoffice/plano/viewplano";
-    }
-
     @GetMapping("/buscar/{planoid}")
     @ResponseBody
     public Plano encontrarPlano(@PathVariable("planoid") String planoid) {
