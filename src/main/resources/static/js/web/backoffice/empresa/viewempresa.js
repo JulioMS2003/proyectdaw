@@ -13,8 +13,12 @@ $(document).on("click", ".btneditar", function(){
     $("#hddempresaid").val($(this).attr("data-empid"));
     $("#txtnomempresa").val($(this).attr("data-empnom"));
     $("#txtruc").val($(this).attr("data-empruc"));
-    $("#switchactivo").prop("checked", $(this).attr("data-empact") ? true : false);
     $("#divestado").show();
+    if($(this).attr("data-empact") == "true") {
+        $("#switchactivo").prop("checked", true);
+    } else {
+        $("#switchactivo").prop("checked", false);
+    }
     $("#modalempresa").modal("show");
 })
 
