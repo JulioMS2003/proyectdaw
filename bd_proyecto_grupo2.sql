@@ -42,6 +42,7 @@ empleadoid Int Primary Key Auto_Increment,
 nomemp Varchar(50) Not Null,
 apeemp Varchar(50) Not Null,
 estado Bit Not Null,
+disponible Bit Not Null,
 fecnac Date Not Null,
 email Varchar(50) Not Null,
 telefono Char(9) Not Null,
@@ -96,6 +97,8 @@ Values (Null, 'admin',
 '$2a$12$1LfV01H5j8HnQEIq0EXkjeP5ktdkbwOt7od2Kb5CHSjUroolKKxca',
 'Penélope Pura', 'Nelson Taylor',
 true, null);
+Insert Into Usuario_Rol
+Values (1, 1);
 
 -- Operador de Proyectos y de Planos
 -- username: usuario1453
@@ -105,6 +108,8 @@ Values (Null, 'usuario1453',
 '$2a$10$7c/voM1.rWnFROGRoiSJFeptVO/aPkwJ1abv1ttKoY2b/.CrKlKVC',
 'Carlos Gabriel', 'Baca Manrique',
 true, null);
+Insert Into Usuario_Rol
+Values (2, 2), (2, 4);
 
 -- Operador de Empleados y de Planos
 -- username: usuario6266
@@ -114,6 +119,8 @@ Values (Null, 'usuario6266',
 '$2a$10$ZU9wKNJt3pc8R6nK1578teTYI4uUG.BDiMB5mJSvj77lW9QF1oZOa',
 'Fernando', 'Castillo Vinces',
 true, null);
+Insert Into Usuario_Rol
+Values (3, 3), (3, 4);
 
 -- Operador de Ubigeos
 -- username: usuario7252
@@ -123,6 +130,8 @@ Values (Null, 'usuario7252',
 '$2a$10$grikvmqivXolnoin3rdGA.NveSEud.8HDEx.H6wB8sl2wdlGR12Km',
 'Anilu Camila', 'Díaz Lopéz',
 true, null);
+Insert Into Usuario_Rol
+Values (4, 5);
 
 -- Operador de Ubigeos y Empresas
 -- username: usuario2476
@@ -131,11 +140,11 @@ Insert Into Usuario
 Values (Null, 'usuario2476',
 '$2a$10$ZQtS326fqNVLxVNdyQ9ILuE3QQH7rXKeayRfYOCqaD9G0SWGt2xIS',
 'Julio Adriano', 'Manchay Seminario',
-true, null); 
-
+true, null);
 Insert Into Usuario_Rol
-Values (1, 1), (2, 2), (2, 4), (3, 3), (3, 4), (4, 5), (5, 5), (5, 6);
+Values (5, 5), (5, 6);
 
+-- Inserciones de Departamentos
 Insert Into Departamento
 Values (Null, 'Amazonas'), (Null, 'Ancash'), (Null, 'Apurímac'),
        (Null, 'Arequipa'), (Null, 'Ayacucho'), (Null, 'Cajamarca'),
@@ -171,7 +180,7 @@ Values (Null, 'Aramango', 1),(Null, 'Bagua', 1),(Null, 'Copallin', 1),(Null, 'Ch
        (Null, 'Bellavista', 108),(Null, 'La Punta', 108),(Null, 'Carmen de la Legua Reynoso', 108),(Null, 'La Perla', 108),(Null, 'Ventanilla', 108);
 
 Insert Into Empleado
-Values (Null, 'Christian Alberto', 'Goméz Méndoza', true,
+Values (Null, 'Christian Alberto', 'Goméz Méndoza', true, true,
 '19980702', 'christiangm@gmail.com', '974128219', 'Av. Las Manzanas 483', 20);
 
 Select * From Rol;
@@ -245,3 +254,6 @@ Begin
     Limit _skip, 20;
 End //
 Delimiter ;
+
+Select * From Empleado;
+Select * From Asignacion;

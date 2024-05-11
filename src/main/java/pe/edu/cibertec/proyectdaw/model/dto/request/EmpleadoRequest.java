@@ -12,6 +12,7 @@ public class EmpleadoRequest {
     private String nomemp;
     private String apeemp;
     private Boolean estado;
+    private Boolean disponible;
     private Date fecnac;
     private String email;
     private String telefono;

@@ -20,6 +20,8 @@ public class Empleado {
     private String apeemp;
     @Column(name="estado")
     private Boolean estado;
+    @Column(name = "disponible")
+    private Boolean disponible;
     @Column(name="fecnac")
     @Temporal(TemporalType.DATE)
     private Date fecnac;
@@ -27,8 +29,6 @@ public class Empleado {
     private String email;
     @Column(name="telefono")
     private String telefono;
-
-
     @Column(name="direccion")
     private String direccion;
 

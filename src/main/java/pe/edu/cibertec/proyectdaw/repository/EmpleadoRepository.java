@@ -14,4 +14,5 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Integer> {
     List<Empleado> findAllByOrderByApeemp();
     @Query(value = "Call PaginacionEmpleados(:skip)", nativeQuery = true)
     List<Empleado> paginacionEmpleados(@Param("skip") Integer skip);
+    List<Empleado> findAllByEstadoAndDisponibleOrderByApeemp(Boolean estado, Boolean disponible);
 }

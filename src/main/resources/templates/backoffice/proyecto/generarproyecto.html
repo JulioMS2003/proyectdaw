@@ -32,7 +32,7 @@
                         <th scope="col" class="text-center">Detalles</th>
                         <th:block th:if="${session.authorities.contains('Administrador') ||
                                            session.authorities.contains('Operador de Planos')}">
-                            <th scope="col">Asignación</th>
+                            <th scope="col" class="text-center">Asignación</th>
                         </th:block>
                         <th:block th:if="${session.authorities.contains('Administrador') ||
                                            session.authorities.contains('Operador de Proyectos')}">
@@ -141,6 +141,25 @@
                         </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalasignacion" tabindex="-1" aria-labelledby="asignacionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="asignacionModalLabel">Asignación de Planos</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="divasignacionplanos">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnguardarasignacion">Guardar</button>
             </div>
         </div>
     </div>

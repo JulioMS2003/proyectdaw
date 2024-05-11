@@ -38,6 +38,12 @@ public class EmpleadoController {
         return iEmpleadoService.listarEmpleadosOrdenadosPorApellido();
     }
 
+    @GetMapping("/lista/activos/disponibles")
+    @ResponseBody
+    public List<Empleado> listarEmpleadosActivos(){
+        return iEmpleadoService.listarEmpleadosPorEstadoYDisponibilidad(true, true);
+    }
+
     @GetMapping("/buscar/{empid}")
     @ResponseBody
     public Empleado encontrarEmpleado(@PathVariable("empid") Integer empid) {
