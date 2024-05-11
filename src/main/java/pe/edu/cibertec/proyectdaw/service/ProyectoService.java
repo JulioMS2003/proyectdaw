@@ -74,6 +74,11 @@ public class ProyectoService implements IProyectoService{
     }
 
     @Override
+    public List<Proyecto> listarProyectosOrdenadosPorFechaDeInicio() {
+        return proyectoRepository.findAllByOrderByFecinicioDesc();
+    }
+
+    @Override
     public List<Proyecto> paginacionProyectos(Integer nropagina) {
         return proyectoRepository.paginacionProyectos((nropagina - 1) * 20);
     }

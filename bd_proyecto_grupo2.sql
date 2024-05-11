@@ -73,7 +73,7 @@ Foreign Key (empresaid) References Empresa (empresaid));
 Create Table Asignacion(
 asignacionid Int Primary Key Auto_Increment,
 proyectoid Int Not Null,
-planoid Char(7) Not Null,
+planoid Varchar(20) Not Null,
 empleadoid Int Null,
 Foreign Key (proyectoid) References Proyecto (proyectoid),
 Foreign Key (planoid) References Plano (planoid),
@@ -459,6 +459,9 @@ Create Procedure PaginacionProyectos(In _skip Int)
 Begin
     Select *
     From Proyecto
+    Order By fecinicio Desc
     Limit _skip, 20;
 End //
 Delimiter ;
+
+Select * From Empleado;
