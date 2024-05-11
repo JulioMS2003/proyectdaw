@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Server Error</title>
+    <link th:href="@{/css/bootstrap/bootstrap.css}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="text-center">
+            <img th:src="@{imagenes/500 Error.png}" alt="Imagen de error 500" class="img-fluid" style="max-width: 600px;">
+            <h1 class="display-4"  style="font-family: 'Poetsen One', cursive; font-size: 5rem;" >500</h1>
+            <h1 class="display-4"  style="font-family: 'Poetsen One'; font-size: 3rem;" > Internal Server Error</h1>
+           
+            <a th:href="@{/auth/dashboard}" class="btn btn-secondary" style="margin-top: 20px;">Volver a la página de inicio</a>
+        </div>
+    </div>
+    <script th:src="@{/js/bootstrap/bootstrap.bundle.js}" type="text/javascript"></script>
+</body>
+</html>
