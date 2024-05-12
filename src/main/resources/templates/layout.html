@@ -38,12 +38,17 @@
                             Generar
                         </a>
                         <ul class="dropdown-menu">
-                            <th:block th:if="${session.authorities.contains('Administrador') ||
-                                               session.authorities.contains('Operador de Proyectos')}">
+                            <th:block th:if="${(session.authorities.contains('Administrador')) ||
+                                               (session.authorities.contains('Operador de Proyectos') &&
+                                                session.authorities.contains('Operador de Planos'))}">
+                                <li><a class="dropdown-item" th:href="@{/proyecto}">Proyectos y Asignaciones</a></li>
+                            </th:block>
+                            <th:block th:if="${session.authorities.contains('Operador de Proyectos') &&
+                                               !session.authorities.contains('Operador de Planos')}">
                                 <li><a class="dropdown-item" th:href="@{/proyecto}">Proyectos</a></li>
                             </th:block>
-                            <th:block th:if="${session.authorities.contains('Administrador') ||
-                                               session.authorities.contains('Operador de Planos')}">
+                            <th:block th:if="${session.authorities.contains('Operador de Planos') &&
+                                               !session.authorities.contains('Operador de Proyectos')}">
                                 <li><a class="dropdown-item" th:href="@{/proyecto}">Asignación de Planos</a></li>
                             </th:block>
                         </ul>

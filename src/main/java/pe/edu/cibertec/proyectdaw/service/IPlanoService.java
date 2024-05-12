@@ -11,6 +11,7 @@ public interface IPlanoService {
     Plano obtenerPlanoPorId(String planoid);
     List<Plano> listarPlano();
     void guardarPlano(PlanoRequest planoRequest) throws Exception;
+    void guardarEstadosPlanos(PlanoRequest[] planoRequests) throws Exception;
     List<Plano> listarTodasOrdenadasPorIdAsc();
     List<Plano> listarTodasPorDistritoIdOrdenadasPorNombreAsc(Integer distritoid);
     void eliminarPlano(String Planoid);

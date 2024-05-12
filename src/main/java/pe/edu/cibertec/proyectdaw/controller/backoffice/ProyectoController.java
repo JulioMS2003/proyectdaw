@@ -51,7 +51,7 @@ public class ProyectoController {
     @GetMapping("/nuevo")
     public String nuevoProyecto(Model model) {
         model.addAttribute("listaEmpresas",
-                iEmpresaService.listarEmpresasOrdenadasPorNombreAsc());
+                iEmpresaService.listarEmpresasActivasOrdenadasPorNombreAsc(true));
         model.addAttribute("listaDepartamentos",
                 iDepartamentoService.listarDepartamentosOrdenadosPorNombreAsc());
         return "backoffice/proyecto/nuevoproyecto";
@@ -60,7 +60,7 @@ public class ProyectoController {
     @PostMapping("/nuevo/generar")
     @ResponseBody
     public ResultadoResponse generarProyecto(@RequestBody ProyectoRequest proyectoRequest){
-        String mensaje = "Proyecto generado. Volviendo a la lista de Proyectos";
+        String mensaje = "Proyecto generado.";
         boolean respuesta = true;
         try{
             iProyectoService.generarProyecto(proyectoRequest);

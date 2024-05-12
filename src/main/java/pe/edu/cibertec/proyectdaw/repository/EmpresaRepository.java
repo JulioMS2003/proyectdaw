@@ -12,7 +12,7 @@ import java.util.List;
 public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
 
     List<Empresa> findAllByOrderByNomempresa();
-
+    List<Empresa> findAllByActivoOrderByNomempresa(Boolean activo);
     @Query(value = "Call PaginacionEmpresas(:skip)", nativeQuery = true)
     List<Empresa> paginacionEmpresas(@Param("skip") Integer skip);
 }

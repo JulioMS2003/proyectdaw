@@ -1,5 +1,6 @@
 package pe.edu.cibertec.proyectdaw.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,18 @@ public class PlanoService implements IPlanoService{
         plano.setDistrito(distrito);
         plano.setEstado(planoRequest.getEstado());
         planoRepository.save(plano);
+    }
+
+    @Override
+    @Transactional(rollbackOn = {Exception.class})
+    public void guardarEstadosPlanos(PlanoRequest[] planoRequests) throws Exception {
+        for(PlanoRequest planoRequest: planoRequests) {
+            Plano plano = planoRepository.findById(planoRequest.getPlanoid()).orElse(null);
+            if(plano == null)
+                throw new Exception("No se encontró plano");
+            plano.setEstado(planoRequest.getEstado());
+            planoRepository.save(plano);
+        }
     }
 
     @Override

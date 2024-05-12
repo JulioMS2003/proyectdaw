@@ -25,8 +25,8 @@ $(document).on("change", "#cboprovincia", function(){
 })
 
 $(document).on("click", "#btnagregarplano", function(){
-    if($("#txtplanoid").val() == null || $("#txtplanoid").val() == "" || $("#txtplanoid").val().length != 7) {
-        alertaDeRespuesta(" ", "Ingresar código de plano (7 caracteres)", "error");
+    if($("#txtplanoid").val() == null || $("#txtplanoid").val() == "" || $("#txtplanoid").val().length > 20) {
+        alertaDeRespuesta(" ", "Código de plano no válido (máximo 20 caracteres)", "error");
         return;
     }
     if($.inArray($("#txtplanoid").val(), idplanos) != -1) {
@@ -38,10 +38,10 @@ $(document).on("click", "#btnagregarplano", function(){
     $("#divplanos").append(
         `<div id="${'divplanonro' + nroplano}" class="container col-6">` +
             `<div class="row mb-3 bg-white p-2 rounded border border-1 mx-3 my-2">` +
-                `<div class="col mt-2">` +
+                `<div class="col-8 mt-2">` +
                     `<h5>${$("#txtplanoid").val()}</h5>` +
                 `</div>` +
-                `<div class="col text-end">` +
+                `<div class="col-4 text-end my-auto">` +
                     `<button type="button" class="btn btn-danger btneliminar" ` +
                              `data-planodiv="${'divplanonro' + nroplano}" data-planoid='${$("#txtplanoid").val()}'>` +
                         `<i class="bi bi-trash"></i>` +
@@ -75,7 +75,7 @@ $(document).on("click", "#btngenerar", function(){
             if(resultado.respuesta) {
                 setTimeout(function() {
                     window.location.href = "/proyecto";
-                }, 5000);
+                }, 1000);
             }
         }
     })
