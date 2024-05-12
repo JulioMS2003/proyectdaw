@@ -16,18 +16,24 @@ $(document).on("click", "#btnnuevo", function(){
     resetearCbo("#cbodistrito");
     $("#cboprovincia").prop("disabled", true);
     $("#cbodistrito").prop("disabled", true);
+    $("#btncerrar").hide();
+    $("#btnguardar").show();
     $("#modalempleado").modal("show");
 })
 
 $(document).on("click", ".btndetalles", function(){
     $("#empleadoModalLabel").html("Detalles Empleado");
     cargarModalEmpleado($(this).attr("data-empid"), true, true, true, true);
+    $("#btncerrar").show();
+    $("#btnguardar").hide();
     $("#modalempleado").modal("show");
 })
 
 $(document).on("click", ".btneditar", function(){
     $("#empleadoModalLabel").html("Editar Empleado");
     cargarModalEmpleado($(this).attr("data-empid"), false, false, false, false);
+    $("#btncerrar").hide();
+    $("#btnguardar").show();
     $("#modalempleado").modal("show");
 })
 
