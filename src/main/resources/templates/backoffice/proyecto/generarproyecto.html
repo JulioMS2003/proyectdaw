@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                     <th:block th:each="proyecto : ${listaProyectos}">
-                        <tr th:class="${proyecto.estado == 'F' ? 'table-success' : proyecto.estado == 'C'? 'table-danger' : 'table-primary'}">
+                        <tr th:class="${proyecto.estado == 'F' ? 'table-success' : proyecto.estado == 'C'? 'table-danger' : 'table-warning'}">
                             <td th:text="${proyecto.empresa.nomempresa}"></td>
                             <td th:text="${#dates.format(proyecto.fecinicio, 'yyyy-MM-dd')}"></td>
                             <td th:text="${proyecto.estado == 'F' ? 'Finalizado' : proyecto.estado == 'C' ? 'Cancelado' : 'En Proceso' }"></td>
