@@ -24,7 +24,6 @@
                 <tr>
                     <th scope="col">Departamento</th>
                     <th scope="col" class="text-center">Editar</th>
-                    <th scope="col" class="text-center">Eliminar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,12 +33,6 @@
                         <button type="button" class="btn btn-primary btneditar"
                                 th:data-depaid="${departamento.departamentoid}">
                             <i class="bi bi-pencil"></i>
-                        </button>
-                    </td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-danger btneliminar"
-                                th:data-depaid="${departamento.departamentoid}">
-                            <i class="bi bi-trash"></i>
                         </button>
                     </td>
                 </tr>

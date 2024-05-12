@@ -25,7 +25,6 @@
                     <th scope="col">Provincia</th>
                     <th scope="col">Departamento</th>
                     <th scope="col" class="text-center">Editar</th>
-                    <th scope="col" class="text-center">Eliminar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,12 +37,6 @@
                                 th:data-nomprov="${provincia.nomprov}"
                                 th:data-depaid="${provincia.departamento.departamentoid}">
                             <i class="bi bi-pencil"></i>
-                        </button>
-                    </td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-danger btneliminar"
-                                th:data-provid="${provincia.provinciaid}">
-                            <i class="bi bi-trash"></i>
                         </button>
                     </td>
                 </tr>

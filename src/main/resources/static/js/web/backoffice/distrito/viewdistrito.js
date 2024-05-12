@@ -44,35 +44,6 @@ $(document).on("click","#btnguardar",function(){
     })
 })
 
-$(document).on("click", ".btneliminar", function() {
-    Swal.fire({
-        title: "¿Eliminar Distrito?",
-        text: "Esta acción no podrá deshacerse",
-        icon: "warning",
-        showCancelButton: true,
-        cancelButtonText: "Cancelar",
-        cancelButtonColor: "#dc3545",
-        confirmButtonText: "Si, eliminar",
-        confirmButtonColor: "#198754"
-    }).then((result) => {
-        if(result.isConfirmed) {
-            $.ajax({
-                type: "DELETE",
-                url: "/distrito/eliminar/" + $(this).attr("data-distid"),
-                contentType: "application/json",
-                success: function (resultado) {
-                    alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success" : "error");
-                    if (resultado.respuesta) {
-                        setTimeout(function(){
-                            location.reload();
-                        }, 1000);
-                    }
-                }
-            })
-        }
-    })
- })
-
  function cargarCboDepartamento (departamentoid) {
     $.ajax({
         type: "GET",

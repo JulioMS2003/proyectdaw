@@ -26,7 +26,6 @@
                     <th scope="col">Provincia</th>
                     <th scope="col">Departamento</th>
                     <th scope="col" class="text-center">Editar</th>
-                    <th scope="col" class="text-center">Eliminar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,11 +40,6 @@
                                 th:data-provid="${distrito.provincia.provinciaid}"
                                 th:data-depaid="${distrito.provincia.departamento.departamentoid}">
                             <i class="bi bi-pencil"></i>
-                        </button>
-                    </td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-danger btneliminar" th:data-distid="${distrito.distritoid}">
-                            <i class="bi bi-trash"></i>
                         </button>
                     </td>
                 </tr>

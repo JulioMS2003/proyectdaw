@@ -14,35 +14,6 @@ $(document).on("click", ".btneditar", function() {
     $("#modalprovincia").modal("show");
 })
 
-$(document).on("click", ".btneliminar", function() {
-    Swal.fire({
-        title: "¿Eliminar Provincia?",
-        text: "Esta acción no podrá deshacerse",
-        icon: "warning",
-        showCancelButton: true,
-        cancelButtonText: "Cancelar",
-        cancelButtonColor: "#dc3545",
-        confirmButtonText: "Si, eliminar",
-        confirmButtonColor: "#198754"
-}).then((result) => {
-    if(result.isConfirmed) {
-        $.ajax({
-            type: "DELETE",
-            url: "/provincia/eliminar/" + $(this).attr("data-provid"),
-            contentType: "application/json",
-            success: function(resultado) {
-                alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success" : "error");
-                if(resultado.respuesta) {
-                    setTimeout(function(){
-                        location.reload();
-                    }, 1000);
-                }
-                }
-            })
-        }
-    })
-})
-
 $(document).on("click", "#btnguardar", function() {
     $.ajax({
         type: $("#hddprovinciaid").val() == 0 ? "POST": "PUT",
