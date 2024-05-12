@@ -199,7 +199,7 @@ $(document).on("click", ".btnfinalizar", function(){
         showCancelButton: true,
         cancelButtonText: "Cancelar",
         cancelButtonColor: "#dc3545",
-        confirmButtonText: "Si, cancelar",
+        confirmButtonText: "Si, finalizar",
         confirmButtonColor: "#198754"
     }).then((result) => {
         if(result.isConfirmed) {
