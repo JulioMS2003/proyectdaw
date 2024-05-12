@@ -106,6 +106,10 @@ function cargarModalEmpleado(empleadoid, deshabilitar, esconderSwitch, mostrarEs
             cargarCboProvincia(resultado.distrito.provincia.provinciaid,
                                resultado.distrito.provincia.departamento.departamentoid);
             cargarCboDistrito(resultado.distrito.distritoid, resultado.distrito.provincia.provinciaid);
+            if(!resultado.estado) {
+                $("#alertadisponible").hide();
+                $("#alertanodisponible").hide();
+            }
         }
     })
 }
