@@ -51,9 +51,9 @@ $(document).on("click", ".btneliminar", function() {
         icon: "warning",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
-        cancelButtonColor: "#FF0C27",
+        cancelButtonColor: "#dc3545",
         confirmButtonText: "Si, eliminar",
-        confirmButtonColor: "#00FF09"
+        confirmButtonColor: "#198754"
     }).then((result) => {
         if(result.isConfirmed) {
             $.ajax({
