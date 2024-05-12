@@ -20,7 +20,7 @@
                 <i class="bi bi-plus-circle"></i> Nuevo Usuario
             </button>
             <hr />
-            <table id="tblusuario" class="table table-bordered table-striped">
+            <table id="tblusuario" class="table table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">Username</th>
@@ -32,24 +32,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="usuario : ${listaUsuarios}">
-                        <td th:text="${usuario.username}"></td>
-                        <td th:text="${usuario.apeusuario + ' ' + usuario.nomusuario}"></td>
-                        <td th:text="${usuario.activo == true ? 'Activo' : 'Inactivo'}"></td>
-                        <td th:text="${usuario.ultimologin == null ? 'No registra' : #dates.format(usuario.ultimologin, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-success btndetalles"
-                                    th:data-usuarioid="${usuario.usuarioid}">
-                                <i class="bi bi-file-earmark-richtext"></i>
-                            </button>
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-primary btneditar"
-                                    th:data-usuarioid="${usuario.usuarioid}">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    <th:block th:each="usuario : ${listaUsuarios}">
+                        <tr th:class="${usuario.activo ? 'table-primary' : 'table-secondary'}">
+                            <td th:text="${usuario.username}"></td>
+                            <td th:text="${usuario.apeusuario + ' ' + usuario.nomusuario}"></td>
+                            <td th:text="${usuario.activo == true ? 'Activo' : 'Inactivo'}"></td>
+                            <td th:text="${usuario.ultimologin == null ? 'No registra' : #dates.format(usuario.ultimologin, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-success btndetalles"
+                                        th:data-usuarioid="${usuario.usuarioid}">
+                                    <i class="bi bi-file-earmark-richtext"></i>
+                                </button>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary btneditar"
+                                        th:data-usuarioid="${usuario.usuarioid}">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </th:block>
                 </tbody>
             </table>
         </div>
