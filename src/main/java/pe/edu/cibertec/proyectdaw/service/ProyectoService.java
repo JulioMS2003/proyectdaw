@@ -123,12 +123,6 @@ public class ProyectoService implements IProyectoService{
                 nroplanos1++;
             if(!asignacion.getPlano().getEstado())
                 nroplanos2++;
-
-            Empleado empleado = empleadoRepository.findById(asignacion.getEmpleado().getEmpleadoid()).orElse(null);
-            if(empleado == null)
-                throw new Exception("No se encontró al empleado");
-            empleado.setDisponible(true);
-            empleadoRepository.save(empleado);
         }
         if(nroplanos1 == 1)
             throw new Exception("Proyecto no puede finalizarse porque existe 1 plano sin asignación");
@@ -138,6 +132,14 @@ public class ProyectoService implements IProyectoService{
             throw new Exception("Proyecto no puede finalizarse porque existe 1 plano sin completar");
         if(nroplanos2 > 1)
             throw new Exception("Proyecto no puede finalizarse porque existen " + nroplanos2 + " planos sin completar");
+
+        for(Asignacion asignacion: asignaciones) {
+            Empleado empleado = empleadoRepository.findById(asignacion.getEmpleado().getEmpleadoid()).orElse(null);
+            if(empleado == null)
+                throw new Exception("No se encontró al empleado");
+            empleado.setDisponible(true);
+            empleadoRepository.save(empleado);
+        }
 
         proyecto.setEstado("F");
         proyectoRepository.save(proyecto);
