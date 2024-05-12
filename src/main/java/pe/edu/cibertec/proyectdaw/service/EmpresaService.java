@@ -27,7 +27,7 @@ public class EmpresaService implements IEmpresaService{
         if(empresaRequest.getRuc() == null || empresaRequest.getRuc().isEmpty())
             throw new Exception("Ingresar RUC de Empresa");
         if(empresaRequest.getRuc().length() != 11)
-            throw new Exception("El RUC debe contener 8 dígitos");
+            throw new Exception("El RUC debe contener 11 dígitos");
 
         if(!empresaRequest.getActivo()) {
             List<Proyecto> proyectos = proyectoRepository.findAllByEmpresaId(empresaRequest.getEmpresaid());
