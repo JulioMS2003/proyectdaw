@@ -102,6 +102,8 @@ public class ProyectoService implements IProyectoService{
                 empleadoRepository.save(empleado);
             }
         }
+
+        proyecto.setFecfin(new Date());
         proyectoRepository.save(proyecto);
     }
 
@@ -141,6 +143,7 @@ public class ProyectoService implements IProyectoService{
             empleadoRepository.save(empleado);
         }
 
+        proyecto.setFecfin(new Date());
         proyecto.setEstado("F");
         proyectoRepository.save(proyecto);
     }
