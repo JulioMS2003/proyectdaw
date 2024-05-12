@@ -3,8 +3,10 @@ package pe.edu.cibertec.proyectdaw.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pe.edu.cibertec.proyectdaw.model.bd.Empresa;
+import pe.edu.cibertec.proyectdaw.model.bd.Proyecto;
 import pe.edu.cibertec.proyectdaw.model.dto.request.EmpresaRequest;
 import pe.edu.cibertec.proyectdaw.repository.EmpresaRepository;
+import pe.edu.cibertec.proyectdaw.repository.ProyectoRepository;
 
 import java.util.List;
 
@@ -13,6 +15,7 @@ import java.util.List;
 public class EmpresaService implements IEmpresaService{
 
     private EmpresaRepository empresaRepository;
+    private ProyectoRepository proyectoRepository;
 
     @Override
     public void guardarEmpresa(EmpresaRequest empresaRequest) throws Exception {
@@ -25,6 +28,14 @@ public class EmpresaService implements IEmpresaService{
             throw new Exception("Ingresar RUC de Empresa");
         if(empresaRequest.getRuc().length() != 11)
             throw new Exception("El RUC debe contener 8 dígitos");
+
+        if(!empresaRequest.getActivo()) {
+            List<Proyecto> proyectos = proyectoRepository.findAllByEmpresaId(empresaRequest.getEmpresaid());
+            for(Proyecto proyecto: proyectos) {
+                if(!proyecto.getEstado().equals("C") && !proyecto.getEstado().equals("F"))
+                    throw new Exception("Está empresa tiene 1 o más proyectos en desarrollo. No se puede inactivar.");
+            }
+        }
 
         Empresa empresa = new Empresa();
         if(empresaRequest.getEmpresaid() > 0)

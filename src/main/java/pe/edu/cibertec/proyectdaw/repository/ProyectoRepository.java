@@ -14,5 +14,7 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Integer> {
     @Query(value = "Call PaginacionProyectos(:skip)", nativeQuery = true)
     List<Proyecto> paginacionProyectos(@Param("skip") Integer skip);
 
+    @Query("Select P From Proyecto P Where P.empresa.empresaid=:empresaid")
+    List<Proyecto> findAllByEmpresaId(@Param("empresaid") Integer empresaid);
     List<Proyecto> findAllByOrderByFecinicioDesc();
 }

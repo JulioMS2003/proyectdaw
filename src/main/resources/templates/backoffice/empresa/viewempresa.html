@@ -18,7 +18,7 @@
                 <i class="bi bi-plus-circle"></i> Nueva Empresa
             </button>
             <hr />
-            <table id="tblempresa" class="table table-bordered table-striped">
+            <table id="tblempresa" class="table table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">Empresa</th>
@@ -28,20 +28,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="empresa : ${listaEmpresas}">
-                        <td th:text="${empresa.nomempresa}"></td>
-                        <td th:text="${empresa.ruc}"></td>
-                        <td th:text="${empresa.activo ? 'Activa' : 'Inactiva'}"></td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-primary btneditar"
-                                    th:data-empid="${empresa.empresaid}"
-                                    th:data-empnom="${empresa.nomempresa}"
-                                    th:data-empruc="${empresa.ruc}"
-                                    th:data-empact="${empresa.activo}">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    <th:block th:each="empresa : ${listaEmpresas}">
+                        <tr th:class="${empresa.activo ? 'table-primary' : 'table-secondary'}">
+                            <td th:text="${empresa.nomempresa}"></td>
+                            <td th:text="${empresa.ruc}"></td>
+                            <td th:text="${empresa.activo ? 'Activa' : 'Inactiva'}"></td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary btneditar"
+                                        th:data-empid="${empresa.empresaid}"
+                                        th:data-empnom="${empresa.nomempresa}"
+                                        th:data-empruc="${empresa.ruc}"
+                                        th:data-empact="${empresa.activo}">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </th:block>
                 </tbody>
             </table>
         </div>
