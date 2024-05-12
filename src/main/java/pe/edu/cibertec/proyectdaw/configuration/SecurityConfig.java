@@ -35,8 +35,8 @@ public class SecurityConfig {
            auth.requestMatchers("/distrito/lista/**").hasAnyAuthority("Administrador", "Operador de Ubigeos", "Operador de Empleados", "Operador de Proyectos");
            auth.requestMatchers("/distrito/**").hasAnyAuthority("Administrador", "Operador de Ubigeos");
 
+           auth.requestMatchers("/empleado/lista/activos/disponibles").hasAnyAuthority("Administrador", "Operador de Empleados", "Operador de Planos");
            auth.requestMatchers("/empleado/**").hasAnyAuthority("Administrador", "Operador de Empleados");
-           auth.requestMatchers("/empleado/lista/activos").hasAnyAuthority("Administrador", "Operador de Empleados", "Operador de Planos");
 
            auth.requestMatchers("/empresa/**").hasAnyAuthority("Administrador", "Operador de Empresas");
            auth.requestMatchers("/plano/**").hasAnyAuthority("Administrador", "Operador de Planos");
