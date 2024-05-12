@@ -1,4 +1,5 @@
 var asignaciones = []
+var planos = []
 
 $(document).on("click", ".btndetalles", function(){
     $.ajax({
@@ -18,9 +19,12 @@ $(document).on("click", ".btndetalles", function(){
         dataType: "json",
         success: function(resultado) {
             $("#tblplanos > tbody").html("");
+            $("#txtdepartamento").val(resultado[0].plano.distrito.provincia.departamento.nomdepa);
+            $("#txtprovincia").val(resultado[0].plano.distrito.provincia.nomprov);
+            $("#txtdistrito").val(resultado[0].plano.distrito.nomdist);
             $.each(resultado, function(index, value){
                 $("#tblplanos > tbody").append(
-                    `<tr>` +
+                    `<tr class="${value.plano.estado ? 'table-primary' : 'table-secondary'}">` +
                         `<td>${value.plano.planoid}</td>` +
                         `<td>${value.empleado == null ? 'Sin Asignación' : value.empleado.nomemp + ' ' + value.empleado.apeemp}</td>` +
                     `</tr>`
@@ -32,6 +36,50 @@ $(document).on("click", ".btndetalles", function(){
     $("#modalproyecto").modal("show");
 })
 
+$(document).on("click", ".btnactualizarplanos", function(){
+    $.ajax({
+        type: "GET",
+        url: "/asignacion/buscar/" + $(this).attr("data-proyid"),
+        dataType: "json",
+        success: function(resultado) {
+            $("#divasignacionplanos").html("");
+            $("#btnguardarasignacion").hide();
+            $("#btnguardarestados").show();
+            planos = [];
+            $.each(resultado, function(index, value){
+                $("#divasignacionplanos").append(
+                    `<div>` +
+                        `<div class="form-floating mb-3">` +
+                            `<input id="txtplanoid${value.plano.planoid}" type="text" class="form-control" value="${value.plano.planoid}" readonly>` +
+                            `<label for="txtplanoid${value.plano.planoid}">Plano</label>` +
+                        `</div>` +
+                        `<div class="form-check form-switch">` +
+                            `<input class="form-check-input switchplanosestado" ` +
+                            `type="checkbox" role="switch" id="switchplano${value.plano.planoid}" ` +
+                            `data-planoid="${value.plano.planoid}" ${value.plano.estado ? "checked": ""}>` +
+                            `<label class="form-check-label" for="switchplano${value.plano.planoid}">Completado</label>` +
+                        `</div>` +
+                    `</div>` +
+                    `<hr />`
+                );
+
+                planos.push({
+                    planoid: value.plano.planoid,
+                    estado: value.plano.estado
+                })
+
+                $(".switchplanosestado").click(function() {
+                    var planoid = $(this).attr("data-planoid");
+                    var estado = $(this).prop("checked");
+                    planos.find(a => a.planoid == planoid).estado = estado;
+                });
+            });
+
+            $("#modalasignacion").modal("show");
+        }
+    });
+});
+
 $(document).on("click", ".btnasignacion", function(){
     $.ajax({
         type: "GET",
@@ -39,6 +87,8 @@ $(document).on("click", ".btnasignacion", function(){
         dataType: "json",
         success: function(resultado) {
             $("#divasignacionplanos").html("");
+            $("#btnguardarasignacion").show();
+            $("#btnguardarestados").hide();
             asignaciones = [];
             $.each(resultado, function(index, value){
                 $("#divasignacionplanos").append(
@@ -95,6 +145,24 @@ $(document).on("click", "#btnguardarasignacion", function(){
         }
     })
 })
+
+$(document).on("click", "#btnguardarestados", function(){
+    $.ajax({
+        type: "PUT",
+        url: "/plano/actualizar/estado",
+        contentType: "application/json",
+        data: JSON.stringify(planos),
+        success: function(resultado) {
+            alertaDeRespuesta(" ", resultado.mensaje, resultado.respuesta ? "success" : "error");
+            if(resultado.respuesta) {
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
+            }
+        }
+    })
+})
+
 
 $(document).on("click", ".btncancelar", function(){
     Swal.fire({
@@ -167,7 +235,7 @@ function cargarEmpleadosActivos(cbo) {
 }
 
 function ocultarMostrarAlertas(estado) {
-    if(estado == 'E') {
+    if(estado == 'E' || estado == 'A') {
         $("#divenproceso").show();
         $("#divfinalizado").hide();
         $("#divcancelado").hide();

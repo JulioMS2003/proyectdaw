@@ -59,8 +59,9 @@ public class EmpleadoService implements IEmpleadoService{
         List<Asignacion> asignaciones = asignacionRepository.findAllByEmpleadoId(empleadoRequest.getEmpleadoid());
         if(!asignaciones.isEmpty()){
             for(Asignacion asignacion: asignaciones) {
-                if(asignacion.getProyecto().getEstado().equals("E") && !asignacion.getPlano().getEstado())
-                    throw new Exception("No se puede inactivar a este empleado porque está participando en un proyecto");
+                if(asignacion.getProyecto().getEstado().equals("A") && !asignacion.getPlano().getEstado())
+                    if(!empleadoRequest.getEstado())
+                        throw new Exception("No se puede inactivar a este empleado porque está participando en un proyecto");
             }
         }
 

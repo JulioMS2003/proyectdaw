@@ -27,6 +27,20 @@ public class PlanoController {
         return iPlanoService.obtenerPlanoPorId(planoid);
     }
 
+    @PutMapping("/actualizar/estado")
+    @ResponseBody
+    public ResultadoResponse actualizarEstadosPlanos(@RequestBody PlanoRequest[] planoRequests){
+        String mensaje = "Planos actualizados";
+        boolean respuesta = true;
+        try{
+            iPlanoService.guardarEstadosPlanos(planoRequests);
+        } catch(Exception ex){
+            mensaje = ex.getMessage();
+            respuesta= false;
+        }
+        return ResultadoResponse.builder().mensaje(mensaje).respuesta(respuesta).build();
+    }
+
     @GetMapping("/lista")
     @ResponseBody
     public List<Plano> listarPlanos(){ return iPlanoService.listarTodasOrdenadasPorIdAsc();}

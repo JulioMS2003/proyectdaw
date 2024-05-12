@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pe.edu.cibertec.proyectdaw.model.bd.*;
 import pe.edu.cibertec.proyectdaw.model.dto.request.ProyectoRequest;
 import pe.edu.cibertec.proyectdaw.repository.AsignacionRepository;
+import pe.edu.cibertec.proyectdaw.repository.EmpleadoRepository;
 import pe.edu.cibertec.proyectdaw.repository.PlanoRepository;
 import pe.edu.cibertec.proyectdaw.repository.ProyectoRepository;
 
@@ -18,6 +19,7 @@ public class ProyectoService implements IProyectoService{
     private ProyectoRepository proyectoRepository;
     private PlanoRepository planoRepository;
     private AsignacionRepository asignacionRepository;
+    private EmpleadoRepository empleadoRepository;
 
     @Override
     @Transactional
@@ -84,14 +86,27 @@ public class ProyectoService implements IProyectoService{
     }
 
     @Override
-    public void cancelarProyecto(Integer proyectoid) {
+    @Transactional(dontRollbackOn = {Exception.class})
+    public void cancelarProyecto(Integer proyectoid) throws Exception {
         Proyecto proyecto = this.buscarPorId(proyectoid);
         proyecto.setEstado("C");
         proyecto.setFecfin(new Date());
+
+        List<Asignacion> asignaciones = asignacionRepository.findAllByProyectoId(proyectoid);
+        for(Asignacion asignacion: asignaciones) {
+            if(asignacion.getEmpleado() != null) {
+                Empleado empleado = empleadoRepository.findById(asignacion.getEmpleado().getEmpleadoid()).orElse(null);
+                if(empleado == null)
+                    throw new Exception("No se encontró empleado");
+                empleado.setDisponible(true);
+                empleadoRepository.save(empleado);
+            }
+        }
         proyectoRepository.save(proyecto);
     }
 
     @Override
+    @Transactional(rollbackOn = {Exception.class})
     public void finalizarProyecto(Integer proyectoid) throws Exception {
         Proyecto proyecto = this.buscarPorId(proyectoid);
         if(proyecto == null)
@@ -108,6 +123,12 @@ public class ProyectoService implements IProyectoService{
                 nroplanos1++;
             if(!asignacion.getPlano().getEstado())
                 nroplanos2++;
+
+            Empleado empleado = empleadoRepository.findById(asignacion.getEmpleado().getEmpleadoid()).orElse(null);
+            if(empleado == null)
+                throw new Exception("No se encontró al empleado");
+            empleado.setDisponible(true);
+            empleadoRepository.save(empleado);
         }
         if(nroplanos1 == 1)
             throw new Exception("Proyecto no puede finalizarse porque existe 1 plano sin asignación");

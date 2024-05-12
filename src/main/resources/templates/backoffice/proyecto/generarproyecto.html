@@ -33,6 +33,7 @@
                         <th:block th:if="${session.authorities.contains('Administrador') ||
                                            session.authorities.contains('Operador de Planos')}">
                             <th scope="col" class="text-center">Asignación</th>
+                            <th scope="col" class="text-center">Actualizar</th>
                         </th:block>
                         <th:block th:if="${session.authorities.contains('Administrador') ||
                                            session.authorities.contains('Operador de Proyectos')}">
@@ -60,6 +61,14 @@
                                         th:class="${proyecto.estado == 'C' || proyecto.estado == 'F' || proyecto.estado == 'A' ? 'btn btn-secondary' : 'btn btn-primary btnasignacion'}"
                                         th:data-proyid="${proyecto.proyectoid}">
                                     <i class="bi bi-person-lines-fill"></i>
+                                </button>
+                            </td>
+                            <td class="text-center">
+                                <button type="button"
+                                        th:disabled="${proyecto.estado != 'A'}"
+                                        th:class="${proyecto.estado != 'A' ? 'btn btn-secondary' : 'btn btn-primary btnactualizarplanos'}"
+                                        th:data-proyid="${proyecto.proyectoid}">
+                                    <i class="bi bi-pencil"></i>
                                 </button>
                             </td>
                         </th:block>
@@ -160,6 +169,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnguardarasignacion">Guardar</button>
+                <button type="button" class="btn btn-primary" id="btnguardarestados">Guardar</button>
             </div>
         </div>
     </div>
@@ -188,8 +198,23 @@
                            placeholder="Fecha de Fin" readonly>
                     <label for="txtfecfin">Fecha de Fin</label>
                 </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtdepartamento"
+                           placeholder="Departamento" readonly>
+                    <label for="txtdepartamento">Departamento</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtprovincia"
+                           placeholder="Provincia" readonly>
+                    <label for="txtprovincia">Provincia</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtdistrito"
+                           placeholder="Distrito" readonly>
+                    <label for="txtdistrito">Distrito</label>
+                </div>
                 <hr />
-                <table id="tblplanos" class="table table-bordered table-striped">
+                <table id="tblplanos" class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">Plano</th>
